@@ -100,13 +100,7 @@ buildPhase2=function(){_buildPhase2P4();
   addSpot(192,-180,'fuel',0x55d68b,'Station-service');
   addSpot(-192,116,'garage',0x7fc7ff,'Garage personnel');
   addSpot(192,116,'drivingschool',0xc79bff,'Auto-école');
-  const colors={dealership:0x17699a,fuel:0x27754d,garage:0x4e5967,drivingschool:0x65468a};
-  [['dealership',-192,-180,'AUTO AURORE'],['fuel',192,-180,'AURORA FUEL'],['garage',-192,116,'GARAGE'],['drivingschool',192,116,'AUTO-ÉCOLE']].forEach(([id,x,z,label])=>{
-    const c=colors[id];const base=new THREE.Mesh(new THREE.BoxGeometry(20,4.5,14),p4mat(c,.72,.08));base.position.set(x,2.25,z-5);base.castShadow=true;base.receiveShadow=true;scene.add(base);
-    const roof=new THREE.Mesh(new THREE.BoxGeometry(21,.45,15),p4mat(0x313743,.5,.15));roof.position.set(x,4.65,z-5);scene.add(roof);
-    addSign(label,x,z-5,5.7,14,1.7,'#'+c.toString(16).padStart(6,'0'),'#ffffff');
-    if(id==='fuel')[-5,0,5].forEach(dx=>{const p=new THREE.Mesh(new THREE.BoxGeometry(.9,1.8,.8),p4mat(0xdfe5e7,.4,.1));p.position.set(x+dx,.9,z-1.5);scene.add(p);const hose=new THREE.Mesh(new THREE.TorusGeometry(.42,.035,8,18,Math.PI),p4mat(0x22252a,.65,.05));hose.position.set(x+dx+.32,1.2,z-1.6);hose.rotation.z=Math.PI/2;scene.add(hose);});
-  });
+  /* v22 : bâtiments détaillés construits dans batiments22.js */
   // Véhicules de circulation et de service sur les grands axes.
   [[-224,-74,'motorcycle',0xd94f4f],[160,82,'scooter',0x3d7be0],[-160,136,'bus',0x2e9a6a],[160,-140,'truck',0xe0a526],[-96,146,'police',0xf4f4f0],[96,-202,'ambulance',0xf4f4f0],[32,150,'firetruck',0xc82d25]].forEach(([x,z,t,c])=>{const v=p4service(x,z,t);v.v=v.maxV;});
 };
@@ -127,6 +121,15 @@ openSpot=function(id){
   if(id==='drivingschool'){openDrivingSchoolP4();return;}
   _openSpotP4(id);
 };
+function showroomVehicle19(id){
+  const v=FLEET_CATALOG.find(q=>q.id===id);if(!v){openSpot('dealership');return;}
+  const licensed=!!(state.license&&state.license[v.license]),afford=state.cash>=v.price;
+  const speed=v.top||27,acc=v.acc||1;
+  openPanel(v.label,'Véhicule exposé · '+fmt(v.price)+' · vitesse max '+speed+' · accélération '+acc.toFixed(1)+' · '+(licensed?'Permis validé':'Permis requis : '+VEHICLE_LICENSE[v.license]),[
+    {label:'Acheter · '+fmt(v.price),off:!licensed||!afford,fn:()=>buyFleetVehicle(v)},
+    {label:'Voir tout le catalogue',fn:()=>openSpot('dealership')}
+  ]);
+}
 function sellFleetVehicle(id,index){const v=FLEET_CATALOG.find(q=>q.id===id);if(!v)return;state.cash+=Math.round(v.price*.6);fleetOwned.splice(index,1);saveFleet();const c=cars.find(q=>q.owned&&q.type===id);if(c){if(player.car===c)exitCar();scene.remove(c.mesh);cars.splice(cars.indexOf(c),1);}toast(v.label+' revendu.','good');saveProgress();openSpot('dealership');}
 function buyFleetVehicle(v){if(state.cash<v.price||!state.license||!state.license[v.license]){toast('Permis requis ou fonds insuffisants.','warn');return;}state.cash-=v.price;fleetOwned.push(v.id);saveFleet();toast(v.label+' ajouté au garage personnel.','good');saveProgress();openSpot('dealership');}
 function spawnFleetVehicle(id){const v=FLEET_CATALOG.find(q=>q.id===id);if(!v)return null;

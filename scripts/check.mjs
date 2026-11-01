@@ -7,6 +7,6 @@ for (const f of readdirSync('js').filter(f => f.endsWith('.js'))) {
   catch (e) { bad++; console.error('Erreur de syntaxe : js/' + f + '\n' + e.stderr); }
 }
 const html = readFileSync('index.html', 'utf8');
-for (const [, p] of html.matchAll(/(?:src|href)="([^"#:]+)"/g)) if (!existsSync(p)) { bad++; console.error('Fichier manquant : ' + p); }
+for (const [, raw] of html.matchAll(/(?:src|href)="([^"#:]+)"/g)) { const p = raw.split('?')[0]; if (!existsSync(p)) { bad++; console.error('Fichier manquant : ' + p); } }
 if (bad) { console.error(bad + ' problème(s).'); process.exit(1); }
 console.log('Port-Aurore : tous les fichiers sont OK.');

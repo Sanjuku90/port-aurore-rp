@@ -66,11 +66,8 @@ const _cr=econCreditP58;econCreditP58=function(a,l,t){
 // lieux : commissariat, gendarmerie, tribunal, prison
 const _bp=buildPhase2;buildPhase2=function(){_bp();
   [['comm13',-240,-40,0x2d4f9a,'Commissariat'],['court13',-240,60,0x7a6a4a,'Tribunal'],['gend13',240,-80,0x22427a,'Gendarmerie']].forEach(([id,x,z,c,l])=>{
-    addSpot(x,z,id,c,l);const b=new THREE.Mesh(new THREE.BoxGeometry(14,5,10),p4mat(c,.7,.1));b.position.set(x,2.5,z-7);b.castShadow=true;scene.add(b);
-    addSign(l.toUpperCase(),x,z-7,6.3,12,1.6,'#'+c.toString(16).padStart(6,'0'),'#ffffff');});
-  addSpot(PR.x,PR.z,'prison13',0x888e96,'Prison');const w=p4mat(0x6d737a,.8,.05);
-  [[0,-12,26,1],[0,12,26,1],[-13,0,1,24],[13,0,1,24]].forEach(([dx,dz,sx,sz])=>{const m=new THREE.Mesh(new THREE.BoxGeometry(sx,4,sz),w);m.position.set(PR.x+dx,2,PR.z+dz);scene.add(m);});
-  addSign('PRISON',PR.x,PR.z-12,4.6,10,1.4,'#3a3f46','#ffffff');
+    addSpot(x,z,id,c,l);});
+  addSpot(PR.x,PR.z,'prison13',0x888e96,'Prison');/* v22 : architecture dans batiments22.js */
 };
 const _os=openSpot;openSpot=function(id){
   if(id==='comm13'||id==='gend13'){const t=fineTot();openPanel(id==='comm13'?'Commissariat':'Gendarmerie','Casier : '+S.rec+' condamnation(s) · Recherché : '+(S.heat>0?'★'.repeat(Math.ceil(S.heat)):'non')+' · Amendes dues : '+fmt(t)+'.',[

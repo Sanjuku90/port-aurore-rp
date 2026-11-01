@@ -70,7 +70,7 @@ function redAhead(c){
 }
 
 /* ----- parkings ----- */
-const LOTS=[[-64,-178,40,14,1],[64,-178,40,14,1],[64,178,40,14,-1],[-192,-178,42,16,1],[192,-178,42,16,1],[-192,178,42,16,-1],[192,178,42,16,-1]];
+const LOTS=[[-64,-178,40,14,1],[64,-178,40,14,1],[64,178,40,14,-1],[-192,178,42,16,-1],[192,178,42,16,-1]];/* v22 : les parkings devant le concessionnaire et la station sont remplacés par leurs propres parvis */
 function buildParkings(){
   LOTS.forEach(([cx,cz,w,d,face])=>{
     const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),lamb(0x474c55));m.rotation.x=-Math.PI/2;m.position.set(cx,0.03,cz);m.receiveShadow=true;scene.add(m);
@@ -111,6 +111,7 @@ function buildFronts(){
 
 /* ----- intérieurs visitables ----- */
 const RD={
+  dealership:['Concessionnaire Aurora',0x9aa6b3,0x17699a,[[6,1.1,1.2,0,-3.8,0x24344a],[2.4,.8,1.2,-5,.5,0x26364a],[2.4,.8,1.2,5,.5,0x26364a]]],
   job:['Pôle Emploi',0x9aa6b3,0x1d4f8a,[[6,1.1,1.2,0,-3.8,0x35506b],[2.4,.8,1.2,-5,.5,0x6b5a45],[2.4,.8,1.2,5,.5,0x6b5a45],[2.4,.8,1.2,-5,3,0x6b5a45],[2.4,.8,1.2,5,3,0x6b5a45]]],
   shop:['Supérette',0xb9b2a6,0x1f7a4d,[[6,1.1,1.2,0,-3.8,0x2e6e4a],[1,2,6,-6.5,-.5,0xc0392b],[1,2,6,6.5,-.5,0x2e6fd1],[1,1.5,4,-2,1,0xe0a526],[1,1.5,4,2,1,0x7b4bb3]]],
   bank:['Banque',0xcfc8b8,0x27306b,[[7,1.2,1.2,0,-3.8,0x27306b],[2,.5,2,-5,1.5,0x555b64],[2,.5,2,5,1.5,0x555b64],[1,2.4,1,-7,-3,0x9fb4c8]]],

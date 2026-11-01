@@ -1,25 +1,61 @@
 'use strict';
 /* ---------- caméra, jour et nuit ---------- */
 let camT=1;
+/* v25 : caméra à la 3e personne lissée, zoom molette/pincement, recentrage auto, champ de vision dynamique */
+const CAMX={sens:1.25,SENS:[['Faible',.8],['Moyenne',1.25],['Élevée',1.7],['Très élevée',2.2]],zoom:1,fov:60,tgt:null,look:null,shake:0,preset:1,PRE:[['Proche',.72],['Normale',1],['Éloignée',1.38]]};
+try{const z=+localStorage.getItem('port-aurore-cam');if(z>=.5&&z<=1.7)CAMX.zoom=z;CAMX.preset=CAMX.PRE.reduce((b,p,i)=>Math.abs(p[1]-CAMX.zoom)<Math.abs(CAMX.PRE[b][1]-CAMX.zoom)?i:b,1);}catch(e){}
+try{const v=+localStorage.getItem('port-aurore-sens');if(v>=.5&&v<=2.5)CAMX.sens=v;}catch(e){}
+function camSens(){const i=CAMX.SENS.findIndex(x=>x[1]===CAMX.sens),n=CAMX.SENS[(i+1)%CAMX.SENS.length];CAMX.sens=n[1];try{localStorage.setItem('port-aurore-sens',String(n[1]));}catch(e){}return n[0];}
+function camSensName(){const f=CAMX.SENS.find(x=>x[1]===CAMX.sens);return f?f[0]:'Personnalisée';}
+function camSaveZoom(){try{localStorage.setItem('port-aurore-cam',CAMX.zoom.toFixed(2));}catch(e){}}
+function camCycle(){CAMX.preset=(CAMX.preset+1)%CAMX.PRE.length;CAMX.zoom=CAMX.PRE[CAMX.preset][1];camSaveZoom();if(typeof toast==='function'&&started)toast('Caméra : '+CAMX.PRE[CAMX.preset][0]);}
 function updateCamera(dt){
   if(!started){
-    idleT+=dt;const a=idleT*0.12;camera.position.set(Math.cos(a)*40,17,Math.sin(a)*40);camera.lookAt(0,5,0);return;
+    /* plan d'ouverture : survol lent du port, hauteur et rayon qui respirent */
+    idleT+=dt;const a=idleT*0.07,r=46+Math.sin(idleT*0.11)*10,hh=15+Math.sin(idleT*0.09)*5;
+    camera.position.set(Math.cos(a)*r,hh,Math.sin(a)*r+20);camera.lookAt(Math.cos(a+0.9)*8,4.5,Math.sin(a+0.9)*8+10);
+    if(Math.abs(camera.fov-52)>.05){camera.fov=52;camera.updateProjectionMatrix();}return;
   }
-  const driving=!!player.car;
-  if(driving&&performance.now()-lastDrag>1500)camYaw+=angDiff(camYaw,player.car.h)*Math.min(1,2.6*dt);
-  camDist=lerp(camDist,driving?8.6:(player.inside?3.6:5.6),Math.min(1,4*dt));
-  const ty=driving?1.3:1.5,cp=Math.cos(camPitch),sp=Math.sin(camPitch);
-  const dx=-Math.sin(camYaw)*cp,dz=-Math.cos(camYaw)*cp;
+  const driving=!!player.car,now=performance.now(),car=player.car,spd=driving?Math.abs(car.v||0):(player.moving||0);
+  const k=s=>1-Math.exp(-s*dt);
+  /* recentrage derrière le joueur après 2,5 s sans toucher la caméra (pas en marchant vers la caméra) */
+  if(driving&&now-lastDrag>1500)camYaw+=angDiff(camYaw,car.h)*Math.min(1,2.6*dt);
+  else if(!driving&&!player.inside&&spd>1.2&&now-lastDrag>2500){const d=angDiff(camYaw,player.h);if(Math.abs(d)<2.1)camYaw+=d*Math.min(1,0.9*dt*Math.min(1,spd/4));}
+  const base=driving?8.2+Math.min(2.4,spd*0.09):(player.inside?3.6:5.4);
+  camDist=lerp(camDist,base*CAMX.zoom,Math.min(1,4*dt));
+  /* cible lissée + regard en avant en voiture */
+  const ty=driving?1.35:1.55;
+  if(!CAMX.tgt)CAMX.tgt=new THREE.Vector3(player.x,ty,player.z);
+  const ah=driving?Math.min(3.2,spd*0.13)*(car.v<0?-1:1):0,hx=driving?Math.sin(car.h):0,hz=driving?Math.cos(car.h):0;
+  const tx=player.x+hx*ah,tz=player.z+hz*ah;
+  if(Math.hypot(tx-CAMX.tgt.x,tz-CAMX.tgt.z)>12)CAMX.tgt.set(tx,ty,tz);else{const f=k(driving?9:14);CAMX.tgt.x+=(tx-CAMX.tgt.x)*f;CAMX.tgt.z+=(tz-CAMX.tgt.z)*f;CAMX.tgt.y+=(ty-CAMX.tgt.y)*f;}
+  const T=CAMX.tgt,cp=Math.cos(camPitch),sp=Math.sin(camPitch),dx=-Math.sin(camYaw)*cp,dz=-Math.cos(camYaw)*cp;
+  /* anti-traversée des bâtiments */
   let t=1;
-  for(let i=1;i<=12;i++){
-    const f=i/12,x=player.x+dx*camDist*f,z=player.z+dz*camDist*f,y=ty+sp*camDist*f;let inside=false;
-    for(let k=0;k<boxes.length;k++){const b=boxes[k];if(b.big&&x>b.x0-0.4&&x<b.x1+0.4&&z>b.z0-0.4&&z<b.z1+0.4&&y<60){inside=true;break;}}
-    if(inside){t=Math.max(Math.min(1,1.3/camDist),(i-1)/12);break;}
+  for(let i=1;i<=14;i++){
+    const f=i/14,x=T.x+dx*camDist*f,z=T.z+dz*camDist*f,y=T.y+sp*camDist*f;let inside=false;
+    for(let q=0;q<boxes.length;q++){const b=boxes[q];if(b.big&&x>b.x0-0.45&&x<b.x1+0.45&&z>b.z0-0.45&&z<b.z1+0.45&&y<60){inside=true;break;}}
+    if(inside){t=Math.max(Math.min(1,1.3/camDist),(i-1)/14);break;}
   }
   camT+=(t-camT)*Math.min(1,(t<camT?20:2.5)*dt);
-  camera.position.set(player.x+dx*camDist*camT,Math.max(0.6,ty+sp*camDist*camT),player.z+dz*camDist*camT);
-  camera.lookAt(player.x,ty,player.z);
+  /* léger tremblement à haute vitesse */
+  CAMX.shake=driving&&spd>18?(spd-18)*0.0035:0;const sh=CAMX.shake?Math.sin(now*0.047)*CAMX.shake:0,sv=CAMX.shake?Math.cos(now*0.061)*CAMX.shake:0;
+  camera.position.set(T.x+dx*camDist*camT+sh,Math.max(0.6,T.y+sp*camDist*camT)+sv,T.z+dz*camDist*camT);
+  camera.lookAt(T.x,T.y+(driving?0.15:0.05),T.z);
+  /* champ de vision : s'ouvre avec la vitesse */
+  const run=!driving&&spd>5.2,fov=60+(driving?Math.min(13,spd*0.48):run?4:0);
+  CAMX.fov+=(fov-CAMX.fov)*k(3);if(Math.abs(camera.fov-CAMX.fov)>.02){camera.fov=CAMX.fov;camera.updateProjectionMatrix();}
 }
+/* molette (PC) et pincement (mobile) pour zoomer */
+(function(){
+  const ok=()=>typeof started!=='undefined'&&started&&!panelOpen&&!(typeof paused!=='undefined'&&paused)&&!(typeof M3!=='undefined'&&M3.on);
+  addEventListener('wheel',e=>{if(!ok())return;if(e.target&&e.target.closest&&e.target.closest('#phone,#panel,#pause,#start,.sheet'))return;CAMX.zoom=Math.max(.55,Math.min(1.6,CAMX.zoom*(1+e.deltaY*0.0011)));camSaveZoom();},{passive:true});
+  const pts=new Map();let pd=0;
+  addEventListener('pointerdown',e=>{if(e.target&&e.target.id==='gl'){pts.set(e.pointerId,[e.clientX,e.clientY]);if(pts.size===2){const [a,b]=[...pts.values()];pd=Math.hypot(a[0]-b[0],a[1]-b[1]);}}});
+  addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,[e.clientX,e.clientY]);if(pts.size===2&&ok()){const [a,b]=[...pts.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);if(pd>0){CAMX.zoom=Math.max(.55,Math.min(1.6,CAMX.zoom*pd/d));}pd=d;}});
+  const up=e=>{if(pts.delete(e.pointerId)&&pts.size<2){pd=0;camSaveZoom();}};addEventListener('pointerup',up);addEventListener('pointercancel',up);
+  addEventListener('keydown',e=>{if(e.key&&e.key.toLowerCase()==='v'&&ok()&&!(typeof chatOpen!=='undefined'&&chatOpen)&&!(e.target&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)))camCycle();});
+})();
 const C_NIGHT=new THREE.Color(0x0a1224),C_DAY=new THREE.Color(0x9ccdf2),C_DAWN=new THREE.Color(0xe8946a);
 const T_NIGHT=new THREE.Color(0x050914),T_DAY=new THREE.Color(0x3d7fd0);
 const SUNW=new THREE.Color(0xfff2d6),SUNO=new THREE.Color(0xff9a55),MOONC=new THREE.Color(0x7b90d6);

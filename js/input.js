@@ -39,7 +39,7 @@ function setupInput(){
   cv.addEventListener('pointerdown',e=>{if(drag)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);});
   cv.addEventListener('pointermove',e=>{
     if(!drag||e.pointerId!==drag.id)return;
-    camYaw-=(e.clientX-drag.x)*0.006;camPitch=clamp(camPitch+(e.clientY-drag.y)*0.004,0.12,1.1);
+    camYaw-=(e.clientX-drag.x)*0.006*CAMX.sens;camPitch=clamp(camPitch+(e.clientY-drag.y)*0.0042*CAMX.sens,0.12,1.1);
     drag.x=e.clientX;drag.y=e.clientY;lastDrag=performance.now();
   });
   const endDrag=e=>{if(drag&&e.pointerId===drag.id)drag=null;};

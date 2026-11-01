@@ -8,7 +8,7 @@ const ECON={rent:18,utilities:6,day:1440,salary:{livreur:22,taxi:30,police:38},b
   {id:'pharma',name:'Pharmacie Aurore',price:16500,income:46}
 ]};
 let walletP58={businesses:[],homeOwned:false,lease:true,nextBill:gameMin+ECON.day,unpaidRent:0,unpaidUtilities:0,furniture:[],ledger:[],posts:[],prices:{water:2,soda:3,sand:8,menu:15,fish:12},lastDay:Math.floor(gameMin/ECON.day),nextId:1};
-function saveEconomyP58(){try{localStorage.setItem(ECON_KEY,JSON.stringify(walletP58));}catch(e){}}
+function saveEconomyP58(){try{localStorage.setItem(ECON_KEY,JSON.stringify(walletP58,(k,v)=>k==='group'?undefined:v));}catch(e){}}
 function resetPhase58(){walletP58={businesses:[],homeOwned:false,lease:true,nextBill:gameMin+ECON.day,unpaidRent:0,unpaidUtilities:0,furniture:[],ledger:[],posts:[],prices:{water:2,soda:3,sand:8,menu:15,fish:12},lots:[],projects:[],lastDay:Math.floor(gameMin/ECON.day),nextId:1};try{localStorage.removeItem(ECON_KEY);}catch(e){}}
 try{const e=JSON.parse(localStorage.getItem(ECON_KEY)||'null');if(e&&typeof e==='object')walletP58=Object.assign(walletP58,e);}catch(e){}
 walletP58.businesses=Array.isArray(walletP58.businesses)?walletP58.businesses:[];walletP58.furniture=Array.isArray(walletP58.furniture)?walletP58.furniture:[];walletP58.ledger=Array.isArray(walletP58.ledger)?walletP58.ledger.slice(-80):[];walletP58.posts=Array.isArray(walletP58.posts)?walletP58.posts.slice(-30):[];walletP58.prices=Object.assign({water:2,soda:3,sand:8,menu:15,fish:12},walletP58.prices||{});

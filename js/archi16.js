@@ -606,9 +606,9 @@ buildFronts=function(){
   inst(lamb(0xffffff),fr);inst(lamb(0xffffff),dr);inst(lamb(0xffffff),st);
   const lm=new THREE.MeshBasicMaterial({color:0xffe2a8});A16.sconce=lm;inst(lm,lp);
   /* commerces visitables (inchangé) */
-  const COM=[[1,0,-1,'cafe','CAFÉ AURORE','#6b3f2a',0xc9a26b,'Café Aurore'],[-1,0,1,'boutique','BOUTIQUE MODE','#7b4bb3',0xc79bff,'Boutique Mode'],[0,2,-1,'pharma','PHARMACIE','#1f7a4d',0x58d68d,'Pharmacie']];
+  const COM=[[2,0,-1,'cafe','CAFÉ AURORE','#6b3f2a',0xc9a26b,'Café Aurore'],[-2,0,1,'boutique','BOUTIQUE MODE','#7b4bb3',0xc79bff,'Boutique Mode'],[0,1,-1,'pharma','PHARMACIE','#1f7a4d',0x58d68d,'Pharmacie']];
   COM.forEach(([i,j,a,id,txt,bg,col,label])=>{
-    const cx=i*BLOCK+a*11,cz=j*BLOCK+13,b=bl.find(q=>Math.abs((q.x0+q.x1)/2-cx)<1.5&&Math.abs((q.z0+q.z1)/2-cz)<1.5)||bl.find(q=>cx>q.x0&&cx<q.x1&&Math.abs((q.z0+q.z1)/2-cz)<2);
+    const cx=i*BLOCK+a*11,cz=j*BLOCK+11,b=bl.find(q=>Math.abs((q.x0+q.x1)/2-cx)<1.5&&Math.abs((q.z0+q.z1)/2-cz)<1.5)||bl.find(q=>cx>q.x0&&cx<q.x1&&Math.abs((q.z0+q.z1)/2-cz)<2.5)||bl.filter(q=>q.z1>j*BLOCK+5&&Math.abs((q.x0+q.x1)/2-cx)<9).sort((p,q)=>Math.abs((p.x0+p.x1)/2-cx)-Math.abs((q.x0+q.x1)/2-cx))[0];
     if(!b)return;
     addSign(txt,(b.x0+b.x1)/2,b.z1,5.8,Math.min(9,b.x1-b.x0-1),1.8,bg,'#ffffff');
     addSpot((b.x0+b.x1)/2,b.z1+2.3,id,col,label);spots[spots.length-1].door=true;

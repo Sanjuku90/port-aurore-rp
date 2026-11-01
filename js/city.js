@@ -56,6 +56,7 @@ function buildWorld(){
       }
       southLots=false;
     }
+    if(['1,0','-1,0','-1,1','1,1','0,2'].includes(key)){southLots=false;if(typeof forecourt22==='function')forecourt22(key,cx,cz);}
     if(southLots){
       for(let a=-1;a<=1;a+=2){lotBuilding(cx+a*11,cz+13,rand(15,20),rand(14,16),rand(10,24));}
     }
@@ -104,7 +105,7 @@ function buildWorld(){
   capM.instanceMatrix.needsUpdate=true;capM.castShadow=true;scene.add(capM);
   const unM=new THREE.InstancedMesh(unitG,new THREE.MeshLambertMaterial({map:noiseTex('#d8dcdf',30,1)}),units.length),grays=[0x9ba1a8,0x7f868d,0xb4b9bf].map(c=>new THREE.Color(c));
   units.forEach((u,i)=>{dummy.position.set(u.x,u.y,u.z);dummy.rotation.set(0,0,0);dummy.scale.set(u.w,u.h,u.d);dummy.updateMatrix();unM.setMatrixAt(i,dummy.matrix);unM.setColorAt(i,pick(grays));});
-  unM.instanceMatrix.needsUpdate=true;unM.instanceColor.needsUpdate=true;unM.castShadow=true;scene.add(unM);
+  unM.instanceMatrix.needsUpdate=true;if(unM.instanceColor)unM.instanceColor.needsUpdate=true;unM.castShadow=true;scene.add(unM);
   // balise de mission
   beam=new THREE.Mesh(new THREE.CylinderGeometry(1.6,1.6,60,24,1,true),new THREE.MeshBasicMaterial({color:0xffb84d,transparent:true,opacity:0.32,depthWrite:false,fog:false,side:THREE.DoubleSide}));
   beam.position.y=30;beam.visible=false;scene.add(beam);

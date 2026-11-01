@@ -1,10 +1,10 @@
 'use strict';
 /* v11 : terrains à bâtir, chantiers visibles et catalogue mobilier étendu. */
 const LOTS11=[
-  {id:'lot-nord-ouest',name:'Terrain des Docks',x:-192,z:-192,price:2400},
-  {id:'lot-nord-est',name:'Terrain du Belvédère',x:192,z:-192,price:3200},
-  {id:'lot-sud-ouest',name:'Terrain des Jardins',x:-192,z:160,price:2800},
-  {id:'lot-sud-est',name:'Terrain de la Colline',x:192,z:160,price:3600}
+  {id:'lot-nord-ouest',name:'Terrain des Docks',x:-160,z:-242,price:2400},
+  {id:'lot-nord-est',name:'Terrain du Belvédère',x:160,z:-242,price:3200},
+  {id:'lot-sud-ouest',name:'Terrain des Jardins',x:-96,z:-242,price:2800},
+  {id:'lot-sud-est',name:'Terrain de la Colline',x:96,z:-242,price:3600}
 ];
 const HOMES11=[
   {id:'maison',name:'Maison familiale',price:4200,color:0xd7c3a5,roof:0x8b5142,kind:'gable'},
@@ -27,6 +27,29 @@ const homeNames11=[
 const HOME_FURN50=[];
 for(let g=0;g<10;g++)for(let v=0;v<5;v++){const i=g*5+v;HOME_FURN50.push({id:'home50-'+i,name:homeNames11[g][v],group:g,variant:v,price:160+g*38+v*24,color:[0x8c5c42,0x57717b,0xc29958,0x61724c,0x9b6674][v]});}
 HOME_FURN.push(...HOME_FURN50);
+const homeNames150=[
+ ['Fauteuil scandinave','Canapé deux places','Canapé d’angle compact','Méridienne en velours','Fauteuil à bascule','Pouf coffre','Banquette capitonnée','Fauteuil papillon','Chaise en métal','Fauteuil de lecture'],
+ ['Table basse en verre','Table à manger extensible','Console en chêne','Table gigogne trio','Bureau d’angle','Table ronde bistrot','Table pliante','Console demi-lune','Table de chevet suspendue','Îlot de cuisine'],
+ ['Commode en noyer','Buffet à portes coulissantes','Armoire miroir','Meuble à chaussures fin','Secrétaire vintage','Desserte à roulettes','Coffre de rangement','Vitrine en verre','Meuble TV bas','Colonne de rangement'],
+ ['Lampe arc dorée','Suspension en rotin','Lampe de bureau articulée','Applique en laiton','Lampadaire trépied','Guirlande lumineuse','Lampe champignon','Lustre contemporain','Lampe tactile','Projecteur d’ambiance'],
+ ['Ficus lyrata','Palmier kentia','Monstera deliciosa','Jardinière de balcon','Bonsaï de pin','Cactus colonnaire','Olivier d’intérieur','Fougère suspendue','Orchidée blanche','Herbes aromatiques'],
+ ['Tapis berbère écru','Tapis géométrique bleu','Tapis rond tressé','Coussin en velours','Plaid en grosse maille','Tapis persan rouge','Tapis de couloir','Coussin à motifs','Couverture matelassée','Paillasson tissé'],
+ ['Miroir plein pied','Miroir soleil en laiton','Cadre photo familial','Toile abstraite','Horloge minimaliste','Triptyque côtier','Miroir arche','Affiche botanique','Cadre noir galerie','Panneau mural décoratif'],
+ ['Vase amphore','Bougeoir sculptural','Sculpture moderne','Plateau en marbre','Panier en osier','Vase soliflore','Diffuseur parfumé','Boîte à bijoux','Pot à clés','Centre de table'],
+ ['Étagère murale flottante','Bibliothèque industrielle','Étagère à plantes','Échelle porte-serviettes','Casier modulable','Étagère d’angle','Bibliothèque vitrée','Porte-revues design','Étagère cube','Portemanteau mural'],
+ ['Enceinte connectée','Ventilateur colonne','Machine à espresso','Lampe de lecture LED','Globe terrestre','Lecteur vinyle','Réveil numérique','Purificateur d’air','Projecteur cinéma','Radio rétro'],
+ ['Réfrigérateur rétro','Four compact','Lave-vaisselle intégré','Machine à pain','Mixeur sur socle','Grille-pain inox','Cave à vin','Robot multifonction','Bouilloire design','Distributeur d’eau'],
+ ['Lit queen avec tête de lit','Lit coffre capitonné','Berceau en bois','Coiffeuse avec miroir','Banc de bout de lit','Paravent pliant','Valet de chambre','Table de nuit suspendue','Porte-bijoux sur pied','Moustiquaire de lit'],
+ ['Meuble lavabo','Porte-serviettes mural','Colonne de salle de bain','Panier à linge','Miroir lumineux','Étagère de douche','Tabouret de salle de bain','Porte-savon sur pied','Meuble pharmacie','Tapis de bain moelleux'],
+ ['Lit cabane enfant','Bureau enfant coloré','Coffre à jouets','Bibliothèque basse','Cheval à bascule','Tente de jeu','Table de dessin','Chaise enfant','Mobile musical','Rangement à bacs'],
+ ['Banc de jardin','Chaise longue pliante','Table de balcon','Parasol compact','Jardinière sur pied','Fauteuil suspendu','Barbecue de terrasse','Balançoire décorative','Fontaine de patio','Lampe solaire']
+];
+const HOME_FURN150=[];
+for(let g=0;g<homeNames150.length;g++)for(let v=0;v<homeNames150[g].length;v++){
+  const i=g*10+v;
+  HOME_FURN150.push({id:'home150-'+i,name:homeNames150[g][v],group:g,variant:v,price:190+g*34+v*19,color:[0x8c5c42,0x57717b,0xc29958,0x61724c,0x9b6674,0x3f5269,0xb96f4a,0x80705b,0x526d65,0x7e5d8c][v]});
+}
+HOME_FURN.push(...HOME_FURN150);
 walletP58.lots=Array.isArray(walletP58.lots)?walletP58.lots:[];
 walletP58.projects=Array.isArray(walletP58.projects)?walletP58.projects:[];
 walletP58.furniture=Array.isArray(walletP58.furniture)?walletP58.furniture:[];
@@ -111,7 +134,40 @@ const _furnBase11=addHomeFurnitureP58;addHomeFurnitureP58=function(R,id){_furnBa
  if(g===9){box(.42,.5,.32,0,.45,0,mat);box(.34,.22,.04,0,.5,.18,metal);if(v===4){const globe=new THREE.Mesh(new THREE.SphereGeometry(.24,14,10),mat);globe.position.y=1.05;group.add(globe);}}
  // 50 emplacements compacts, répartis dans les pièces sans modifier les collisions.
  const col=n%10,row=Math.floor(n/10);group.position.set(-7.3+col*1.62,.18,-5.15+row*2.35);group.scale.setScalar(.78);};
-function furniturePanelP58(){openPanel('Mobilier · 54 nouveautés','50 nouveaux articles, plus les 4 collections déjà présentes. Chaque achat est posé dans ton appartement.',HOME_FURN.map(x=>({label:(walletP58.furniture.includes(x.id)?'✓ ':'')+x.name+' · '+fmt(x.price),off:walletP58.furniture.includes(x.id)||state.cash<x.price,fn:()=>{if(!econDebitP58(x.price,'Mobilier · '+x.name,false))return;walletP58.furniture.push(x.id);const R=ROOMS.home;if(R)addHomeFurnitureP58(R,x.id);toast(x.name+' installé chez toi.','good');saveEconomyP58();furniturePanelP58();}})));}
+const _furn150Base11=addHomeFurnitureP58;
+addHomeFurnitureP58=function(R,id){
+  _furn150Base11(R,id);
+  if(!id||!id.startsWith('home150-')||!R||!R.G)return;
+  R.furnBuilt150=R.furnBuilt150||[];
+  if(R.furnBuilt150.includes(id))return;
+  R.furnBuilt150.push(id);
+  const item=HOME_FURN150.find(x=>x.id===id);if(!item)return;
+  const n=+id.slice(8),g=item.group,v=item.variant;
+  const group=new THREE.Group(),mat=constructionMat11(item.color),wood=constructionMat11([0x8c5c42,0xc69a67,0x51443b,0xd5c4a3][v%4]),metal=constructionMat11([0x41484b,0xb18a52,0x697783][v%3],.38,.6),light=constructionMat11([0xf2ead8,0xffd890,0xdde9f2][v%3],.45,.05);
+  R.G.add(group);
+  const box=(w,h,d,x,y,z,m=mat)=>constructionBox11(group,w,h,d,x,y,z,m);
+  const cyl=(rt,rb,h,x,y,z,m=mat)=>{const o=new THREE.Mesh(new THREE.CylinderGeometry(rt,rb,h,14),m);o.position.set(x,y,z);o.castShadow=true;group.add(o);return o;};
+  const sphere=(r,x,y,z,m=mat)=>{const o=new THREE.Mesh(new THREE.SphereGeometry(r,12,10),m);o.position.set(x,y,z);o.castShadow=true;group.add(o);return o;};
+  const cone=(r,h,x,y,z,m=mat)=>{const o=new THREE.Mesh(new THREE.ConeGeometry(r,h,14),m);o.position.set(x,y,z);o.castShadow=true;group.add(o);return o;};
+  if(g===0){box(.76,.15,.72,0,.58,0);box(.76,.48,.16,0,.88,-.28);box(.13,.38,.78,-.34,.72,0);box(.13,.38,.78,.34,.72,0);[[-.28,-.25],[.28,-.25],[-.28,.25],[.28,.25]].forEach(p=>box(.065,.46,.065,p[0],.23,p[1],wood));if(v%3===0)sphere(.18,0,.78,.12,light);}
+  if(g===1){if(v%3===1)cyl(.54,.54,.11,0,.72,0,wood);else box(.98,.11,.7,0,.72,0,wood);[[-.4,-.25],[.4,-.25],[-.4,.25],[.4,.25]].forEach(p=>box(.065,.69,.065,p[0],.35,p[1],metal));if(v%4===0)box(.75,.06,.42,0,.3,0,wood);}
+  if(g===2){box(.86,1.05,.52,0,.62,0,wood);box(.78,.78,.035,0,.7,.28,mat);for(let j=0;j<3;j++){box(.75,.025,.035,0,.4+j*.25,.31,metal);sphere(.025,.24,.4+j*.25,.34,light);}if(v%3===0)box(.9,.07,.56,0,1.18,0,mat);}
+  if(g===3){cyl(.24,.3,.08,0,.04,0,metal);cyl(.025,.035,1.12,0,.62,0,metal);if(v%3===0){box(.48,.035,.08,0,1.17,0,metal);cone(.3,.36,.2,1.32,0,light);}else cone(.33,.4,0,1.28,0,light);sphere(.07,0,1.04,.02,light);}
+  if(g===4){cyl(.23,.18,.34,0,.17,0,wood);for(let k=0;k<5+v%5;k++){const a=k/(5+v%5)*Math.PI*2;const leaf=sphere(.12+v%3*.025,Math.sin(a)*.19,.48+(k%3)*.1,Math.cos(a)*.19,mat);leaf.scale.set(.7,1.7,.65);}if(v%2===0)box(.16,.035,.16,0,.36,0,wood);}
+  if(g===5){const rug=new THREE.Mesh(v%3===1?new THREE.CircleGeometry(.58,28):new THREE.PlaneGeometry(1.15,.86),mat);rug.rotation.x=-Math.PI/2;rug.position.y=.025;group.add(rug);if(v%3===0){for(let k=0;k<2;k++){const pillow=box(.35,.14,.3,-.2+k*.4,.12,0,light);pillow.rotation.y=(k-v%4)*.12;}}}
+  if(g===6){box(.8,1.02,.07,0,1.2,0,wood);box(.66,.86,.025,0,1.2,.05,mat);if(v%3===1)cyl(.23,.23,.035,0,1.2,.075,metal);if(v%3===2){for(let k=0;k<3;k++)box(.08,.76,.02,-.2+k*.2,1.2,.08,light);}}
+  if(g===7){if(v%3===0){cyl(.19,.1,.55,0,.32,0,mat);cyl(.1,.18,.12,0,.62,0,wood);}else if(v%3===1){for(let k=0;k<3;k++){cyl(.06,.07,.22,(k-1)*.17,.12,0,wood);sphere(.07,(k-1)*.17,.27,0,light);}}else{cyl(.25,.2,.12,0,.08,0,wood);for(let k=0;k<3;k++)sphere(.07,(k-1)*.14,.2,.02,mat);}}
+  if(g===8){for(let y=.28;y<1.38;y+=.27)box(.86,.055,.34,0,y,0,wood);[-.4,.4].forEach(x=>box(.07,1.35,.38,x,.68,0,metal));if(v%3===0)box(.92,.08,.4,0,1.38,0,mat);for(let k=0;k<3;k++)box(.11,.2,.12,-.25+k*.25,.42+(k%2)*.27,.05,mat);}
+  if(g===9||g===10){box(.7,.82,.56,0,.43,0,mat);box(.54,.36,.03,0,.5,.3,metal);box(.24,.13,.025,0,.51,.325,light);for(let k=0;k<3;k++)cyl(.035,.035,.025,-.2+k*.2,.83,.31,light);if(g===10&&v%2===0){cyl(.23,.2,.28,0,.98,0,metal);cyl(.08,.08,.13,0,1.17,0,mat);}if(v%4===0)box(.74,.06,.58,0,.04,0,metal);}
+  if(g===11){box(.92,.2,1.05,0,.35,0,wood);box(.96,.9,.12,0,.88,-.47,wood);box(.84,.13,.86,0,.52,.04,light);box(.86,.3,.3,0,.69,-.26,mat);if(v%3===0)box(1,.08,1.12,0,1.34,-.03,mat);}
+  if(g===12){box(.82,.72,.46,0,.4,0,wood);box(.9,.07,.52,0,.79,0,light);box(.72,.52,.035,0,.44,.25,mat);if(v%3===0)box(.78,.9,.07,0,1.35,-.22,metal);for(let k=0;k<3;k++)cyl(.045,.045,.3,-.27+k*.27,.95,.1,light);}
+  if(g===13){box(.78,.62,.52,0,.32,0,mat);box(.84,.08,.58,0,.68,0,wood);if(v%3===0){box(.7,.9,.08,0,1.15,-.2,wood);cone(.18,.42,0,1.82,-.2,mat);}else{for(let k=0;k<3;k++)box(.18,.38,.18,-.23+k*.23,.9,.12,light);}if(v%4===0)sphere(.2,0,1.12,.36,mat);}
+  if(g===14){box(.92,.1,.66,0,.66,0,wood);[[-.36,-.24],[.36,-.24],[-.36,.24],[.36,.24]].forEach(p=>box(.06,.62,.06,p[0],.32,p[1],metal));if(v%3===0){cyl(.32,.35,.08,0,.8,0,light);cyl(.025,.025,.7,0,1.18,0,metal);cone(.42,.3,0,1.65,0,mat);}else if(v%3===1){for(let k=0;k<3;k++)sphere(.12,(k-1)*.2,.88,.1,mat);}}
+  group.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
+  // Grille compacte de 15 colonnes sur 10 rangées dans les pièces de l’appartement.
+  const col=n%15,row=Math.floor(n/15);group.position.set(-7.2+col*1.03,.18,-5.8+row*1.25);group.scale.set(.58*(.88+(v%4)*.08),.58*(.9+(v%3)*.08),.58*(.88+(v%5)*.045));
+};
+function furniturePanelP58(){openPanel('Mobilier · 204 articles','150 nouveaux meubles répartis en 15 collections, en plus des 50 nouveautés et des 4 articles déjà présents. Les achats sont installés dans ton appartement.',HOME_FURN.map(x=>({label:(walletP58.furniture.includes(x.id)?'✓ ':'')+x.name+' · '+fmt(x.price),off:walletP58.furniture.includes(x.id)||state.cash<x.price,fn:()=>{if(!econDebitP58(x.price,'Mobilier · '+x.name,false))return;walletP58.furniture.push(x.id);const R=ROOMS.home;if(R)addHomeFurnitureP58(R,x.id);toast(x.name+' installé chez toi.','good');saveEconomyP58();furniturePanelP58();}})));}
 // Correctif direct du bug d’achat par message : l’ancien handler dépensait sans vérifier le solde.
 const _sendMsg11=sendMsg;sendMsg=function(n,t,k){if(k===2&&state.cash<15){toast('Pas assez de cash pour offrir le repas.','warn');return;}if(typeof blackout!=='undefined'&&blackout>0){toast('Pas de réseau.','warn');return;}if(k===2)state.cash-=15;(threads[n]=threads[n]||[]).push({me:1,t});phThread(n);setTimeout(()=>{const ok=k&&(cool[n]||0)<performance.now();if(ok)cool[n]=performance.now()+60000;threads[n].push({t:k===1?'Carrément ! RDV au Club Néon.':k===2?'Trop sympa, merci !':pick(REPLIES)});if(!$('#phone').hidden&&phThN===n)phThread(n);else unread[n]=(unread[n]||0)+1;if(ok){state.fun=Math.min(100,state.fun+(k===2?25:15));state.rep+=1;toast('Bon moment avec '+n+'. +humeur','good');}saveProgress();},1500);};
 // Détails de façade dédiés aux lieux majeurs pour qu’on les reconnaisse sans lire l’enseigne.
@@ -124,4 +180,4 @@ function detailMajorBuilding11(x,z,w,d,kind){const g=new THREE.Group();scene.add
  if(kind==='job'){add(w*.75,.22,.45,x,1.2,front-.2,0x253e5e);for(let i=-2;i<=2;i++)add(.12,4,.22,x+i*w*.15,2.8,front-.32,0x5b8790);add(w*.62,.25,.52,x,5,front-.2,0x1e4772);}
 }
 const _addBuilding11=addBuilding;addBuilding=function(cx,cz,w,d,h,mi,o){const body=_addBuilding11(cx,cz,w,d,h,mi,o);const targets=[[0,-14,'job'],[64,-10,'shop'],[-64,-10,'bank'],[-64,54,'home'],[64,54,'club'],[0,116,'hospital']];const t=targets.find(q=>Math.abs(q[0]-cx)<.1&&Math.abs(q[1]-cz)<.1);if(t)detailMajorBuilding11(cx,cz,w,d,t[2]);return body;};
-const _resetConstruction11=resetProgress;resetProgress=function(){_resetConstruction11();walletP58.lots=[];walletP58.projects=[];walletP58.furniture=walletP58.furniture.filter(id=>!id.startsWith('home50-'));};
+const _resetConstruction11=resetProgress;resetProgress=function(){_resetConstruction11();walletP58.lots=[];walletP58.projects=[];walletP58.furniture=walletP58.furniture.filter(id=>!id.startsWith('home50-')&&!id.startsWith('home150-'));};

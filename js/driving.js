@@ -5,6 +5,7 @@ function getInput(){
   if(keys.q||keys.a||keys.arrowleft)x-=1;if(keys.d||keys.arrowright)x+=1;
   if(keys.z||keys.w||keys.arrowup)z+=1;if(keys.s||keys.arrowdown)z-=1;
   x+=joy.x;z+=-joy.y;
+  if(typeof GP19!=='undefined'&&GP19.on){x+=GP19.x;z-=GP19.y;if(!gpOverlay||!gpOverlay()) {if(GP19.dpad.l)x-=1;if(GP19.dpad.r)x+=1;if(GP19.dpad.u)z+=1;if(GP19.dpad.d)z-=1;}}
   const m=Math.hypot(x,z);if(m>1){x/=m;z/=m;}
   return {x,z};
 }
@@ -15,7 +16,7 @@ function driveCar(c,dt){
   else if(thr<-0.05){c.v+=(c.v>0.5?-28:-9)*(-thr)*dt;}
   else c.v-=Math.sign(c.v)*Math.min(Math.abs(c.v),3.2*dt);
   c.v-=c.v*0.3*dt;
-  if(keys[' ']&&!chatOpen)c.v-=Math.sign(c.v)*Math.min(Math.abs(c.v),32*dt);
+  if((keys[' ']||(typeof GP19!=='undefined'&&GP19.on&&GP19.brake))&&!chatOpen)c.v-=Math.sign(c.v)*Math.min(Math.abs(c.v),32*dt);
   c.v=clamp(c.v,-8,c.top||27);
   const rate=steer*1.75*clamp(Math.abs(c.v)/5,0,1)*(1-0.55*Math.abs(c.v)/27)*(c.v>=0?1:-1);
   c.h-=rate*dt;

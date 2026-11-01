@@ -3,8 +3,11 @@ services:
   - type: web
     name: port-aurore-rp
     runtime: static
-    buildCommand: node scripts/check.mjs
+    buildCommand: npm run check
     staticPublishPath: .
+    envVars:
+      - key: NODE_VERSION
+        value: 20
     pullRequestPreviewsEnabled: true
     headers:
       - path: /*

@@ -59,7 +59,7 @@ function appTaxi(b){
   });
 }
 APPS.splice(6,0,['Radio','📻','#ffd54a,#ff7a59',appRadio],['Taxi','🚕','#ffe066,#e0a526',appTaxi]);
-const VERSION='v11',CHANGELOG=[['v11','Façades typées, achat de terrains, chantiers avec ingénieurs et grue, 50 nouveaux meubles'],['v10','Téléphone complet, appels, contacts, réseaux, annonces, immobilier, factures, virements et salaires'],['v9','Phase 4 transports, ville agrandie et carte GPS repensée'],['v8','Menu de démarrage, guide débutant, création de personnage et PNJ intérieurs'],['v7','Vrai appartement, intérieurs visitables et voitures détaillées'],['v1','Ville 3D, métiers, rangs, besoins, club, météo, téléphone et PNJ']];
+const VERSION='v23',CHANGELOG=[['v11','Façades typées, achat de terrains, chantiers avec ingénieurs et grue, 50 nouveaux meubles'],['v10','Téléphone complet, appels, contacts, réseaux, annonces, immobilier, factures, virements et salaires'],['v9','Phase 4 transports, ville agrandie et carte GPS repensée'],['v8','Menu de démarrage, guide débutant, création de personnage et PNJ intérieurs'],['v7','Vrai appartement, intérieurs visitables et voitures détaillées'],['v1','Ville 3D, métiers, rangs, besoins, club, météo, téléphone et PNJ']];
 function befriend(p){
   if((p.talkAt||0)>performance.now())return;p.talkAt=performance.now()+8000;
   p.h=Math.atan2(player.x-p.x,player.z-p.z);p.wait=4;

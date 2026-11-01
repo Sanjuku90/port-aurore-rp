@@ -1,4 +1,58 @@
-# Port-Aurore RP · v19 · voitures refaites
+# Port-Aurore RP · v26 · trajets réels et livreur en personne
+- Taxi, Prestige, okada (moto-taxi), keke et danfo : plus de téléportation. Le chauffeur part d’un carrefour, traverse la ville (feux, virages, circulation) et se gare au bord de la route à côté de toi.
+- Le chauffeur t’envoie un message à la commande et à son arrivée, puis attend jusqu’à 2 min 30 (rappel au bout d’une minute). Approche-toi et appuie sur E pour monter.
+- Trajet complet jusqu’à la destination : vue intérieure (siège passager, tableau de bord, GPS animé, compteur du taxi) ou extérieure avec V, regard libre en glissant, vitesse ×1/×2/×4, « Descendre ici ».
+- Okada et keke : tu es assis derrière le chauffeur, la moto se penche dans les virages. Danfo : arrêt en route pour un passager.
+- Livraison de repas : un livreur arrive en scooter, marche jusqu’à toi (ou jusqu’à l’entrée du bâtiment), t’écrit « je suis arrivé » et t’attend. E pour récupérer la commande. Suivi en direct dans l’appli Livraison.
+- Messages : les chauffeurs et livreurs ont leur fil de discussion (réponses rapides), notification en haut de l’écran.
+
+# Port-Aurore RP · v25 · téléphone réaliste + caméra
+- Téléphone entièrement refait : coque titane avec boutons latéraux, Dynamic Island (notifications, appels, alertes du jeu), écran verrouillé avec Face ID, reflets du verre, barre d’état réelle (réseau, 5G/SOS, batterie qui se vide dans la journée).
+- Écran d’accueil : widgets Météo et Banque, pages qui glissent, dock (Appels, Messages, Plan, Radio), icônes dessinées en SVG au lieu des emojis, ouverture/fermeture animée des applis, 5 fonds d’écran.
+- Applis natives : Messages (bulles, « en train d’écrire », saisie libre), Banque (carte, actions, retraits, virements, relevé), Plan (carte + recherche + itinéraire), Photos + vrai Appareil photo avec viseur en direct et zoom, Appels avec écran d’appel, Contacts, Réglages, Livraison avec suivi, Radio façon lecteur musical. Toutes les autres applis reprennent le style natif.
+- Caméra du jeu : suivi lissé, recentrage auto derrière le joueur, zoom molette/pincement, touche V (Proche/Normale/Éloignée, sauvegardé), champ de vision qui s’ouvre avec la vitesse, regard en avant en voiture, plan d’ouverture cinématique.
+- Cartes 2D retirées (mini-carte du HUD et grande carte 2D). Sensibilité caméra réglable dans Pause (Faible → Très élevée, souris + manette), plus vive par défaut.
+- Correctif : taper dans un champ du téléphone ne déclenche plus les raccourcis du jeu (T, E, M, Entrée).
+
+# Port-Aurore RP · v24 · catalogue mobilier par pièce
+- Nouveau catalogue mobilier : filtres par pièce (Salon, Chambre, Cuisine & repas, Salle de bain, Bureau, Chambre d’enfant, Entrée, Balcon & jardin), compteur d’articles par pièce, recherche, « Dans mon budget », « Masquer mes meubles » et tri (prix, nom).
+- Fiches lisibles : couleur du meuble, collection, prix, état (Acheter / Chez toi / somme manquante). Achat payé en cash puis banque, installation immédiate dans l’appartement.
+- Nouvelle appli téléphone « Mobilier » : ouvre le catalogue directement sur une pièce et affiche ta progression par pièce.
+- Mobilier : 150 nouveaux articles répartis en 15 collections (assises, tables, rangement, luminaires, plantes, textiles, décoration murale, accessoires, étagères, électronique, cuisine, chambre, salle de bain, enfants et extérieur). Catalogue de l’appartement porté à 204 articles; chaque nouvel achat est installé dans le logement et sauvegardé.
+- Déploiement : scripts et styles versionnés (?v=24) pour que les joueurs reçoivent la mise à jour sans cache périmé.
+
+# Port-Aurore RP · v23 · nouveau système de chantier
+- 9 terrains au front nord (4 petits, 4 moyens, 1 grand « Îlot Aurore »), chacun avec son repère jaune : approche-toi et appuie sur E, ou ouvre l’appli Chantier.
+- 6 bâtiments : maison familiale, villa, duplex, commerce (vitrine, store, enseigne du locataire), entrepôt (charpente métallique, bardage, portes sectionnelles), immeuble à louer (5 ou 7 étages, balcons, hall).
+- Équipe à engager : architecte, ingénieur structure, électricien, plombier (Junior / Confirmé / Expert) et 1 à 4 maçons. Bouton « Équipe standard » pour tout engager d’un coup.
+- Engins loués et animés : grue à tour (rotation, chariot, levage de palettes, fers, benne à béton), pelleteuse (cycle de creusage), camion toupie (toupie qui tourne, coulage du radier).
+- 6 phases visibles : plans, terrassement (fouille, déblais), fondations (ferraillage puis radier), gros œuvre étage par étage (poteaux, murs bruts, dalles, échafaudage), réseaux (les étages s’allument), façade et finitions du haut vers le bas.
+- Chantier à l’arrêt s’il manque un métier ou un engin : le gestionnaire indique quoi engager. Les travaux avancent aussi pendant le sommeil.
+- Une fois livré : arrivée des locataires, loyers versés en banque toutes les 6 h de jeu, qualité de l’architecte = loyer +12 % / +25 %.
+- Les chantiers v11 sont repris automatiquement. Collines du nord repoussées : elles recouvraient une partie des terrains.
+
+# Port-Aurore RP · v22 · bâtiments reconnaissables
+- Chaque lieu important a sa propre architecture : hôpital (urgences, ambulance, héliport, croix lumineuse), banque néoclassique (colonnes, fronton, DAB), Pôle Emploi moderne, supermarché vitré (rayons visibles, chariots, étals), résidence à balcons (linge, paraboles, boîtes aux lettres), club à néons animés (videur, file, projecteurs la nuit).
+- Bordure de ville : hôtel de police (voitures, lanterne bleue), gendarmerie (grille, portail), palais de justice à coupole, maison d'arrêt (miradors, barbelés, portail), showroom automobile, station-service à auvent et totem des prix, garage à rideaux métalliques et pont élévateur, auto-école avec voiture double commande. Mairie : beffroi à horloge et drapeaux.
+- Parvis : parkings, aire de jeux, place arborée avec statue. Pharmacie, café et boutique déplacés dans des îlots dégagés (croix verte, terrasse, portant).
+- Collines repoussées : mairie, commissariat, tribunal, gendarmerie, prison et casino ne sont plus enfouis.
+- Terrains à bâtir déplacés au nord de la ville (ils chevauchaient le concessionnaire et la station). Correctif : les chantiers ne sont plus corrompus à la sauvegarde.
+
+# Port-Aurore RP · v21 · showroom Auto Aurore
+- Intérieur du concessionnaire entièrement refait : showroom marbre et bleu nuit, accents métalliques dorés, enseigne lumineuse, réception, éclairage d’exposition et plantes.
+- Trois voitures sont exposées sur podiums : Berline Luxe, Toyota Compacte et Lambo Wedge. Approche-toi d’un modèle pour afficher son prix, ses performances, le permis requis et l’acheter si tu es éligible.
+- Le comptoir ouvre le catalogue complet comme avant.
+- Vérification de syntaxe réussie; rendu visuel en navigateur non vérifié ici.
+
+## Voitures
+- Remplacement des proportions dérivées par 10 profils de carrosserie dessinés séparément : berline longue, coupé bas, muscle car, compactes/hatchbacks et SUV carré.
+- Détails distincts ajoutés à la géométrie : calandres et prises d’air, capot, ouïes arrière, roue de secours et barres de toit.
+## Manette
+- Correction des entrées : le stick et les boutons sont lus directement par les systèmes de mouvement/conduite, sans écraser les commandes clavier.
+- Menu « Configurer la manette » dans Pause : réaffectation des boutons, permutations automatiques en cas de doublon, sauvegarde des réglages et réinitialisation.
+- Stick gauche : déplacement/conduite, stick droit : caméra; croix pour les menus; RT/LT pour courir/freiner.
+- Syntaxe vérifiée; pas de test visuel/audio possible ici, prévoir un essai dans le navigateur avec une manette.
+
 ## Manette
 - Prise en charge des manettes (Xbox, PlayStation et compatibles) : stick gauche pour marcher et conduire, stick droit pour la caméra.
 - A interagir, B fermer, X klaxon, Y téléphone, LB sac à dos, RB carte, Start pause, RT courir, LT frein.

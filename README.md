@@ -1,54 +1,51 @@
-# Port-Aurore RP
+# Port-Aurore RP · v26
 
-Jeu de rôle 3D dans le navigateur (Three.js embarqué, aucune dépendance externe à installer) : 17 métiers avec gameplay dédié, grades et promotions, entreprises, justice, immobilier, téléphone, GPS avec itinéraire et carte aérienne 3D, élections municipales, courses de rue, renommée et défis du jour, transports en commun, salle de jeux (v17).
+Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
 
-## Lancer en local
-Le jeu est un site statique. Ouvre un terminal dans ce dossier :
+## Lancer et vérifier en local
 
 ```bash
-npm start            # puis ouvre http://localhost:8080
-# ou, sans Node :
 python3 -m http.server 8080
 ```
 
-Vérifier que tout est en ordre avant de publier :
+Ouvre ensuite http://localhost:8080. Avec Node.js 18 ou plus récent, vérifie les scripts et les fichiers utilisés par la page :
 
 ```bash
 npm run check
 ```
 
-## Mettre le projet sur GitHub
-1. Crée un dépôt vide sur github.com (par ex. `port-aurore-rp`), sans README.
-2. Dans ce dossier :
+## Déployer sur Render (recommandé : Blueprint)
 
-```bash
-git init
-git add .
-git commit -m "Port-Aurore RP v17"
-git branch -M main
-git remote add origin https://github.com/<ton-pseudo>/port-aurore-rp.git
-git push -u origin main
-```
+Le fichier `render.yaml` est prêt à créer un **Static Site**. Render publie le dossier racine après avoir exécuté `npm run check`.
 
-À chaque `git push`, l’action **Vérification** (onglet *Actions*) contrôle la syntaxe des scripts.
+1. Mets le contenu de ce dossier dans un dépôt GitHub et pousse la branche `main`.
+2. Dans Render, choisis **New → Blueprint** et connecte le dépôt.
+3. Vérifie la configuration lue depuis `render.yaml`, puis clique **Apply**.
+4. Attends la fin du premier déploiement, puis ouvre l’URL `.onrender.com` indiquée sur la page du service.
+5. Teste le menu de démarrage, le chargement de la ville, la sauvegarde locale, les intérieurs et les commandes. Le jeu stocke la progression dans le navigateur de chaque joueur (`localStorage`).
 
-## Déployer sur Render
-**Option 1 · Blueprint (recommandé)**
-1. Sur render.com : *New* → *Blueprint* → connecte ton compte GitHub et choisis le dépôt.
-2. Render lit `render.yaml` et crée le site statique `port-aurore-rp`. Clique *Apply*.
+Chaque push sur la branche suivie par Render lance un nouveau déploiement automatiquement. Les previews de pull request sont activées dans le Blueprint.
 
-**Option 2 · Manuel**
-*New* → *Static Site* → choisis le dépôt, puis :
-- Build Command : `node scripts/check.mjs`
-- Publish Directory : `.`
+## Déploiement manuel (Static Site)
 
-Le site est en ligne sur `https://port-aurore-rp.onrender.com` (ou le nom choisi). Chaque push sur `main` redéploie automatiquement.
+Si tu ne veux pas utiliser le Blueprint, crée un Static Site Render relié au même dépôt :
 
-## Bonus · GitHub Pages
-Le fichier `.nojekyll` est présent : *Settings* → *Pages* → *Deploy from a branch* → `main` / `(root)`.
+- **Branch** : `main`
+- **Build Command** : `npm run check`
+- **Publish Directory** : `.`
 
-## Structure
-- `index.html` : point d’entrée
-- `css/style.css` : interface
-- `js/` : modules du jeu, chargés dans l’ordre défini par `index.html` (`js/lib/three.min.js` = moteur 3D)
-- `CHANGELOG.md` : historique des versions
+Ne configure pas de Start Command, de base de données, de secret ou de serveur Node : ce projet est servi comme un site statique.
+
+## Dépannage rapide
+
+- Si le build échoue, ouvre les logs Render : `scripts/check.mjs` indique les scripts en erreur ou les fichiers statiques manquants.
+- Si la page est blanche, vérifie que `index.html`, `css/` et `js/` sont bien à la racine publiée, et consulte la console du navigateur.
+- Les polices sont chargées depuis Google Fonts; si elles ne sont pas accessibles, le jeu conserve les polices de secours.
+- Les sauvegardes sont locales au navigateur et ne sont pas partagées entre appareils.
+
+## Autres fichiers
+
+- `render.yaml` : Blueprint Render avec vérification au build et en-têtes de cache adaptés.
+- `.github/workflows/check.yml` : vérification de syntaxe à chaque push et pull request.
+- `scripts/check.mjs` : validation des scripts et des chemins référencés par `index.html`.
+- `js/lib/three.min.js` : moteur 3D embarqué, aucune dépendance CDN pour le jeu.

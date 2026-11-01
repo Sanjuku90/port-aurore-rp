@@ -107,6 +107,52 @@ function addRoomCrowd7(R,people){
   });
 }
 const SHOPS7={
+  dealership(R){
+    const wall=PLM(0xe6eaf0),accent=PLM(0x15243a),floor=tm(rep(marbleTex(0xbfc8d1,0x68788b),.55),0xffffff,.2,.2),
+      dark=sm(0x132238,.32,.25),chrome=sm(0xc7d2de,.2,.8),blue=sm(0x17699a,.28,.2,{emissive:0x0a3150,emissiveIntensity:.15,k:'dealerBlue19'}),gold=sm(0xe0b34a,.25,.45);
+    shopShell(R,{name:'AUTO AURORE · SHOWROOM',sc:'#17699a',floor,wall,back:accent,wWin:true,eWin:true,spot:45});
+    /* plafond haut façon hall d’exposition, bandeaux lumineux et carrelage de circulation */
+    R.floor(-.55,-5.6,.55,5.65,tm(rep(tileTex7(0x244768,0x244768,0xcbd2db,4,false),1.3),0xffffff,.35,.16),1.3);
+    const lineMat=sm(0xd5a83b,.3,.5,{emissive:0x47300b,emissiveIntensity:.2,k:'dealerGold19'});
+    [-6.95,6.95].forEach(x=>M(R.G,new THREE.BoxGeometry(.035,.014,10.5),lineMat,x,.024,-.25));
+    /* arrière décor architectural: mur bleu profond, lettrage lumineux et panneaux verticaux */
+    M(R.G,rbox(12.8,2.2,.2,.08),dark,0,2.25,-5.68);
+    M(R.G,new THREE.PlaneGeometry(5.4,.92),new THREE.MeshBasicMaterial({map:signTex7('AUTO AURORE','#17699a'),transparent:false}),0,2.35,-5.555);
+    for(let i=-5;i<=5;i++){
+      const x=i*1.05;M(R.G,rbox(.055,2.6,.09,.02),i%2?chrome:blue,x,1.8,-5.48);
+    }
+    /* réception épurée, écran et présentoir de clés */
+    const desk=R.place(F7.counter(3.4,0x15243a),0,3.1,Math.PI,3.4,.75);desk.position.y=.03;
+    M(R.G,rbox(3.42,.035,.08,.015),gold,0,.82,3.48);
+    const mon=F7.monitor();mon.position.set(0,1.05,0);mon.rotation.y=Math.PI;desk.add(mon);
+    R.place(F7.plant(2,1.25),-6.65,4.6,0,.48,.48);
+    R.place(F7.plant(1,1.1),6.65,4.6,0,.44,.44);
+    const clerk=clerk7(R,-.9,2.2,0x17699a);clerk.rotation.y=Math.PI;R.clerk=clerk;
+    R.int(0,4.35,'Conseiller · catalogue et reprise',()=>openSpot('dealership'));
+    /* 3 vrais véhicules dans la salle, chacun sur son podium et avec sa fiche de vente interactive */
+    const display=[['benz',0x141a23,-4.55,'BERLINE LUXE'],['toyota',0x2e6fd1,0,'COMPACTE'],['lambo',0xe0b34a,4.55,'SUPERSPORTIVE']];
+    display.forEach(([id,color,x,label],i)=>{
+      M(R.G,rbox(3.2,.12,5.4,.08),dark,x,.08,-.65);
+      M(R.G,rbox(2.85,.025,5.02,.04),blue,x,.15,-.65);
+      const car=makeCar(color,id);car.scale.setScalar(.9);car.position.set(x,.19,-.65);car.rotation.y=Math.PI;R.G.add(car);
+      M(R.G,rbox(2.5,.42,.5,.04),dark,x,.24,2.05);M(R.G,rbox(2.48,.025,.48,.02),gold,x,.47,2.05);
+      M(R.G,new THREE.BoxGeometry(2.5,.035,.055),gold,x,.52,2.26);
+      const sign=M(R.G,new THREE.PlaneGeometry(2.15,.36),new THREE.MeshBasicMaterial({map:signTex7(label,'#15243a')}),x,.73,2.04,0,0,0,false);sign.renderOrder=3;
+      const title=FLEET_CATALOG&&FLEET_CATALOG.find(v=>v.id===id);
+      R.int(x,1.1,'Voir · '+(title?title.label:label),()=>showroomVehicle19(id));
+      R.light(x,3.25,-.55,12,[0xfff0d0,0xd8ecff,0xffe8b0][i],'main');
+      /* petites bornes anti-choc aux coins du podium */
+      [-1,1].forEach(s=>[-2.7,1.4].forEach(z=>{const post=M(R.G,new THREE.CylinderGeometry(.045,.055,.46,10),chrome,x+s*1.38,.23,z,0,0,0,false);post.castShadow=true;}));
+    });
+    /* rangée de spots au plafond et panneaux vitrés latéraux */
+    for(let i=0;i<5;i++){
+      const x=-6+i*3;M(R.G,new THREE.BoxGeometry(1.7,.035,.12),sm(0xf8fbff,.2,0,{emissive:0xcde7ff,emissiveIntensity:1.4,k:'dealerLight'+i}),x,3.32,-.3);
+      R.light(x,3.15,-.3,8,0xe2f2ff,'main');
+    }
+    M(R.G,rbox(4.8,1.1,.06,.02),sm(0xeff3f6,.2,.2),-5.4,2.3,-5.55);
+    M(R.G,rbox(4.8,1.1,.06,.02),sm(0xeff3f6,.2,.2),5.4,2.3,-5.55);
+    R.zones=[[-4.55,-.65],[0,-.65],[4.55,-.65],[0,3.1]];
+  },
   job(R){shopShell(R,{name:'Pôle Emploi',sc:'#1d4f8a',floor:TLM(0xc9d0d8,0xb3bcc6,0x8f99a3,4,true,1.2),wall:PLM(0xe9edf1),back:PLM(0x1d4f8a),wWin:1,eWin:1,spot:60});
     [[-4.8,-3.2],[0,-3.2],[4.8,-3.2]].forEach((p,i)=>{const d=R.place(F7.desk(1.6),p[0],p[1],0,1.6,.62);const mo=F7.monitor();mo.position.set(0,1.0,-.12);d.add(mo);R.place(F7.officeChair(0x35506b),p[0],p[1]-.75,0);
       clerk7(R,p[0],p[1]-.75,[0x1d4f8a,0x4f7fd9,0x2e9a6a][i],1);R.place(F7.chair(0x35506b,0x4a4f58),p[0]-.4,p[1]+.8,Math.PI);R.place(F7.chair(0x35506b,0x4a4f58),p[0]+.4,p[1]+.8,Math.PI);

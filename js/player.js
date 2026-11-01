@@ -11,7 +11,7 @@ function resolvePlayer(){
 function updatePlayer(dt){
   if(player.car){const c=player.car;driveCar(c,dt);player.x=c.x;player.z=c.z;player.h=c.h;player.amp=0;return;}
   const inp=(panelOpen||chatOpen)?{x:0,z:0}:getInput(),mag=Math.hypot(inp.x,inp.z);
-  const sp=(running||keys.shift)?7.2:3.9,ox=player.x,oz=player.z;
+  const sp=(running||keys.shift||(typeof GP19!=='undefined'&&GP19.on&&GP19.run))?7.2:3.9,ox=player.x,oz=player.z;
   if(mag>0.05){
     const fx=Math.sin(camYaw),fz=Math.cos(camYaw),rx=-Math.cos(camYaw),rz=Math.sin(camYaw);
     let dx=fx*inp.z+rx*inp.x,dz=fz*inp.z+rz*inp.x;const l=Math.hypot(dx,dz)||1;dx/=l;dz/=l;

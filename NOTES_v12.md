@@ -41,3 +41,15 @@
 - 10 modèles de marques ajoutés (Benz, Lambo, Ford, Toyota, Ferrari, Porsche, BMW, Honda, Jeep, Hyundai) : proportions tuées par modèle, achetables et dans la circulation.
 - Feux de jour et diffuseur arrière ajoutés; contrôle de syntaxe réussi.
 - Rendu non vérifié visuellement dans l’environnement de build : à tester dans le navigateur.
+
+
+# v20 · Silhouettes et manette
+- Dix carrosseries retravaillées avec des profils et détails de modèle propres, au lieu de simples mises à l’échelle de formes existantes.
+- Pilotage manette intégré directement aux contrôles de déplacement et de conduite; boutons remappables depuis Pause et réglages sauvegardés.
+- Vérification de syntaxe réussie; test de navigateur/manette à effectuer.
+
+
+# v21 · Intérieur du concessionnaire
+- Showroom luxueux avec marbre, éclairage d’exposition, comptoir et trois véhicules exposés interactifs.
+- Consultation et achat d’un modèle depuis son emplacement, catalogue complet accessible à la réception.
+- Vérification de syntaxe réussie; test visuel à effectuer dans le navigateur.

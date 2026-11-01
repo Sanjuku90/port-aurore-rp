@@ -1,6 +1,6 @@
 {
   "name": "port-aurore-rp",
-  "version": "17.0.0",
+  "version": "26.0.0",
   "private": true,
   "description": "Port-Aurore RP : jeu de rôle 3D dans le navigateur (Three.js), site statique.",
   "type": "module",
@@ -8,5 +8,7 @@
     "start": "npx --yes serve -l 8080 .",
     "check": "node scripts/check.mjs"
   },
-  "engines": { "node": ">=18" }
+  "engines": {
+    "node": ">=18"
+  }
 }
