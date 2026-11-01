@@ -1,0 +1,142 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Port-Aurore RP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"></head><body>
+<div id="app">
+  <canvas id="gl"></canvas>
+  <div id="hud" hidden>
+    <div id="left">
+      <section class="card" id="stats">
+        <div class="who"><b id="h-name">Alex Martin</b><span id="h-job">Sans emploi</span></div><div id="rank">Rang 1</div>
+        <div class="money"><div><small>Cash</small><b id="h-cash">$0</b></div><div><small>Banque</small><b id="h-bank">$0</b></div></div>
+        <div class="bar"><span>Santé</span><i><u id="hp"></u></i></div>
+        <div class="bar"><span>Faim</span><i><u id="hu"></u></i></div>
+        <div class="bar"><span>Énergie</span><i><u id="he" class="e"></u></i></div>
+        <div class="bar"><span>Humeur</span><i><u id="hf" class="m"></u></i></div>
+      </section>
+      <section class="card" id="mission" hidden>
+        <div class="t" id="m-title">Livraison</div>
+        <p id="m-text"></p>
+        <div class="row"><span id="m-time">0:00</span><span id="m-pay" style="color:var(--cash)">$0</span></div>
+      </section>
+    </div>
+    <div id="right">
+      <canvas id="mini" width="224" height="224"></canvas>
+      <div id="clock" class="card">10:00</div>
+      <div id="speed" class="card" hidden>0 km/h</div>
+      <button id="ph-btn" class="card">📱 Téléphone<b id="ph-bd" class="badge" hidden></b></button>
+    </div>
+    <button id="pausebtn" aria-label="Pause">⏸</button>
+    <div id="toasts"></div>
+    <div id="chatlog"></div>
+    <button id="prompt" hidden></button>
+    <div id="joy"><div id="knob"></div></div>
+    <div id="btns"><button id="b-act">Action</button><button id="b-run">Courir</button><button id="b-chat">Chat</button><button id="b-phone">📱 Téléphone</button><button id="b-map">🗺 Carte</button></div>
+    <form id="chatbar" hidden><input id="chatin" maxlength="120" autocomplete="off" placeholder="Dire quelque chose (/me action · /do décor)"><button class="primary">Envoyer</button></form>
+  </div>
+  <div id="panel" hidden><div class="sheet"><h2 id="pn-title"></h2><p id="pn-text"></p><div id="pn-btns"></div></div></div>
+  <div id="phone" hidden><div class="ph"><div class="notch"></div><div class="scr" id="ph-scr"><div class="sb"><span id="ph-time">10:00</span><span id="ph-net">5G ▂▄▆</span></div><div class="hd"><button id="ph-back" hidden>‹</button><span id="ph-title"></span></div><div id="ph-body" class="apps"></div><button id="ph-home" aria-label="Accueil"></button></div></div></div>
+  <div id="pause" hidden><div class="sheet"><h2>Pause</h2><p id="pz-info"></p><div id="pz-btns"></div></div></div>
+  <div id="start">
+    <section id="main-menu" class="start-card">
+      <div class="menu-kicker">SIMULATION DE VIE · SOLO</div>
+      <h1>Port-Aurore<span>JEU DE RÔLE</span></h1>
+      <p>Une ville à vivre, un personnage à façonner, des rencontres à chaque coin de rue.</p>
+      <div class="menu-actions">
+        <button id="continue-game" class="primary" hidden>Reprendre ma partie</button>
+        <button id="new-game" class="primary">Créer mon personnage</button>
+        <button id="open-guide">Guide du débutant</button>
+      </div>
+      <div class="menu-foot">Téléphone : appels, GPS, banque, travail et annonces · Sauvegarde auto</div>
+    </section>
+    <section id="beginner-guide" class="start-card guide-card" hidden>
+      <button class="ghost menu-back" data-menu-back>‹ Menu principal</button>
+      <div class="menu-kicker">BIENVENUE EN VILLE</div>
+      <h2>Les premiers pas</h2>
+      <div class="guide-steps">
+        <article><b>1 · Choisis ton personnage</b><span>Prénom, nom, teint, coiffure et tenue. Tu pourras changer de look plus tard.</span></article>
+        <article><b>2 · Trouve un travail</b><span>Le Pôle Emploi est sur la place centrale. Un premier métier te donne accès aux missions et aux revenus.</span></article>
+        <article><b>3 · Vis la ville</b><span>Approche-toi d’un repère et appuie sur E (ou Action) pour entrer, parler, acheter ou utiliser un objet.</span></article>
+        <article><b>4 · Garde l’équilibre</b><span>Mange, repose-toi et prends soin de ta santé. La supérette, le café, l’hôpital et ton appartement t’aident.</span></article>
+      </div>
+      <div class="guide-controls"><span><b>Z Q S D</b> Se déplacer</span><span><b>E</b> Interagir</span><span><b>Maj</b> Courir</span><span><b>T</b> Téléphone</span><span><b>I</b> Sac</span><span><b>Entrée</b> Chat</span></div>
+      <button id="guide-create" class="primary">Créer mon personnage</button>
+    </section>
+    <form class="intro" id="intro" hidden>
+      <button type="button" class="ghost menu-back" data-menu-back>‹ Menu principal</button>
+      <div class="menu-kicker">ÉTAPE 1 SUR 1 · PERSONNALISATION</div>
+      <h1>Port-Aurore<span>JEU DE RÔLE</span></h1>
+      <p>Vis ta vie à Port-Aurore : bosse, grimpe les rangs, sors en club, survis aux coupures de courant et fais-toi des amis.</p>
+      <div class="names">
+        <label><small>Prénom</small><input id="fn" maxlength="14" value="Alex" autocomplete="off"></label>
+        <label><small>Nom</small><input id="ln" maxlength="14" value="Martin" autocomplete="off"></label>
+      </div>
+      <div class="lookwrap"><canvas id="look-prev" width="180" height="220"></canvas><div class="lookcol">
+      <div class="look" id="look-s" data-k="s"><small>Haut</small><button type="button" data-c="3d7be0" style="background:#3d7be0"></button><button type="button" data-c="d94f4f" style="background:#d94f4f"></button><button type="button" data-c="4fb58a" style="background:#4fb58a"></button><button type="button" data-c="e0b34a" style="background:#e0b34a"></button><button type="button" data-c="8a5fc9" style="background:#8a5fc9"></button><button type="button" data-c="2f3a4a" style="background:#2f3a4a"></button></div>
+      <div class="look" id="look-k" data-k="k"><small>Teint</small><button type="button" data-c="f1c9a5" style="background:#f1c9a5"></button><button type="button" data-c="d9a47c" style="background:#d9a47c"></button><button type="button" data-c="a8744f" style="background:#a8744f"></button><button type="button" data-c="7a4d33" style="background:#7a4d33"></button><button type="button" data-c="4f3224" style="background:#4f3224"></button></div>
+      <div class="look" id="look-h" data-k="h"><small>Cheveux</small><button type="button" data-c="1a1410" style="background:#1a1410"></button><button type="button" data-c="3a2616" style="background:#3a2616"></button><button type="button" data-c="6b4a2a" style="background:#6b4a2a"></button><button type="button" data-c="b08a4a" style="background:#b08a4a"></button><button type="button" data-c="8a3a1e" style="background:#8a3a1e"></button><button type="button" data-c="9a9a9a" style="background:#9a9a9a"></button></div>
+      <div class="look chips" id="look-y" data-k="y"><small>Coiffure</small><button type="button" data-v="court">Court</button><button type="button" data-v="long">Long</button><button type="button" data-v="chignon">Chignon</button><button type="button" data-v="afro">Afro</button><button type="button" data-v="queue">Queue</button><button type="button" data-v="ras">Ras</button><button type="button" data-v="casquette">Casquette</button></div>
+      <div class="look chips" id="look-t" data-k="t"><small>Haut</small><button type="button" data-v="tee">T-shirt</button><button type="button" data-v="long">Manches longues</button><button type="button" data-v="veste">Veste</button><button type="button" data-v="sweat">Sweat</button></div>
+      <div class="look chips" id="look-b" data-k="bt"><small>Bas</small><button type="button" data-v="pantalon">Pantalon</button><button type="button" data-v="short">Short</button><button type="button" data-v="jupe">Jupe</button></div>
+      <div class="look" id="look-p" data-k="p"><small>Couleur bas</small><button type="button" data-c="2b3445" style="background:#2b3445"></button><button type="button" data-c="1c1c1c" style="background:#1c1c1c"></button><button type="button" data-c="5a4a3a" style="background:#5a4a3a"></button><button type="button" data-c="3d6fb0" style="background:#3d6fb0"></button><button type="button" data-c="7a2f2f" style="background:#7a2f2f"></button></div>
+      <div class="look chips" id="look-g" data-k="g"><small>Lunettes</small><button type="button" data-v="false">Sans</button><button type="button" data-v="true">Avec</button></div>
+      <div class="look chips" id="look-bd" data-k="b"><small>Barbe</small><button type="button" data-v="false">Sans</button><button type="button" data-v="true">Avec</button></div>
+      </div></div>
+      <div class="keys">
+        <b>Z Q S D / flèches</b><span>Se déplacer, conduire</span>
+        <b>E</b><span>Parler, monter, utiliser les objets (lit, canapé, frigo…)</span>
+        <b>Maj</b><span>Courir</span>
+        <b>Entrée</b><span>Chat de la ville</span>
+        <b>T</b><span>Téléphone</span>
+        <b>I</b><span>Sac à dos</span>
+        <b>G</b><span>Gestes</span>
+        <b>H</b><span>Klaxon (en voiture)</span>
+        <b>Glisser</b><span>Tourner la caméra</span>
+      </div>
+      <div class="legend"><span><i style="background:#ffb84d"></i>Emploi</span><span><i style="background:#58d68d"></i>Supérette</span><span><i style="background:#5aa9ff"></i>Banque</span><span><i style="background:#ff6b6b"></i>Hôpital</span><span><i style="background:#c79bff"></i>Appart</span><span><i style="background:#ff5fd2"></i>Club</span></div>
+      <button class="primary" id="go" disabled>Chargement de la ville…</button>
+      <p style="font-size:12px">Mode solo : les habitants sont des personnages non joueurs. Le multijoueur demande un serveur dédié.</p>
+    </form>
+  </div>
+</div>
+<script src="js/lib/three.min.js"></script>
+<script src="js/compat7.js"></script>
+<script src="js/core.js"></script>
+<script src="js/utils3d.js"></script>
+<script src="js/characters.js"></script>
+<script src="js/decor.js"></script>
+<script src="js/vehicles.js"></script>
+<script src="js/collisions.js"></script>
+<script src="js/city.js"></script>
+<script src="js/peds.js"></script>
+<script src="js/driving.js"></script>
+<script src="js/player.js"></script>
+<script src="js/interactions.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/camera-env.js"></script>
+<script src="js/loop.js"></script>
+<script src="js/input.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/save.js"></script>
+<script src="js/phone.js"></script>
+<script src="js/vehicle-types.js"></script>
+<script src="js/phase2.js"></script>
+<script src="js/phase3.js"></script>
+<script src="js/kit7.js"></script>
+<script src="js/cars7.js"></script>
+<script src="js/rooms7.js"></script>
+<script src="js/furn7.js"></script>
+<script src="js/house7.js"></script>
+<script src="js/life7.js"></script>
+<script src="js/hooks7.js"></script>
+<script src="js/pause.js"></script>
+<script src="js/phase4.js"></script>
+<script src="js/phase5-8.js"></script>
+<script src="js/archi16.js"></script>
+<script src="js/construction.js"></script>
+<script src="js/jobs12.js"></script>
+<script src="js/justice13.js"></script>
+<script src="js/map15.js"></script>
+<script src="js/start-menu.js"></script>
+<script src="js/main.js"></script>
+</body></html>

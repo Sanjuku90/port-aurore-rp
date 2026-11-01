@@ -1,0 +1,18 @@
+# Blueprint Render : site statique (aucun serveur ni build requis)
+services:
+  - type: web
+    name: port-aurore-rp
+    runtime: static
+    buildCommand: node scripts/check.mjs
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: true
+    headers:
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /js/lib/*
+        name: Cache-Control
+        value: public, max-age=604800, immutable
+      - path: /index.html
+        name: Cache-Control
+        value: no-cache
