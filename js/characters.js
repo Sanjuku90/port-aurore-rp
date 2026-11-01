@@ -7,6 +7,7 @@ const BOTTOMS=['pantalon','pantalon','pantalon','short','jupe'];
 const SHOE_COLS=[0x1c1c1c,0xf2f2ee,0x5a3b24,0x2b3445];
 const JACKETS=[0x2b3445,0x5a4a3a,0x3b3b3b,0x7a2f2f,0x2f5a4a,0xc9b38a];
 const CAP_COLS=[0xd94f4f,0x2e6fd1,0x1c1c1c,0xe0b34a,0x4fb58a];
+const personMat=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.84,metalness:0.01});
 const _pm=new THREE.Matrix4(),_pq=new THREE.Quaternion(),_pe=new THREE.Euler(),_pv=new THREE.Vector3(),_ps=new THREE.Vector3();
 /* pièce avec position, couleur, échelle et rotation */
 function pp(g,x,y,z,c,sx,sy,sz,rx,ry,rz){
@@ -83,9 +84,9 @@ function makePerson(shirt,pants,skin,hair,opt){
   else if(style==='afro'){P.push(pp(sph(0.21,14,10),0,1.86,-0.06,hair,1.06,0.92,1));}
   else if(style==='queue'){P.push(cap(0.163));P.push(pp(sph(0.05,8,6),0,1.84,-0.17,hair));P.push(pp(cyl(0.045,0.02,0.26,8),0,1.7,-0.2,hair,1,1,1,0.25,0,0));}
   else if(style==='casquette'){const cc=opt.capColor!=null?opt.capColor:pick(CAP_COLS);P.push(pp(new THREE.SphereGeometry(0.166,16,10,0,Math.PI*2,0,Math.PI*0.5),0,1.79,-0.012,cc,1,1,1.06));P.push(pp(bx(0.22,0.02,0.14),0,1.84,0.17,cc,1,1,1,-0.12,0,0));P.push(pp(bx(0.3,0.06,0.2),0,1.72,-0.08,hair));}
-  g.add(new THREE.Mesh(mergeParts(P),vcLamb));
+  g.add(new THREE.Mesh(mergeParts(P),personMat));
   /* membres articulés */
-  function grp(parent,parts,x,y,z){const p=new THREE.Group();p.position.set(x,y,z||0);p.add(new THREE.Mesh(mergeParts(parts),vcLamb));parent.add(p);return p;}
+  function grp(parent,parts,x,y,z){const p=new THREE.Group();p.position.set(x,y,z||0);p.add(new THREE.Mesh(mergeParts(parts),personMat));parent.add(p);return p;}
   const shortLeg=bottom==='short',bareLeg=bottom==='jupe';
   function leg(x){
     const thighC=bareLeg?skin:pants,shinC=(bareLeg||shortLeg)?skin:pants;

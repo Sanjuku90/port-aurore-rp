@@ -14,6 +14,9 @@ function gpOverlay(){for(const sel of ['#gp-remap','#pause','#panel','#start','#
 function gpFocusables(root){return [...root.querySelectorAll('button,input,select')].filter(b=>!b.disabled&&b.offsetParent!==null);}
 function gpMove(dir){const root=gpOverlay();if(!root)return;const list=gpFocusables(root);if(!list.length)return;gpFocus=(gpFocus+dir+list.length)%list.length;list.forEach((b,i)=>b.classList.toggle('gp-focus',i===gpFocus));list[gpFocus].scrollIntoView({block:'nearest'});}
 function gpPress(action){
+  const mg=window.MG29&&MG29.active&&document.getElementById('mg29')&&!document.getElementById('mg29').hidden?MG29._g:null;
+  if(mg){const root=document.getElementById('mg29');if(action==='interact'){if(mg.phase==='intro')root.querySelector('.mg-go')?.click();else if(mg.phase==='res')root.querySelector('.mg-ok')?.click();else if(mg.phase==='play'&&mg.def.key)mg.def.key(mg,'A');}else if(action==='cancel')root.querySelector('.mg-x')?.click();return;}
+  if(window.V31&&V31.match&&action==='cancel'&&!gpOverlay()){V31.quitMatch();return;}
   const menu=gpOverlay();
   if(menu){
     if(menu.id==='gp-remap'){if(action==='interact'){const list=gpFocusables(menu);const b=list[gpFocus]||list[0];if(b)b.click();gpFocus=-1;}else if(action==='cancel'){GP19.capture=null;menu.hidden=true;}return;}
@@ -60,7 +63,7 @@ function gpPoll(){
   let pads=[];try{pads=navigator.getGamepads?navigator.getGamepads():[];}catch(e){}
   let pad=null;for(const p of pads||[])if(p&&p.connected){pad=p;break;}
   const now=performance.now();
-  if(!pad){if(GP19.on){GP19.on=false;GP19.x=GP19.y=0;GP19.run=GP19.brake=false;}return;}
+  if(!pad){if(GP19.on){GP19.on=false;GP19.x=GP19.y=0;GP19.run=GP19.brake=false;GP19.btn={};GP19.dpad={u:false,d:false,l:false,r:false};}return;}
   const wasOn=GP19.on;GP19.on=true;
   if(!wasOn&&document.getElementById('gp-remap')&&!document.getElementById('gp-remap').hidden)gpRenderRemap();
   const bn={};for(let i=0;i<(pad.buttons||[]).length;i++)bn[i]=gpButton(pad,i);
@@ -76,10 +79,12 @@ function gpPoll(){
   else{gpFocus=-1;document.querySelectorAll('.gp-focus').forEach(x=>x.classList.remove('gp-focus'));}
   GP19.dpad=dp;
   GP19.x=gpDz(pad.axes&&pad.axes[0]||0);GP19.y=gpDz(pad.axes&&pad.axes[1]||0);
+  const mg=window.MG29&&MG29.active&&document.getElementById('mg29')&&!document.getElementById('mg29').hidden?MG29._g:null;
+  if(mg){mg.k.L=GP19.x<-.22||GP19.dpad.l;mg.k.R=GP19.x>.22||GP19.dpad.r;mg.k.U=GP19.y<-.22||GP19.dpad.u;mg.k.D=GP19.y>.22||GP19.dpad.d;}
   const rx=gpDz(pad.axes&&pad.axes[2]||0),ry=gpDz(pad.axes&&pad.axes[3]||0);
   if(rx||ry){camYaw-=rx*.035*CAMX.sens;camPitch=clamp(camPitch+ry*.025*CAMX.sens,.12,1.1);lastDrag=now;}
   GP19.run=gpButton(pad,GP19.bind.run);GP19.brake=gpButton(pad,GP19.bind.brake);
 }
-addEventListener('gamepadconnected',()=>{if(typeof toast==='function'&&started)toast('Manette connectée.','good');gpRenderRemap();});
+addEventListener('gamepadconnected',()=>{if(typeof toast==='function'&&started)toast('Manette connectée. Stick gauche pour bouger, A pour agir, B pour revenir.','good');gpRenderRemap();});
 addEventListener('gamepaddisconnected',()=>{if(typeof toast==='function'&&started)toast('Manette déconnectée.','warn');gpRenderRemap();});
 (function gpLoop(){gpPoll();requestAnimationFrame(gpLoop);})();

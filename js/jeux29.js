@@ -484,6 +484,6 @@ DEF.stir={name:'Cuisson',icon:'🍲',intro:'Fais tourner la cuillère en rond (s
     if(G.heat>.6)for(let i=0;i<5;i++)emo('💨',W/2-120+i*60,170-((G.t*60+i*30)%60),30);
     const x0=W/2-280;rr(x0,470,560,24,12);const g=cx.createLinearGradient(x0,0,x0+560,0);g.addColorStop(0,'#6cc6ff');g.addColorStop(.5,'#7ee0a3');g.addColorStop(1,'#ff5f57');cx.fillStyle=g;cx.fill();
     cx.strokeStyle='#fff';cx.lineWidth=2;cx.strokeRect(x0+.3*560,470,.4*560,24);cx.fillStyle='#fff';cx.fillRect(x0+G.heat*560-4,460,8,44);txt('Feu',x0-30,482,20,'#fff');}};
-return {play,act,chain,actChain,pay:payMG,DEF,best:BEST,end:(s)=>end(s),get active(){return !!G;},get _g(){return G;},_sim(sec,fn){let i=0;for(let t=0;t<sec&&G&&(G.phase==='count'||G.phase==='play');t+=1/60){G.noDraw=(i++%30)!==0;tick(1/60);if(fn&&G)fn(G,t);}if(G)G.noDraw=false;return G&&G.phase;}};
+return {play,act,chain,actChain,pay:payMG,DEF,best:BEST,end:(s)=>end(s),_util:{W,H,CL,R,bg,txt,emo,sfx,pop,get cx(){return cx;}},get active(){return !!G;},get _g(){return G;},_sim(sec,fn){let i=0;for(let t=0;t<sec&&G&&(G.phase==='count'||G.phase==='play');t+=1/60){G.noDraw=(i++%30)!==0;tick(1/60);if(fn&&G)fn(G,t);}if(G)G.noDraw=false;return G&&G.phase;}};
 })();
 window.MG29=MG29;

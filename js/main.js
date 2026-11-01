@@ -2,15 +2,15 @@
 /* ---------- démarrage ---------- */
 function init(){
   const cv=$('#gl');
-  renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true});
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.75));
   const coarse=matchMedia('(pointer: coarse)').matches;
-  renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
+  renderer=new THREE.WebGLRenderer({canvas:cv,antialias:!coarse,powerPreference:'high-performance'});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,coarse?1.25:1.75));
+  renderer.shadowMap.enabled=!coarse;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
   scene=new THREE.Scene();scene.background=new THREE.Color(0x8cc4f0);scene.fog=new THREE.Fog(0x8cc4f0,90,300);
   camera=new THREE.PerspectiveCamera(60,1,0.3,420);
   hemi=new THREE.HemisphereLight(0xcfe6ff,0x4a4a52,0.9);scene.add(hemi);
   sun=new THREE.DirectionalLight(0xfff2d6,0.9);sun.position.set(80,120,40);scene.add(sun);scene.add(sun.target);
-  sun.castShadow=true;const ss=coarse?1024:2048;sun.shadow.mapSize.set(ss,ss);
+  sun.castShadow=true;const ss=coarse?512:2048;sun.shadow.mapSize.set(ss,ss);
   const sc=sun.shadow.camera;sc.left=-60;sc.right=60;sc.top=60;sc.bottom=-60;sc.near=20;sc.far=320;sun.shadow.bias=-0.0006;sun.shadow.normalBias=0.4;
   sky=new THREE.Mesh(new THREE.SphereGeometry(320,24,14),new THREE.ShaderMaterial({
     uniforms:{top:{value:new THREE.Color(0x3d7fd0)},hor:{value:new THREE.Color(0x9ccdf2)}},

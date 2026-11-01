@@ -1,3 +1,17 @@
+## v33
+- Quartier automobile Aurore : concession Prestige complète, étage, atelier SAV, piste chronométrée, Aurore Moto, Occasion, Exclusive, 11 nouveaux modèles, voitures interactives, achat/crédit/reprise/location, garage sauvegardé, appli Véhicules, fluidité mobile.
+
+# v31
+- **Résidences du Belvédère** : 14 villas de luxe (piscine, haies, portail, voitures), poste de garde. 5 à louer (24 h) ou acheter, les autres habitées (rachat possible). Intérieur : salon, cuisine (cuisiner), chambre (dormir), TV, console, ordinateur.
+- **Résidence Palmeraie** : 4 immeubles à balcons, appartements à louer ou acheter.
+- **Aurore Motors** : showroom vitré avec cadres lumineux, podium, plateaux tournants, 10 modèles (occasion → supercar), couleurs, essai routier de 2 min, livraison au parking, voitures sauvegardées.
+- **Les Palmiers** : vrai centre commercial intérieur, 9 boutiques + food court + café + distributeur, clients PNJ. Achats réels : sac, tenues portées, bijoux, appareils et meubles utilisables à la maison.
+- **Entreprises** : Mama Adjo, étal du marché, food truck, Mode Aurore, Aurore Tech, Arcade Néon, Aurore Motors. Achat, recrutement (candidats notés), formation, licenciement, prix, stock, agrandissement, salaires, caisse, revente, app téléphone « Business ».
+- **Ville vivante** : 52 habitants avec métier, domicile et emploi du temps (travail, courses, sport, sorties, retour à la maison). Ils fréquentent les commerces (et paient tes entreprises), réagissent aux voitures, discutent (E).
+- **Parc sportif** : terrain de foot à 5, 2 terrains de basket street, tribunes avec supporters, food truck. **Matchs 3D jouables** au clavier ou à la manette : foot (coéquipier, gardiens, adversaires) et basket 1 contre 1 (dribble, tir, dunk, interception).
+- Caserne avec portes rouges et camions, allée de palmiers du campus.
+- Correctif : le module v30 plantait au chargement (sports et marché inactifs).
+
 # Port-Aurore RP · v29 · les activités deviennent des mini-jeux
 - Nouveau moteur de mini-jeux (22 types) : timing, rythme (avec battle contre un rival), course/esquive (jet-ski, kayak, tortue…), attrape, mémoire, quiz, marchandage, cadence, photo, mini-golf avec physique, billard, pêche à la ligne, blackjack, machine à sous, penalty, respiration, code, beach-volley, pronostic + match en direct, équilibre, stand de tir, cuisson.
 - Écran d’intro avec les touches, compte à rebours, écran de résultat (étoiles, record sauvegardé, gains proportionnels au score). Clavier (flèches, ZQSD, Espace), souris et tactile. Le monde 3D est mis en pause pendant la partie.

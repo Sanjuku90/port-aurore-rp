@@ -1,4 +1,4 @@
-# Port-Aurore RP · v29 · mini-jeux
+# Port-Aurore RP · v33 · Quartier automobile Aurore
 
 Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
 
@@ -49,3 +49,47 @@ Ne configure pas de Start Command, de base de données, de secret ou de serveur 
 - `.github/workflows/check.yml` : vérification de syntaxe à chaque push et pull request.
 - `scripts/check.mjs` : validation des scripts et des chemins référencés par `index.html`.
 - `js/lib/three.min.js` : moteur 3D embarqué, aucune dépendance CDN pour le jeu.
+
+
+## v30
+- Commandes manette rétablies dans les menus et mini-jeux, avec stick analogique et actions A/B.
+- Quartier du Belvédère: villas habitées, deux locations interactives, marché et restaurant Chez Mama Adjo.
+- Complexe sportif jouable (football à 5, basket, tennis, natation, musculation, cyclisme), campus enrichi et centre commercial Les Palmiers.
+- Aurore Motors: achat et reprise de voitures détaillées.
+
+
+## v31 · Ville vivante
+- **Résidences du Belvédère** : 14 villas de luxe (piscine, haies, portail, voitures), poste de garde. 5 à louer (24 h) ou acheter, les autres habitées (rachat possible). Intérieur : salon, cuisine (cuisiner), chambre (dormir), TV, console, ordinateur.
+- **Résidence Palmeraie** : 4 immeubles à balcons, appartements à louer ou acheter.
+- **Aurore Motors** : showroom vitré avec cadres lumineux, podium, plateaux tournants, 10 modèles (occasion → supercar), couleurs, essai routier de 2 min, livraison au parking, voitures sauvegardées.
+- **Les Palmiers** : vrai centre commercial intérieur, 9 boutiques + food court + café + distributeur, clients PNJ. Achats réels : sac, tenues portées, bijoux, appareils et meubles utilisables à la maison.
+- **Entreprises** : Mama Adjo, étal du marché, food truck, Mode Aurore, Aurore Tech, Arcade Néon, Aurore Motors. Achat, recrutement (candidats notés), formation, licenciement, prix, stock, agrandissement, salaires, caisse, revente, app téléphone « Business ».
+- **Ville vivante** : 52 habitants avec métier, domicile et emploi du temps (travail, courses, sport, sorties, retour à la maison). Ils fréquentent les commerces (et paient tes entreprises), réagissent aux voitures, discutent (E).
+- **Parc sportif** : terrain de foot à 5, 2 terrains de basket street, tribunes avec supporters, food truck. **Matchs 3D jouables** au clavier ou à la manette : foot (coéquipier, gardiens, adversaires) et basket 1 contre 1 (dribble, tir, dunk, interception).
+- Caserne avec portes rouges et camions, allée de palmiers du campus.
+- Correctif : le module v30 plantait au chargement (sports et marché inactifs).
+
+
+## v32 · confort mobile, villas signature et conduite interactive
+- Rendu tactile allégé automatiquement (résolution et ombres adaptées aux téléphones), commandes et panneaux adaptés aux encoches et au mode paysage.
+- Quatre villas signature détaillées : Moderne, Prestige, Royale et Penthouse, avec capacités et équipements distincts dans leurs fiches.
+- Concession : achat comptant ou financement avec acompte et deux échéances sauvegardées. Commandes de voiture depuis le bouton mobile « Véhicule » ou la touche V : portières, coffre, phares, clignotants, détresse, klaxon, caméra, peinture, jantes, vitres, réparations, lavage et radio.
+- Accueil vocal et messages de chat du conseiller Aurore Motors.
+
+
+## v33 · Quartier automobile Aurore
+- **Aurore Motors Prestige** devient un vrai lieu : showroom vitré à portes automatiques, enseigne lumineuse, exposition extérieure, parking clients, places VIP avec tapis rouge, accueil (Ama), conseillers (Koffi, Nadia), espace de négociation, écran géant de suivi en direct, mezzanine.
+- **Étage** (escalier vitré) : bureau des vendeurs, espace de négociation, bureau de financement, salon VIP (champagne, présentation privée, attente des commandes).
+- **Atelier de livraison & SAV** (Yao) : pont élévateur, écran de suivi, borne de remise des clés avec confettis et ruban sur le toit.
+- **11 nouvelles carrosseries** dessinées une par une : Titan X (SUV de luxe), Prestige S, Volt GT électrique, Rosso SF, Hyperion, Atlas 4x4, Coupé 9, Lagune, Lumi, Sovereign et Sovereign Pullman (portes antagonistes), plus éditions limitées à stock réel.
+- **Voitures vivantes** : portières, capot (baie moteur), coffre/hayon, phares, clignotants, feux de détresse, rétroviseurs rabattables, caméra intérieure, sellerie, éclairage d’ambiance, jantes, vitres teintées, plaques, finitions métallisé/mat/nacré.
+- **Showroom** : fiche technique, couleur exposée modifiable, vue 360°, regarder l’intérieur, s’asseoir au volant, démarrer et faire rugir le moteur, comparateur jusqu’à 3 modèles.
+- **Essais** de 3 minutes sur la **piste d’essai chronométrée** (4 portiques, records par modèle).
+- **Achat** : comptant, crédit (acompte + mensualités, 1 mois = 1 jour de jeu, retards et saisie), reprise, location longue durée avec option d’achat, garanties, remise négociée.
+- **Après l’achat** : commande suivie étape par étape, plaque attribuée, carte grise à ton nom, garage sauvegardé (atelier ou villa), repère sur la carte, revente.
+- **SAV** : entretien (vidange, révision, pneus, moteur, diagnostic, carrosserie), personnalisation, nettoyage, garanties, assistance routière. L’usure réduit la puissance.
+- **Aurore Moto**, **Aurore Occasion** (parc, annonces entre particuliers, rachat, offres d’acheteurs) et **Aurore Exclusive** (carte VIP, limousines, séries limitées).
+- **Appli téléphone « Véhicules »** : état, localisation, livraison, réparation, mensualités, documents, vente, suivi.
+- **Clients et employés parlent** : accueil, conversations client ↔ conseiller, clients interpellables (E).
+- **Fluidité mobile** : résolution adaptative selon les images par seconde, distance d’affichage réduite, peinture allégée, voitures lointaines masquées.
+- Commandes : **C** commandes de bord · **L** phares · **X** détresse · bouton **🚘 Bord** sur mobile.

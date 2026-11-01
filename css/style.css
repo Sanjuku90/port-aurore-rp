@@ -358,3 +358,11 @@ button.gp-focus{outline:3px solid #ffd54a;outline-offset:2px}
 .cat24-empty{display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px 10px;color:var(--dim)}
 #pn-btns .cat24-close{position:sticky;bottom:-14px;z-index:2;margin-top:4px;background:#0f1520;border-color:var(--line);box-shadow:0 -12px 18px #0f1520}
 @media (max-width:520px){.cat24-room{font-size:13px;padding:5px 9px;min-height:34px}.cat24-tog{flex:1 1 auto}.cat24-grid{grid-template-columns:1fr 1fr}.cat24-card{grid-template-columns:1fr;min-height:0}.cat24-sw{grid-row:auto;width:100%;height:34px}}
+
+/* v32 · commandes confortables et rendu tactile léger */
+.touch #joy,.touch #btns button{touch-action:none;-webkit-tap-highlight-color:transparent}
+.touch #btns button{min-height:54px}
+.touch #panel{padding:calc(10px + env(safe-area-inset-top,0px)) calc(10px + env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) calc(10px + env(safe-area-inset-left,0px))}
+.touch .sheet{width:min(100%,420px);max-height:calc(100dvh - 20px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));overscroll-behavior:contain}
+@media(max-width:760px){.touch #left{width:min(42vw,165px)}.touch #mini-map{transform:scale(.88);transform-origin:top right}.touch #btns{gap:6px}.touch #b-act{min-height:58px}}
+@media(max-height:480px) and (orientation:landscape){.touch #left{transform:scale(.82);transform-origin:top left}.touch #btns button{min-height:42px}.touch .sheet{max-height:calc(100dvh - 12px)}}
