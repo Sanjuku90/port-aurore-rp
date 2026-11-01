@@ -94,6 +94,7 @@ const _cw=collideCarWorld;collideCarWorld=function(c){const h=_cw(c);if(h>0&&mis
 // création
 newMission=function(){
   const j=J[state.job];if(!j)return;fxClear();
+  if(window.M28&&M28.make){let mm=null;try{mm=M28.make(j);}catch(e){console.warn('v28 mission',e);}if(mm){mission=mm;toast(j.n+' · '+mm.title+' · ~'+fmt(mm.pay),'warn');return;}}
   const st=STYLE[j.id]||'route',f=j.v?1:.6,a=nodeNear(player,20,140*f);
   const m={kind:j.id,st,stage:'pickup',pickup:a,drop:a,tgt:a,resto:pick(j.tasks),addr:Math.floor(rand(2,98))+' '+pick(STREETS),time:0,limit:0,wk:0,hitCd:0,ui:null};
   let dist=110,brief='';
@@ -186,7 +187,9 @@ updateMission=function(dt){
   if(!state.job){mission=null;beam.visible=false;fxClear();return;}
   if(fxOwner&&fxOwner!==mission)fxClear();
   if(!mission){beam.visible=false;missionCd-=dt;if(missionCd<=0)newMission();return;}
-  const m=mission,j=J[m.kind];if(!j||!STEP[m.st]){mission=null;return;}
+  const m=mission,j=J[m.kind];
+  if(m.st==='r28'&&window.M28){m.hitCd=(m.hitCd||0)-dt;M28.tick(m,j,dt);if(mission!==m)return;const t=m.tgt||m.pickup;if(t){m.pickup=m.drop=t;beam.visible=true;beam.position.x=t.x;beam.position.z=t.z;beam.material.color.setHex(m.beamC||0xffb84d);}else beam.visible=false;return;}
+  if(!j||!STEP[m.st]){mission=null;return;}
   m.hitCd=(m.hitCd||0)-dt;STEP[m.st](m,j,dt);
   if(mission!==m)return;const t=m.tgt||m.pickup;m.pickup=m.drop=t;
   beam.visible=true;beam.position.x=t.x;beam.position.z=t.z;beam.material.color.setHex(m.st==='chase'&&m.stage==='chase'||m.st==='fire'&&m.stage==='fight'?0xff4d4d:m.stage==='pickup'?0xffb84d:0x58d68d);
@@ -239,4 +242,5 @@ const _up=update;update=function(dt){
   cars.forEach(c=>{const p=c.pk;if(p&&p.road&&!p.lot&&!p.f&&gameMin-p.t>30&&Math.hypot(c.x-player.x,c.z-player.z)>15){p.f=1;if(state.bank>=40)state.bank-=40;else state.cash=Math.max(0,state.cash-40);toast('Amende : stationnement gênant · '+fmt(40),'bad');}});
 };
 const _rs=resetProgress;resetProgress=function(){_rs();fxClear();jx={};fst={};sv(JK,jx);sv(PK,fst);syncSal();dropCo();};
+window.JOBS12={J,JD,JINFO,STYLE,QUIZ,MENU,FISH,GM,GN,finish,gainXp,gradeOf,xpOf,fxAdd,fxDel,fxClear,suspectMesh,flameMesh,crateMesh,nodeNear,hosp,clk,stars,shuf,spawnCo,dropCo,inCo};
 })();

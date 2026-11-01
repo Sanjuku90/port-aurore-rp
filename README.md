@@ -1,4 +1,4 @@
-# Port-Aurore RP · v27 · Horizons
+# Port-Aurore RP · v29 · mini-jeux
 
 Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
 

@@ -1,0 +1,36 @@
+/* v29 · mini-jeux */
+#mg29{--mg:#ff7a59;position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:12px;background:radial-gradient(ellipse at center,rgba(8,12,20,.72),rgba(4,6,10,.92));backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);animation:mg29in .25s ease-out}
+#mg29[hidden]{display:none}
+@keyframes mg29in{from{opacity:0}to{opacity:1}}
+#mg29 .mg-card{width:min(100%,calc((100vh - 120px)*16/9),1100px);display:flex;flex-direction:column;border-radius:20px;overflow:hidden;background:#0d131c;border:1px solid rgba(255,255,255,.12);box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.04) inset}
+#mg29 header{display:flex;align-items:center;gap:14px;padding:10px 14px 10px 18px;background:linear-gradient(90deg,color-mix(in srgb,var(--mg) 28%,#0d131c),#0d131c 70%);border-bottom:1px solid rgba(255,255,255,.08)}
+#mg29 .mg-t{display:flex;flex-direction:column;min-width:0;flex:1}
+#mg29 .mg-t b{font:700 22px var(--display);letter-spacing:.04em;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mg29 .mg-t span{font-size:13px;color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mg29 .mg-hud{font:600 17px var(--display);letter-spacing:.03em;color:#fff;background:rgba(0,0,0,.35);padding:6px 12px;border-radius:10px;white-space:nowrap;max-width:55%;overflow:hidden;text-overflow:ellipsis}
+#mg29 .mg-hud:empty{display:none}
+#mg29 .mg-x{width:38px;height:38px;padding:0;border-radius:50%;font-size:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);color:#fff;flex:none}
+#mg29 .mg-stage{position:relative;aspect-ratio:16/9;background:#000}
+#mg29 canvas{display:block;width:100%;height:100%;touch-action:none;cursor:crosshair}
+#mg29 footer{padding:8px 16px;font-size:13px;color:var(--dim);text-align:center;border-top:1px solid rgba(255,255,255,.06);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mg29 .mg-intro,#mg29 .mg-res{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4% 8%;gap:8px;background:linear-gradient(180deg,rgba(8,12,20,.35),rgba(8,12,20,.8))}
+#mg29 .mg-intro[hidden],#mg29 .mg-res[hidden]{display:none}
+#mg29 .mg-ic{font-size:clamp(40px,8vw,74px);line-height:1;filter:drop-shadow(0 6px 18px rgba(0,0,0,.5));animation:mg29b 2.4s ease-in-out infinite}
+@keyframes mg29b{50%{transform:translateY(-6px) rotate(-3deg)}}
+#mg29 h3{margin:0;font:700 clamp(24px,4vw,40px) var(--display);letter-spacing:.03em;color:#fff;text-shadow:0 3px 18px rgba(0,0,0,.5)}
+#mg29 p{margin:0;max-width:620px;font-size:clamp(14px,1.8vw,17px);line-height:1.4;color:#dfe7f0}
+#mg29 ul{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+#mg29 li{font-size:13px;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);color:#fff}
+#mg29 .mg-res li{background:color-mix(in srgb,var(--cash) 18%,transparent);border-color:color-mix(in srgb,var(--cash) 40%,transparent);font-weight:600}
+#mg29 small{color:var(--warn);font-weight:600}
+#mg29 .mg-row{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+#mg29 .mg-row button{min-width:150px;padding:12px 20px;font:700 17px var(--display);letter-spacing:.04em}
+#mg29 .mg-row .primary{background:linear-gradient(135deg,var(--mg),color-mix(in srgb,var(--mg) 60%,#ffd24a));color:#1a0d05;box-shadow:0 8px 24px color-mix(in srgb,var(--mg) 40%,transparent)}
+#mg29 .mg-stars{display:flex;gap:8px;font-size:clamp(34px,6vw,58px);line-height:1}
+#mg29 .mg-stars i{font-style:normal;color:rgba(255,255,255,.15);transform:scale(.8);transition:transform .3s}
+#mg29 .mg-stars i.on{color:#ffd24a;text-shadow:0 0 24px rgba(255,210,74,.6);transform:scale(1);animation:mg29s .5s ease-out backwards}
+#mg29 .mg-stars i.on:nth-child(2){animation-delay:.12s}#mg29 .mg-stars i.on:nth-child(3){animation-delay:.24s}
+@keyframes mg29s{from{transform:scale(0) rotate(-40deg)}60%{transform:scale(1.3)}}
+#mg29 .mg-pct{font:700 clamp(28px,4.5vw,46px) var(--display);color:var(--mg)}
+#mg29 .mg-pct em{font-style:normal;font-size:.45em;color:#ffd24a;vertical-align:middle;margin-left:8px;padding:3px 8px;border:1px solid #ffd24a;border-radius:8px}
+@media (max-height:520px){#mg29{padding:4px}#mg29 header{padding:6px 10px}#mg29 footer{display:none}#mg29 .mg-t b{font-size:18px}}

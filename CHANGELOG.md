@@ -1,3 +1,16 @@
+# Port-Aurore RP · v29 · les activités deviennent des mini-jeux
+- Nouveau moteur de mini-jeux (22 types) : timing, rythme (avec battle contre un rival), course/esquive (jet-ski, kayak, tortue…), attrape, mémoire, quiz, marchandage, cadence, photo, mini-golf avec physique, billard, pêche à la ligne, blackjack, machine à sous, penalty, respiration, code, beach-volley, pronostic + match en direct, équilibre, stand de tir, cuisson.
+- Écran d’intro avec les touches, compte à rebours, écran de résultat (étoiles, record sauvegardé, gains proportionnels au score). Clavier (flèches, ZQSD, Espace), souris et tactile. Le monde 3D est mis en pause pendant la partie.
+- Solenne : jet-ski, parachute, bouée, ski nautique, baptême de plongée (photos = carnet d’espèces), kayak, paddle, surf (ramer, take-off, glisse), beach-volley, yoga (souffle + postures), mini-golf 3 ou 4 trous, phare (montée + panorama), sorties en mer (photos dauphins/baleines, pêche au gros avec revente), marché (marchandage), soirée séga, piscine, danse et battle au Corail, atelier cuisine de Ti Kaz (ingrédients, découpe, cuisson), quiz du musée et de la distillerie, repas et remise à l’eau des tortues, pollinisation de la vanille.
+- Les achats simples (glaces, souvenirs, location) restent des menus ; le repos (transat, spa, cinéma) garde son fondu.
+
+# Port-Aurore RP · v28 · la vraie vie
+- Métiers réalistes (17 métiers) : chaque mission est une suite d’étapes avec interactions (E). Livreur : aller au restaurant, annoncer la commande, attendre la préparation, prendre le sac, livrer, le client paie (espèces avec monnaie à rendre, carte ou déjà payé) + pourboire. Taxi : faire monter le client, lancer le compteur, encaisser. Police : témoin, poursuite, menottes, garde à vue, PV. Ambulancier, pompier, bus, routier, mécanicien, pompiste, infirmier, pêcheur, docker, serveur, facteur, éboueur, gendarme et sécurité ont tous leur scénario.
+- Liste d’étapes dans le HUD, barre de progression, temps forts « MAINTENANT ! », 6 restaurants, La Poste, point relais, criée, pièces auto et terrasse du Café Aurore construits en ville.
+- Solenne agrandie (1 580 m) : Pointe des Alizés et Anse Créole, 7 bâtiments où entrer (hôtel, Ti Kaz, Le Corail, musée, centre des tortues, boutique, distillerie), 30+ activités, baignade dans le lagon, la piscine et le bassin de la cascade, snorkeling, tyrolienne, location de scooters.
+- Appartement : mode Aménager pour déplacer, tourner, ranger les meubles (sauvegardé).
+- Vol : caméra recalculée après le mouvement de l’avion (fin des saccades et de la caméra dans la carlingue), altitude réelle (36 000 ft), vitesse en km/h et nœuds, turbulences légères, caméra et brouillard remis à zéro après l’atterrissage.
+
 # Port-Aurore RP · v27 · extension du quartier des Horizons
 - Nouveau quartier connecté au boulevard nord : cinéma Aurore, Galerie du Port, campus, caserne, commissariat et musée maritime.
 - Parvis paysager, arbres, bancs, lampadaires, arrêt de navette et routes supplémentaires pour relier le quartier au reste de la ville.

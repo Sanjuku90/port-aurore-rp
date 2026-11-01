@@ -177,7 +177,7 @@ function tickFlight(dt){const R=FL.R,G=FL.plane,f=FL.f,K=FL.speed;
     let rot=0;const iL=R.C.findIndex(c=>c[3]==='climb'),sL=R.marks[iL];if(ph==='roll'&&FL.s>sL-70)rot=.13*clamp((FL.s-(sL-70))/70,0,1);if(ph==='climb'&&P.y<30)rot=.13*(1-P.y/30)+.02;
     const iT=R.C.findIndex(c=>c[3]==='landing')+1,sT=R.marks[iT];if((ph==='landing'||ph==='approach')&&FL.s<sT&&FL.s>sT-260)rot=.07*clamp((FL.s-(sT-260))/180,0,1);if(ph==='landing'&&FL.s>sT&&FL.s<sT+80)rot=.07*(1-(FL.s-sT)/80);
     const air=P.y>.5,bank=air?clamp(-FL.yr*1.6,-.55,.55):0;FL.bank=(FL.bank||0)+(bank-(FL.bank||0))*Math.min(1,2.5*dt);
-    G.position.copy(P);G.rotation.order='YXZ';G.rotation.set(-(pitch+rot),h,FL.bank);
+    G.position.copy(P);G.rotation.order='YXZ';const tb=(ph==='cruise'||ph==='descent')?Math.sin(performance.now()*.0021)*Math.sin(performance.now()*.0007)*.012:0;G.rotation.set(-(pitch+rot)+tb,h,FL.bank+tb*.8);G.position.y+=tb*8;
     if(FL.s>=R.L-.2){G.position.set(R.P1.p.x,0,R.P1.p.z);G.rotation.set(0,R.P1.h,0);}}
   if(ph!==FL.lastPh){FL.lastPh=ph;if(ANN[ph]){subtitle(ANN[ph](f));if(ph==='board'||ph==='roll'||ph==='approach'||ph==='landing')chime();}if(ph==='landing')FL.touch=false;}
   FL.ph=ph;FL.v=v;
@@ -190,7 +190,7 @@ function tickFlight(dt){const R=FL.R,G=FL.plane,f=FL.f,K=FL.speed;
   player.x=G.position.x;player.z=G.position.z;player.h=G.rotation.y;player.moving=0;
   FL.uiT=(FL.uiT||0)-dt;if(FL.uiT<=0){FL.uiT=.2;
     UI.phase.textContent=PH[ph]||'';UI.fill.style.width=(prog*100).toFixed(1)+'%';UI.ic.style.left=(prog*100).toFixed(1)+'%';
-    const ft=Math.round(gy*70/50)*50;UI.alt.textContent=ft.toLocaleString('fr-FR')+' ft';UI.spd.textContent=Math.round(v*K>0?v*5.2:0)+' km/h';
+    const ft=Math.round(gy*69.2/50)*50;UI.alt.textContent=ft.toLocaleString('fr-FR')+' ft';UI.spd.textContent=Math.round(v>0?(gy<1&&v<15?v*2.6:v*5.2):0)+' km/h · '+Math.round(v>0?(gy<1&&v<15?v*1.4:v*2.8):0)+' kt';
     const remMin=Math.max(0,Math.round((1-prog)*(from(f)==='pax'?65:70)));UI.eta.textContent=ph==='gate'?'À la porte':remMin>=60?Math.floor(remMin/60)+' h '+String(remMin%60).padStart(2,'0'):remMin+' min';
     UI.km.textContent=Math.round((1-prog)*f.km).toLocaleString('fr-FR')+' km';
     FL.mapT=(FL.mapT||0)-1;if(FL.mapT<=0){FL.mapT=2;drawMap(UI.map,'hud');if(FL.view==='carte'){drawMap(UI.big,'full');UI.info.innerHTML=infoHtml(f,ph,prog);}if(FL.view==='cabine'&&FL.ifeC){drawMap(FL.ifeC,'ife');FL.ifeT.needsUpdate=true;}}}
@@ -201,7 +201,7 @@ function tickFlight(dt){const R=FL.R,G=FL.plane,f=FL.f,K=FL.speed;
 const from=f=>f.from;
 function infoHtml(f,ph,prog){const lt=hhmm(gameMin);return `<div><small>VOL</small><b>${f.code}</b><span>${esc(f.fromN)} → ${esc(f.toN)}</span></div><div><small>PHASE</small><b>${PH[ph]}</b></div><div><small>ALTITUDE</small><b>${UI.alt.textContent}</b></div><div><small>VITESSE SOL</small><b>${UI.spd.textContent}</b></div><div><small>HEURE LOCALE</small><b>${lt}</b></div><div><small>ARRIVÉE DANS</small><b>${UI.eta.textContent}</b></div><div><small>TEMPÉRATURE À DESTINATION</small><b>${f.temp}</b></div><div><small>PARCOURU</small><b>${Math.round(prog*100)} %</b></div>`;}
 function endFlight(){const f=FL.f,to=f.to;fade(true,()=>{
-  FL.on=false;FL.ending=false;jetStop();if(FL.me){FL.cab.g.remove(FL.me);FL.me=null;}player.mesh.visible=true;FL.cab.g.visible=false;UI.d.hidden=true;$('#hud').hidden=false;camera.up.set(0,1,0);camera.far=FL.oldFar||420;camera.updateProjectionMatrix();tickClouds(false);
+  FL.on=false;FL.ending=false;jetStop();if(FL.me){FL.cab.g.remove(FL.me);FL.me=null;}player.mesh.visible=true;FL.cab.g.visible=false;UI.d.hidden=true;$('#hud').hidden=false;camera.up.set(0,1,0);camera.far=FL.oldFar||420;FL.camLate=0;camera.fov=60;if(window.CAMX)CAMX.fov=60;if(scene.fog){scene.fog.near=90;scene.fog.far=300;}camera.updateProjectionMatrix();tickClouds(false);
   const T=W27.terms[to];player.x=T.spot.arr.x;player.z=T.spot.arr.z;player.h=T.spot.arrH;camYaw=T.spot.arrH;camPitch=.38;camT=1;if(window.CAMX)CAMX.tgt=null;
   S27.ticket=null;save27();updateGates(true);placePlane();
   const first=!S27.seen[to];S27.seen[to]=1;save27();saveProgress();
@@ -330,13 +330,13 @@ let zoneT=0,curZ=null;function tickZones(dt){zoneT-=dt;if(zoneT>0||!started||FL.
   const id=z?z.id:(Math.abs(player.x)<262&&player.z>-262?'city':null);if(id!==curZ){const prev=curZ;curZ=id;if(prev===undefined)return;if(z)banner(z.n,z.s);else if(id==='city'&&prev)banner('Port-Aurore','Centre-ville');}}
 /* ---------------- branchements ---------------- */
 const _uP=updatePlayer;updatePlayer=function(dt){if(FL.on)return;if(SIT.on){const i=(panelOpen||chatOpen)?{x:0,z:0}:getInput();if(Math.hypot(i.x,i.z)>.3){standUp();_uP(dt);return;}const s=SIT.s,m=player.mesh;player.x=s.x;player.z=s.z;player.h=s.h;m.position.set(s.x,.08,s.z);m.rotation.set(0,s.h,0);player.moving=0;state.energy=Math.min(100,state.energy+.12*dt);return;}_uP(dt);};
-const _uC=updateCamera;updateCamera=function(dt){_uC(dt);if(!started)return;if(FL.on){try{camFlight(dt);}catch(e){if(!FL.ce){FL.ce=1;console.warn('v27 cam',e);}}}};
+const _uC=updateCamera;updateCamera=function(dt){_uC(dt);if(!started)return;if(FL.on&&!FL.camLate){try{camFlight(dt);}catch(e){if(!FL.ce){FL.ce=1;console.warn('v27 cam',e);}}}};
 const _uPr=updatePrompt;updatePrompt=function(){if(FL.on){if(promptKey!==''){promptKey='';$('#prompt').hidden=true;}nearSpot=null;nearCar=null;nearPed=null;return;}_uPr();
   if(!panelOpen&&!chatOpen&&nearSpot&&typeof nearSpot.id==='string'){const id=nearSpot.id;let t=null;const ap=id.includes('@sol')?'sol':'pax',tk=S27.ticket&&S27.ticket.from===ap;
     if(id.startsWith('air27:secu'))t=tk?'E · Contrôle de sûreté ✓ billet '+S27.ticket.code:'E · Contrôle de sûreté · billet requis';if(id.startsWith('air27:gate'))t=tk?'E · Embarquer · '+FLIGHTS[ap].code+' vers '+FLIGHTS[ap].toN:'E · Porte '+FLIGHTS[ap].gate+' · billet requis';
     if(t&&t!==promptKey){promptKey=t;const b=$('#prompt');b.hidden=false;b.textContent=t;}}};
 const _int=interact;interact=function(){if(FL.on)return;if(SIT.on){standUp();return;}_int();};
-const _upd=update;update=function(dt){_upd(dt);dt=Math.max(0,dt);try{if(FL.on)tickFlight(dt);tickClouds(FL.on);tickAmb(dt);tickGates(dt);tickZones(dt);if(FL.plane&&!FL.on)tickPlaneLights27(FL.plane,performance.now()*.001,false);}catch(e){if(!FL.err){FL.err=1;console.warn('v27 vol',e);}}};
+const _upd=update;update=function(dt){_upd(dt);dt=Math.max(0,dt);try{if(FL.on){tickFlight(dt);if(FL.on&&FL.plane){FL.camLate=1;try{camFlight(dt);}catch(e){}}}tickClouds(FL.on);tickAmb(dt);tickGates(dt);tickZones(dt);if(FL.plane&&!FL.on)tickPlaneLights27(FL.plane,performance.now()*.001,false);}catch(e){if(!FL.err){FL.err=1;console.warn('v27 vol',e);}}};
 if(typeof updateMission==='function'){const _um=updateMission;updateMission=function(dt){if(inSol27()||FL.on){if(mission){mission=null;if(beam)beam.visible=false;}return;}_um(dt);};}
 const _obm=openBigMap;openBigMap=function(){if(FL.on){setView(FL.view==='carte'?'cine':'carte');return;}if(inSol27()&&started){toast('Le plan GPS couvre Port-Aurore. À Solenne, suis les panneaux : plage au sud, hôtel à l’est, marché à l’ouest.','warn');return;}_obm();};
 const _tph=togglePhone;togglePhone=function(){if(FL.on){toast('Mode avion activé ✈️','');return;}_tph();};
