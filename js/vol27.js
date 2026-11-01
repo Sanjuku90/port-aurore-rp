@@ -268,7 +268,48 @@ function sol(k){const buy=(n,c,fn,msg)=>({label:n+(c?' · '+fmt(c):''),off:state
   else if(k==='bar')openPanel('Le Coquillage','Les pieds dans le sable. Humeur '+Math.round(state.fun)+'.',[buy('Cocktail du lagon',9,()=>{state.fun=Math.min(100,state.fun+18);}),buy('Jus de coco',5,()=>{if(state.thirst!=null)state.thirst=Math.min(100,state.thirst+30);state.fun=Math.min(100,state.fun+5);}),buy('Soirée sur la plage',25,()=>{state.fun=Math.min(100,state.fun+40);state.energy=Math.max(0,state.energy-10);gameMin+=90;state.rep+=1;},'Soirée mémorable sur la plage ! +40 humeur')]);
   else if(k==='ponton')openPanel('Ponton de Solenne','Excursions en bateau autour de l’île.',[buy('Tour de l’île · 1 h',40,()=>{fade(true,()=>{gameMin+=60;state.fun=Math.min(100,state.fun+35);fade(false);});},'Des dauphins ont suivi le bateau 🐬 +35 humeur'),buy('Plongée au récif · 2 h',65,()=>{fade(true,()=>{gameMin+=120;state.fun=Math.min(100,state.fun+50);state.energy=Math.max(0,state.energy-15);fade(false);});},'Tortues et poissons-perroquets au récif ! +50 humeur')]);
   else if(k==='chapelle')openPanel('Chapelle Sainte-Anne','Petite chapelle blanche face au lagon. Un moment de calme.',[buy('Se recueillir',0,()=>{state.fun=Math.min(100,state.fun+8);gameMin+=15;},'Moment de sérénité. +8 humeur')]);}
-function zone(k){if(k==='stade'){const T=['Port-Aurore FC','Solenne Étoile','AS Littoral','Dockers United'],o=pick(T.slice(1));openPanel('Stade Aurore','Match du jour : Port-Aurore FC – '+o+'. 32 000 places, ambiance garantie.',[{label:'Billet tribune · '+fmt(15),off:state.cash+state.bank<15,fn:()=>{if(!pay27(15))return;fade(true,()=>{gameMin+=105;state.fun=Math.min(100,state.fun+30);state.rep+=1;const a=Math.floor(rand(0,4)),b=Math.floor(rand(0,3));fade(false);toast('Coup de sifflet final : Port-Aurore FC '+a+' – '+b+' '+o+'. +30 humeur','good');});}}]);}}
+function zone(k){
+  if(k==='stade'){const T=['Port-Aurore FC','Solenne Étoile','AS Littoral','Dockers United'],o=pick(T.slice(1));openPanel('Stade Aurore','Match du jour : Port-Aurore FC – '+o+'. 32 000 places, ambiance garantie.',[{label:'Billet tribune · '+fmt(15),off:state.cash+state.bank<15,fn:()=>{if(!pay27(15))return;fade(true,()=>{gameMin+=105;state.fun=Math.min(100,state.fun+30);state.rep+=1;const a=Math.floor(rand(0,4)),b=Math.floor(rand(0,3));fade(false);toast('Coup de sifflet final : Port-Aurore FC '+a+' – '+b+' '+o+'. +30 humeur','good');});}}]);return;}
+  const activity=(label,cost,fn,msg)=>({label:label+(cost?' · '+fmt(cost):''),off:state.cash+state.bank<cost,fn:()=>{if(cost&&!pay27(cost))return;fn();toast(msg,'good');}});
+  if(k==='cinema'){
+    const film=pick(['Les Marées d’Aurore','Dernier Tram pour Solenne','Le Gardien du Phare','Une Nuit au Port']);
+    openPanel('Cinéma Aurore','Six salles, séances toute la journée. À l’affiche : '+film+'.',[
+      activity('Séance · '+film,18,()=>{gameMin+=115;state.fun=Math.min(100,state.fun+30);},'Séance terminée. +30 humeur'),
+      activity('Pop-corn et soda',8,()=>{state.hunger=Math.min(100,state.hunger+12);if(state.thirst!=null)state.thirst=Math.min(100,state.thirst+14);},'Pause snack au cinéma.')
+    ]);return;
+  }
+  if(k==='mall'){
+    openPanel('Galerie du Port','Centre commercial du quartier : boutiques, restauration et services.',[
+      activity('Déjeuner au food court',14,()=>{state.hunger=Math.min(100,state.hunger+35);state.fun=Math.min(100,state.fun+7);gameMin+=35;},'Déjeuner pris. +35 faim'),
+      activity('Après-midi shopping',32,()=>{state.fun=Math.min(100,state.fun+22);gameMin+=55;},'Nouvelles boutiques découvertes. +22 humeur'),
+      activity('Pause au café',6,()=>{state.energy=Math.min(100,state.energy+8);if(state.thirst!=null)state.thirst=Math.min(100,state.thirst+20);},'Petite pause, ça repart.')
+    ]);return;
+  }
+  if(k==='campus'){
+    openPanel('Campus Aurore','Bibliothèque, amphithéâtre et ateliers ouverts aux habitants.',[
+      activity('Atelier de conduite responsable · 45 min',0,()=>{gameMin+=45;state.rep+=1;state.fun=Math.min(100,state.fun+8);},'Atelier terminé. Réputation +1'),
+      activity('Étudier à la bibliothèque · 1 h',0,()=>{gameMin+=60;state.energy=Math.max(0,state.energy-4);state.rep+=1;},'Une heure productive. Réputation +1')
+    ]);return;
+  }
+  if(k==='fire'){
+    openPanel('Caserne 7','Les pompiers accueillent le public pour des initiations aux premiers secours.',[
+      activity('Initiation aux premiers secours · 30 min',12,()=>{gameMin+=30;state.health=Math.min(100,state.health+12);state.rep+=1;},'Initiation réussie. Santé +12'),
+      activity('Visite de la caserne',0,()=>{gameMin+=15;state.fun=Math.min(100,state.fun+5);},'Les véhicules de secours sont impressionnants.')
+    ]);return;
+  }
+  if(k==='police'){
+    openPanel('Commissariat Nord','Accueil du public et ateliers de prévention routière.',[
+      activity('Atelier de prévention · 30 min',8,()=>{gameMin+=30;state.rep+=1;state.fun=Math.min(100,state.fun+5);},'Atelier terminé. Réputation +1'),
+      activity('Déclarer un objet perdu',0,()=>{gameMin+=10;},'Déclaration enregistrée à l’accueil.')
+    ]);return;
+  }
+  if(k==='museum'){
+    openPanel('Musée maritime','L’histoire du port, des phares et des grandes traversées de Port-Aurore.',[
+      activity('Entrée adulte',10,()=>{gameMin+=50;state.fun=Math.min(100,state.fun+18);},'Visite terminée. +18 humeur'),
+      activity('Exposition temporaire · « Les routes du lagon »',16,()=>{gameMin+=70;state.fun=Math.min(100,state.fun+26);state.rep+=1;},'Belle découverte. Humeur +26, réputation +1')
+    ]);
+  }
+}
 const _os27=openSpot;openSpot=function(id){if(typeof id==='string'){if(id.startsWith('air27:')){air(id.slice(6));return;}if(id.startsWith('sol27:')){sol(id.slice(6));return;}if(id.startsWith('zone27:')){zone(id.slice(7));return;}}_os27(id);};
 /* ---------------- trafic aérien d'ambiance (PAX) ---------------- */
 const AMB=window.AMB27={p:null,st:'wait',t:8,kind:'takeoff',hide(){if(AMB.p)AMB.p.visible=false;AMB.st='wait';AMB.t=30;}};

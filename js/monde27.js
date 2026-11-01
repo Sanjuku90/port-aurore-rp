@@ -152,13 +152,60 @@ function buildIndustry27(){
   for(let i=0;i<3;i++){const x=600+i*9,z=196;c27(x,9,z,3.6,18,0xd8dcdf);W27.parts.push(pp(CONE27,x,19.3,z,0xc9ced3,3.7,2.6,3.7));col27(x-3.6,x+3.6,z-3.6,z+3.6,true);}
   W27.zones.push({id:'zae',n:'Zone d’activités',s:'Entrepôts · logistique',x0:330,x1:740,z0:40,z1:207});
   return T;}
+/* ======================= quartier civique & loisirs ======================= */
+function buildCivic27(){
+  // Un nouveau quartier relié au boulevard nord et au périphérique.
+  road27(300,-300,300,-710,14,{lamps:24});
+  road27(300,-470,740,-470,12,{lamps:26});
+  road27(300,-610,740,-610,12,{lamps:24});
+  surf27(520,-540,420,64,.07,M27.conc,10);
+  surf27(520,-680,420,58,.07,M27.conc,10);
+  const civic=(x,z,w,d,h,c,label,spot,color)=>{
+    b27(x,h/2,z,w,h,d,c);
+    b27(x,h+.2,z,w+.8,.4,d+.8,shade(c,.72));
+    // Vitrine et entrée côté rue, avec enseigne lisible depuis la route.
+    b27(x,h*.34,z+d/2+.08,w*.62,h*.32,.12,0x29465b);
+    b27(x-w*.34,h*.22,z+d/2+.16,w*.1,h*.36,.16,0x252c34);
+    for(let i=0;i<5;i++){
+      const wx=x-w*.38+i*w*.19;
+      b27(wx,h*.68,z+d/2+.09,w*.105,1.4,.12,i%2?0x9fd3e8:0x6f9eb4);
+    }
+    const sg=sign27(label,Math.min(w*.82,22),1.7,'#'+color.toString(16).padStart(6,'0'),'#ffffff');
+    sg.position.set(x,h*.78,z+d/2+.17);scene.add(sg);
+    col27(x-w/2,x+w/2,z-d/2,z+d/2,true);
+    addSpot27(x,z+d/2+3.8,spot,color,label,1.05);
+  };
+  civic(390,-520,46,30,13,0x9c5360,'CINÉMA AURORE','zone27:cinema',0x9b59b6);
+  civic(510,-520,62,34,16,0x527e9c,'GALERIE DU PORT','zone27:mall',0x58d68d);
+  civic(650,-520,48,30,11,0xc49c53,'CAMPUS AURORE','zone27:campus',0x5aa9ff);
+  civic(390,-665,42,28,10,0xb4493e,'CASERNE 7','zone27:fire',0xe0523e);
+  civic(510,-665,42,28,11,0x34537b,'COMMISSARIAT NORD','zone27:police',0x3976c5);
+  civic(650,-665,48,30,12,0x657b72,'MUSÉE MARITIME','zone27:museum',0xe0a526);
+  // Parvis, bancs, arbres et arrêts de bus pour donner de la vie au quartier.
+  surf27(520,-445,118,22,.08,M27.grassS,8);
+  for(let i=0;i<6;i++){
+    const x=468+i*20;
+    c27(x,1.1,-459,.55,2.2,0x6b4a2a);
+    W27.parts.push(pp(CONE27,x,3.2,-459,pick([0x4f8c52,0x5fa65c]),1.7,2.8,1.7));
+  }
+  [[350,-445],[700,-445],[350,-592],[700,-592]].forEach(([x,z])=>{
+    b27(x,.55,z,3.8,.16,1.2,0x6b4a2a);b27(x,.9,z-.42,3.8,.7,.16,0x6b4a2a);
+    lamp27(x+4,z,7,Math.PI/2);
+  });
+  const bus=sign27(['NAVETTE NORD','Centre-ville · Stade'],4.5,1.5,'#1f7a52','#ffffff');
+  bus.position.set(318,2.2,-442);bus.rotation.y=Math.PI/2;scene.add(bus);
+  // Les nouveaux carrefours deviennent des destinations possibles des métiers.
+  [[330,-470],[450,-470],[570,-470],[700,-470],[330,-610],[450,-610],[570,-610],[700,-610],[330,-710],[700,-710]]
+    .forEach(([x,z])=>NODES.push({x,z}));
+  W27.zones.push({id:'civique',n:'Quartier des Horizons',s:'Loisirs · services · campus',x0:300,x1:740,z0:-730,z1:-440});
+}
 function buildWind27(){
   W27.rotors=[];for(let i=0;i<6;i++){const x=320+i*80,z=-720+(i%2)*26;c27(x,30,z,1.1,60,0xf2f4f5);col27(x-1.2,x+1.2,z-1.2,z+1.2);
     const hub=new THREE.Group();hub.position.set(x,60,z+1.6);const bl=[];for(let k=0;k<3;k++){bl.push(pp(U27,0,9,0,0xf7f7f7,.9,18,.3,0,0,k*2.094));}
     const P=bl.map((p,k)=>{const m=new THREE.Matrix4().makeRotationZ(k*2.094);m.multiply(new THREE.Matrix4().makeTranslation(0,9,0)).multiply(new THREE.Matrix4().makeScale(.9,18,.3));return {g:U27,m,c:0xf7f7f7};});
     P.push(pp(sph(1.2),0,0,0,0xe9ecee));const m=new THREE.Mesh(mergeParts(P),M27.vc);m.castShadow=true;hub.add(m);b27(x,60,z-1,1.6,1.6,4,0xe9ecee);scene.add(hub);W27.rotors.push({g:hub,s:rand(.6,1)});}}
 function forests27(){
-  const T=[],ex=[[-290,290,-300,215],[-1005,-330,-260,215],[-800,-720,-760,215],[-200,140,-660,-280],[300,740,-300,215],[-320,580,-312,-288],[-306,-294,-307,-24],[300,750,-760,-680]];
+  const T=[],ex=[[-290,290,-300,215],[-1005,-330,-260,215],[-800,-720,-760,215],[-200,140,-660,-280],[300,740,-300,215],[300,750,-760,-440],[-320,580,-312,-288],[-306,-294,-307,-24],[300,750,-760,-680]];
   const free=(x,z)=>!ex.some(e=>x>e[0]-6&&x<e[1]+6&&z>e[2]-6&&z<e[3]+6)&&!(Math.abs(z+32)<14&&x<-270&&x>-360);
   for(let k=0,tr=0;k<430&&tr<9000;tr++){const x=rand(-990,750),z=rand(-750,200);if(!free(x,z))continue;const cl=Math.random()<.55;
     T.push({x,z,s:rand(.9,1.6),type:z<-400?(Math.random()<.65?'pine':'round'):pick(['round','round','pine','flam']),col:true});
@@ -436,7 +483,7 @@ function tickPlaneLights27(G,t,on){const L=G.userData.L,n=1-dayK27();L.navL.visi
 /* ======================= construction globale ======================= */
 function build27(){
   if(W27.built)return;W27.built=true;mats27();
-  buildRoads27();const tS=buildSuburb27();buildStadium27();const tI=buildIndustry27();buildWind27();
+  buildRoads27();const tS=buildSuburb27();buildStadium27();const tI=buildIndustry27();buildCivic27();buildWind27();
   const pax=buildPAX27();const sol=buildSOL27();
   trees27([].concat(tS,tI,forests27(),sol.T,[[-345.5,-150],[-345.5,-110],[-345.5,-80],[-345.5,-10],[-345.5,30],[-345.5,70],[-345.5,110],[-345.5,150]].map(([x,z])=>({x,z,s:1.2,type:'palm',col:true}))));
   terminalCrowd27(pax,22,10);terminalCrowd27(sol.TT,10,5);

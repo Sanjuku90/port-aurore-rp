@@ -1,3 +1,9 @@
+# Port-Aurore RP · v27 · extension du quartier des Horizons
+- Nouveau quartier connecté au boulevard nord : cinéma Aurore, Galerie du Port, campus, caserne, commissariat et musée maritime.
+- Parvis paysager, arbres, bancs, lampadaires, arrêt de navette et routes supplémentaires pour relier le quartier au reste de la ville.
+- Chaque bâtiment propose une activité jouable : séances de cinéma, restauration, shopping, ateliers, initiation aux premiers secours et visites du musée.
+- Les nouveaux carrefours alimentent aussi les destinations des missions de métiers pour faire circuler les joueurs dans ce nouveau secteur.
+
 # Port-Aurore RP · v27 · Horizons : carte agrandie, aéroports, vols et île de Solenne
 - Carte agrandie : de 512 m à ~1 760 m de large. Zone aéroportuaire à l’ouest (autoroute A1), quartier pavillonnaire « Les Hauts-Jardins » au nord, Stade Aurore (match du jour) et zone d’activités à l’est, périphérique avec circulation, forêts, éoliennes, collines repoussées.
 - Aéroport International de Port-Aurore (PAX) : terminal ouvert à visiter (portes coulissantes, comptoirs d’enregistrement, écrans des départs animés, contrôle de sûreté avec barrière, salle d’attente où s’asseoir, duty free, café, porte A1 avec passerelle), piste 36/18 balisée et éclairée la nuit, tour de contrôle, hangar, parkings, navettes. Des avions décollent et atterrissent en continu.
