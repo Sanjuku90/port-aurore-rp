@@ -11,7 +11,17 @@ const FLEET_CATALOG=[
   {id:'truck',label:'Camion de livraison',price:19500,kind:'truck',top:22,acc:.75,license:'pro'},
   {id:'police',label:'Véhicule de police',price:18000,kind:'police',top:30,acc:1.15,license:'service'},
   {id:'ambulance',label:'Ambulance',price:23500,kind:'ambulance',top:26,acc:.9,license:'service'},
-  {id:'firetruck',label:'Camion de pompiers',price:29500,kind:'firetruck',top:19,acc:.6,license:'service'}
+  {id:'firetruck',label:'Camion de pompiers',price:29500,kind:'firetruck',top:19,acc:.6,license:'service'},
+  {id:'benz',label:'Benz Berline Luxe',price:16000,kind:'benz',top:29,acc:1.0,license:'auto'},
+  {id:'lambo',label:'Lambo Wedge',price:42000,kind:'lambo',top:44,acc:1.5,license:'auto'},
+  {id:'ford',label:'Ford Muscle',price:9000,kind:'ford',top:38,acc:1.4,license:'auto'},
+  {id:'toyota',label:'Toyota Compacte',price:6000,kind:'toyota',top:25,acc:1.0,license:'auto'},
+  {id:'ferrari',label:'Ferrari Rouge GT',price:45000,kind:'ferrari',top:46,acc:1.55,license:'auto'},
+  {id:'porsche',label:'Porsche Coupé',price:26000,kind:'porsche',top:40,acc:1.45,license:'auto'},
+  {id:'bmw',label:'BMW Sport Sedan',price:13000,kind:'bmw',top:31,acc:1.1,license:'auto'},
+  {id:'honda',label:'Honda Citadine',price:5500,kind:'honda',top:24,acc:1.0,license:'auto'},
+  {id:'jeep',label:'Jeep Tout-Terrain',price:11000,kind:'jeep',top:24,acc:0.85,license:'auto'},
+  {id:'hyundai',label:'Hyundai Familiale',price:5000,kind:'hyundai',top:25,acc:1.0,license:'auto'}
 ];
 const VEHICLE_LICENSE={auto:'Permis B',moto:'Permis moto',pro:'Permis poids lourd',service:'Permis de service'};
 let fleetOwned=[],fleetPaint={},p4FuelTick=0,drivingExam=null;state.license=state.license||{};

@@ -1,7 +1,7 @@
 'use strict';
 /* ---------- voitures, sons, radio, taxi ---------- */
 let ambGain=null,ambLp=null,hgm=null,tgm=null,radioN=-1,radioT=null,radioStep=0;
-const CT={sedan:[1,1,1,27,1],suv:[1.06,1.2,1.06,25,0.9],sport:[1.06,0.84,1.03,34,1.35],danfo:[1.1,1.4,1.25,21,0.8],taxi:[1,1,1,27,1]};
+const CT={sedan:[1,1,1,27,1],suv:[1.06,1.2,1.06,25,0.9],sport:[1.06,0.84,1.03,34,1.35],danfo:[1.1,1.4,1.25,21,0.8],taxi:[1,1,1,27,1],benz:[1,1,1,29,1.0],lambo:[1,1,1,44,1.5],ford:[1,1,1,38,1.4],toyota:[1,1,1,25,1.0],ferrari:[1,1,1,46,1.55],porsche:[1,1,1,40,1.45],bmw:[1,1,1,31,1.1],honda:[1,1,1,24,1.0],jeep:[1,1,1,24,0.85],hyundai:[1,1,1,25,1.0]};
 function applyType(g,t){
   const k=CT[t];g.children[0].scale.set(k[0],k[1],k[2]);g.children[1].scale.set(k[0],k[1],k[2]);
   g.userData.wheels.forEach(w=>{w.position.x*=k[0];w.position.z*=k[2];});
@@ -80,7 +80,7 @@ function bindLook(){
   document.querySelectorAll('.look').forEach(row=>{
     const key=row.dataset.k;
     row.querySelectorAll('button').forEach(b=>{
-      const v=b.dataset.c!=null?parseInt(b.dataset.c,16):(['g','b','bag'].includes(key)?b.dataset.v==='true':b.dataset.v);
+      const v=b.dataset.c!=null?parseInt(b.dataset.c,16):(['g','b','bag','n','e','w'].includes(key)?b.dataset.v==='true':b.dataset.v);
       b.classList.toggle('on',look[key]===v);
       b.onclick=()=>{look[key]=v;row.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));preview();};
     });

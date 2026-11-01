@@ -114,14 +114,14 @@ function buildWorld(){
   for(let k=0,tr=0;k<18&&tr<150;tr++){
     const x=pick([-96,-32,32,96])+pick([-6,6]),z=Math.floor(rand(-2,3))*64+rand(-17,17);
     if(cars.some(o=>Math.hypot(o.x-x,o.z-z)<5))continue;
-    addCar(x,z,Math.random()<0.5?0:Math.PI,pick(CAR_COLORS),'parked',pick(['sedan','suv','sport','sedan','suv']));k++;
+    addCar(x,z,Math.random()<0.5?0:Math.PI,pick(CAR_COLORS),'parked',pick(['sedan','suv','sport','sedan','suv','benz','toyota','bmw','honda','hyundai','jeep','ford','porsche','lambo','ferrari']));k++;
   }
   // circulation
   for(let k=0;k<18;k++){
     const axis=Math.random()<0.5?'z':'x',dir=Math.random()<0.5?1:-1,rc=pick(roadC);
     let x,z,h;const s=axis==='z'?rand(-214,180):rand(-250,250);
     if(axis==='z'){x=rc-3.5*dir;z=s;h=dir>0?0:Math.PI;}else{z=rc+3.5*dir;x=s;h=dir>0?Math.PI/2:-Math.PI/2;}
-    const ty=pick(['sedan','sedan','suv','sport','danfo','danfo','taxi']),c=addCar(x,z,h,ty==='danfo'?0xf2c200:ty==='taxi'?0xf5c400:pick(CAR_COLORS),'npc',ty);c.lane={axis,dir};c.maxV=rand(8,12);c.v=c.maxV;
+    const ty=pick(['sedan','sedan','suv','sport','danfo','danfo','taxi','toyota','bmw','honda','hyundai','benz','jeep','ford']),c=addCar(x,z,h,ty==='danfo'?0xf2c200:ty==='taxi'?0xf5c400:pick(CAR_COLORS),'npc',ty);c.lane={axis,dir};c.maxV=rand(8,12);c.v=c.maxV;
   }
   // habitants
   for(let k=0;k<56;k++)spawnPed();

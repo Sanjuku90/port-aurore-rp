@@ -26,7 +26,7 @@ function update(dt){
     updatePrompt();
     hudT-=dt;if(hudT<=0){hudT=0.2;updateHud();}
     miniT-=dt;if(miniT<=0){miniT=0.05;updateMini();}
-    if(engGain){const t=player.car?Math.min(1,0.25+Math.abs(player.car.v)/20)*0.05*(muted?0:1):0;engGain.gain.setTargetAtTime(t,actx.currentTime,0.08);engOsc.frequency.setTargetAtTime(36+(player.car?Math.abs(player.car.v)*4.2:0),actx.currentTime,0.08);}
+    if(engGain)engineUpdate19();
   }
 }
 let last=performance.now();

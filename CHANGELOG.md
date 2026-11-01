@@ -1,3 +1,36 @@
+# Port-Aurore RP · v19 · voitures refaites
+## Manette
+- Prise en charge des manettes (Xbox, PlayStation et compatibles) : stick gauche pour marcher et conduire, stick droit pour la caméra.
+- A interagir, B fermer, X klaxon, Y téléphone, LB sac à dos, RB carte, Start pause, RT courir, LT frein.
+- Croix directionnelle pour naviguer dans les menus et les panneaux, A pour valider.
+
+## Sons
+- Chaque modèle a son moteur : timbre, grave, grondement et cadence des cylindres (4 cylindres, V8 rugissant, moteur plat, moto, bus diesel…).
+- Le son suit la vitesse et la montée des régimes de la voiture conduite.
+- Les voitures de la circulation restent sur le son générique.
+
+## Voitures
+- 10 nouveaux modèles achetables au concessionnaire : Benz Berline Luxe, Lambo Wedge, Ford Muscle, Toyota Compacte, Ferrari Rouge GT, Porsche Coupé, BMW Sport Sedan, Honda Citadine, Jeep Tout-Terrain, Hyundai Familiale.
+- Chaque modèle a ses proportions (longueur, largeur, hauteur, garde au sol, roues) et apparaît aussi dans la circulation.
+- Rendu : feux de jour LED sur les phares, bas de caisse et diffuseur arrière sur les sportives.
+- Les sportives gardent jantes, étriers et aileron de la v7.
+
+# Port-Aurore RP · v18 · personnage et accessoires
+- Personnage amélioré : vêtements avec coutures, boutons et poches; visage, chaussures et sac à dos plus détaillés.
+- Accessoires visibles et personnalisables dès la création : lunettes, barbe, sac à dos, collier, boucles d’oreilles et montre.
+- Les choix du personnage sont conservés dans la sauvegarde et visibles dans l’aperçu 3D.
+
+# Port-Aurore RP · v17 · la ville vit avec toi
+Inspiré de Lagos Life et de OneState RP. Ajouts co-conçus avec ClickUp Brain.
+- Départ dans la vie au moment de créer le perso : Héritier ($4 500 + berline + permis B, mais XP −25 %), Standard, ou Débrouillard ($60 + micro-crédit de $300 remboursé $30/jour, missions +10 %, XP +25 %).
+- Compétences (Conduite, Technique, Charisme, Commerce, Forme), niveaux 1 à 10 : études à la Bibliothèque (ouest) et XP à chaque mission. Bonus de paie, de bénéfices, besoins qui baissent moins vite.
+- Élection municipale tous les 2 jours de jeu : 3 candidats avec leur politique (paie, salaires, bénéfices, prix des transports), sondage en direct, vote en personne à la Mairie, campagne ($100). Le programme du gagnant s’applique à toute la ville.
+- Renommée niveaux 1 à 50 avec titres et primes, et 3 défis du jour (missions, km en voiture, études, course, transports, vote…).
+- Appli Transports : danfo, keke et okada, prix au km, embouteillages aux heures de pointe (7h-9h30, 17h-19h30), petite chute possible en okada.
+- Circuit des Docks (est du port) : 3 courses de rue en voiture, portiques, compte à rebours, faux départ, médailles or/argent/bronze, records.
+- Le Trèfle (nord-est) : machine à sous animée (3 mises, retour ~97 %) et bar.
+- Nouvelles applis : Ma Vie, Mairie, Transports. HUD : renommée, défis, maire, go-slow.
+
 # Port-Aurore RP · v15 · GPS, carte aérienne et déploiement
 - GPS avec vrai itinéraire calculé sur les rues (plus court chemin), tracé sur la mini-carte, sur le plan 2D et au sol en 3D avec chevrons animés.
 - Guidage dans le HUD : prochaine direction (à gauche, à droite, demi-tour), distance restante et temps estimé à pied ou en voiture.

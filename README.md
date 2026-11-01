@@ -1,6 +1,6 @@
 # Port-Aurore RP
 
-Jeu de rôle 3D dans le navigateur (Three.js embarqué, aucune dépendance externe à installer) : 17 métiers avec gameplay dédié, grades et promotions, entreprises, justice, immobilier, téléphone, GPS avec itinéraire et carte aérienne 3D.
+Jeu de rôle 3D dans le navigateur (Three.js embarqué, aucune dépendance externe à installer) : 17 métiers avec gameplay dédié, grades et promotions, entreprises, justice, immobilier, téléphone, GPS avec itinéraire et carte aérienne 3D, élections municipales, courses de rue, renommée et défis du jour, transports en commun, salle de jeux (v17).
 
 ## Lancer en local
 Le jeu est un site statique. Ouvre un terminal dans ce dossier :
@@ -24,7 +24,7 @@ npm run check
 ```bash
 git init
 git add .
-git commit -m "Port-Aurore RP v15"
+git commit -m "Port-Aurore RP v17"
 git branch -M main
 git remote add origin https://github.com/<ton-pseudo>/port-aurore-rp.git
 git push -u origin main

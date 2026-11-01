@@ -40,5 +40,5 @@ let panelOpen=false,chatOpen=false,mission=null,missionCd=2,impactCd=0,fineCd=0,
 const keys={};const joy={x:0,y:0,id:null};
 let blackout=0,cutCd=rand(90,160),look={s:0x3d7be0,k:0xd9a47c},nearPed=null,clouds=[],sea;
 const dummy=new THREE.Object3D();
-let actx=null,engOsc=null,engGain=null;
+let actx=null,engOsc=null,engGain=null,engLp=null;
 

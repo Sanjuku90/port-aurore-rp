@@ -34,6 +34,10 @@ function makePerson(shirt,pants,skin,hair,opt){
   P.push(pp(sph(0.11,10,8),-0.235,1.5,0,torsoC,1,0.9,0.95));
   P.push(pp(sph(0.11,10,8),0.235,1.5,0,torsoC,1,0.9,0.95));
   P.push(pp(cyl(0.2,0.255,0.06,14),0,1.56,0,torsoC,1,1,0.6));
+  /* col de vêtement et détails de couture */
+  if(top!=='tee')P.push(pp(cyl(0.072,0.072,0.045,10),0,1.59,0,shade(torsoC,0.78)));
+  if(top==='veste'||top==='long'){P.push(pp(bx(0.012,0.34,0.012),0,1.34,0.158,shade(torsoC,0.7)));for(let by=1.25;by<1.48;by+=.1)P.push(pp(sph(0.012,6,5),0,by,0.17,0xd9c18a));}
+  if(top==='tee'||top==='long'){P.push(pp(bx(0.095,0.12,0.012),-0.135,1.22,0.13,shade(torsoC,0.82)));P.push(pp(bx(0.095,0.12,0.012),0.135,1.22,0.13,shade(torsoC,0.82)));}
   if(top==='veste'){
     P.push(pp(bx(0.12,0.46,0.02),0,1.33,0.152,shirt));
     P.push(pp(bx(0.06,0.2,0.03),-0.08,1.47,0.15,shade(jacket,0.8),1,1,1,0,0,-0.35));
@@ -45,12 +49,13 @@ function makePerson(shirt,pants,skin,hair,opt){
   }else if(top==='long'){
     P.push(pp(bx(0.14,0.035,0.03),0,1.58,0.12,shade(shirt,0.75)));
   }
-  if(opt.bag||(opt.bag==null&&Math.random()<0.16)){const bc=pick([0x2b3445,0x7a2f2f,0x2f5a4a,0xe0a526]);P.push(pp(bx(0.3,0.36,0.14),0,1.32,-0.2,bc));P.push(pp(bx(0.24,0.12,0.04),0,1.2,-0.28,shade(bc,0.8)));}
+  if(opt.bag||(opt.bag==null&&Math.random()<0.16)){const bc=opt.bagColor||pick([0x2b3445,0x7a2f2f,0x2f5a4a,0xe0a526]);P.push(pp(bx(0.3,0.36,0.14),0,1.32,-0.2,bc));P.push(pp(bx(0.24,0.12,0.04),0,1.2,-0.28,shade(bc,0.8)));P.push(pp(bx(0.24,0.045,0.025),0,1.49,-0.28,shade(bc,1.15)));[-.115,.115].forEach(x=>P.push(pp(bx(.045,.3,.035),x,1.32,-.11,shade(bc,.72),1,1,1,-.12,0,0)));P.push(pp(bx(.065,.05,.012),0,1.32,-.294,0xb9a46a));}
   /* cou et tête */
   P.push(pp(cyl(0.058,0.066,0.12,8),0,1.62,0,skin));
   P.push(pp(sph(0.15,16,12),0,1.77,0,skin,1,1.12,1.05));
   P.push(pp(sph(0.036,6,5),-0.148,1.765,0,shade(skin,0.92),0.5,1,0.8));
   P.push(pp(sph(0.036,6,5),0.148,1.765,0,shade(skin,0.92),0.5,1,0.8));
+  P.push(pp(sph(0.012,6,5),-0.148,1.765,0.033,shade(skin,.72),.65,1,.6));P.push(pp(sph(0.012,6,5),0.148,1.765,0.033,shade(skin,.72),.65,1,.6));
   /* visage */
   [-0.055,0.055].forEach(x=>{
     P.push(pp(sph(0.026,8,6),x,1.785,0.151,0xf4f1ea,1,0.85,0.5));
@@ -60,9 +65,12 @@ function makePerson(shirt,pants,skin,hair,opt){
   P.push(pp(bx(0.032,0.05,0.04),0,1.752,0.155,shade(skin,0.9),1,1,1,-0.2,0,0));
   P.push(pp(bx(0.065,0.014,0.014),0,1.707,0.151,shade(skin,0.55)));
   if(opt.glasses||(opt.glasses==null&&Math.random()<0.14)){
-    P.push(pp(bx(0.075,0.04,0.012),-0.055,1.785,0.172,0x15151a));P.push(pp(bx(0.075,0.04,0.012),0.055,1.785,0.172,0x15151a));
-    P.push(pp(bx(0.3,0.012,0.012),0,1.797,0.16,0x15151a,1,1,1));
+    const frame=opt.frameColor||0x25242a;[-.055,.055].forEach(x=>{P.push(pp(bx(.082,.05,.014),x,1.785,.171,frame));P.push(pp(bx(.064,.034,.009),x,1.785,.18,0x8bb8c5));});
+    P.push(pp(bx(.024,.012,.014),0,1.797,.174,frame));P.push(pp(bx(.08,.012,.012),-.13,1.795,.16,frame));P.push(pp(bx(.08,.012,.012),.13,1.795,.16,frame));
   }
+  if(opt.earrings){[-.148,.148].forEach(x=>{P.push(pp(cyl(.018,.018,.025,8),x,1.72,.025,0xd9bf78));P.push(pp(sph(.018,8,6),x,1.70,.03,0xd9bf78));});}
+  if(opt.necklace){P.push(pp(cyl(.078,.078,.018,12),0,1.565,.025,0xd9bf78,1,1,1,.15,0,0));P.push(pp(sph(.022,8,6),0,1.51,.082,opt.pendantColor||0xd94f4f));}
+  if(opt.watch){P.push(pp(cyl(.059,.059,.045,10),-.36,1.22,.008,0x22262c,1,1,1,0,0,Math.PI/2));P.push(pp(bx(.068,.045,.015),-.36,1.22,.042,0xc7d5df));P.push(pp(bx(.045,.006,.004),-.36,1.22,.052,0x315e87));}
   if(opt.beard||(opt.beard==null&&style!=='long'&&style!=='chignon'&&Math.random()<0.2)){
     P.push(pp(new THREE.SphereGeometry(0.13,12,8,0,Math.PI*2,Math.PI*0.5,Math.PI*0.5),0,1.73,0.025,hair,1.05,1.05,1.05));
   }
@@ -85,7 +93,8 @@ function makePerson(shirt,pants,skin,hair,opt){
     if(shortLeg){th.length=0;th.push(pp(cyl(0.105,0.095,0.28,10),0,-0.14,0,pants,1,1,1.05));th.push(pp(cyl(0.08,0.078,0.18,10),0,-0.35,0,skin));}
     const hip=grp(g,th,x,0.9);
     const sh=[pp(cyl(0.08,0.062,0.4,10),0,-0.2,0,shinC),pp(sph(0.081,8,6),0,0,0,shinC),
-      pp(bx(0.135,0.085,0.27),0,-0.425,0.045,shoe),pp(bx(0.14,0.03,0.28),0,-0.47,0.045,shoe===0xf2f2ee?0xbdbdb6:0xf2f2ee),pp(sph(0.07,8,6),0,-0.41,0.15,shoe,1,0.6,0.9)];
+      pp(bx(0.135,0.085,0.27),0,-0.425,0.045,shoe),pp(bx(0.14,0.03,0.28),0,-0.47,0.045,shoe===0xf2f2ee?0xbdbdb6:0xf2f2ee),pp(sph(0.07,8,6),0,-0.41,0.15,shoe,1,0.6,0.9),pp(bx(.075,.012,.07),0,-.405,.155,shade(shoe,.72))];
+    for(let ly=-.40;ly>-.46;ly-=.025)sh.push(pp(bx(.045,.007,.008),0,ly,.19,shoe===0x1c1c1c?0xc8c8c8:0x343434));
     const knee=grp(hip,sh,0,-0.44);
     return [hip,knee];
   }
@@ -109,7 +118,7 @@ function makePerson(shirt,pants,skin,hair,opt){
   castAll(g);return g;
 }
 function makePlayerMesh(){
-  return makePerson(look.s,look.p||0x2b3445,look.k,look.h||0x1a1410,{style:look.y||'court',top:look.t||'tee',bottom:'pantalon',bag:false,glasses:false,beard:false,shoe:0xf2f2ee,jacket:0x2b3445,capColor:0xd94f4f});
+  return makePerson(look.s,look.p||0x2b3445,look.k,look.h||0x1a1410,{style:look.y||'court',top:look.t||'tee',bottom:look.bt||'pantalon',bag:!!look.bag,glasses:!!look.g,beard:!!look.b,shoe:look.f!=null?look.f:0xf2f2ee,earrings:!!look.e,necklace:!!look.n,watch:!!look.w,jacket:look.j||0x2b3445,capColor:look.cap||0xd94f4f});
 }
 function animPerson(g,phase,amp,run){
   const u=g.userData,s=Math.sin(phase)*amp,c=Math.cos(phase)*amp,a=0.8+(run?0.5:0),z=0.07+(run?0.08:0);

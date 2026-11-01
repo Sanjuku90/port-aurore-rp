@@ -9,10 +9,10 @@ function bindStartMenu(){
   const show=(view)=>{menu.hidden=view!=='menu';guide.hidden=view!=='guide';intro.hidden=view!=='creator';};
   function prepareNewCharacter(){
     $('#fn').value='Alex';$('#ln').value='Martin';
-    look={s:0x3d7be0,k:0xd9a47c,h:0x1a1410,y:'court',t:'tee',bt:'pantalon',p:0x2b3445,g:false,b:false};
+    look={s:0x3d7be0,k:0xd9a47c,h:0x1a1410,y:'court',t:'tee',bt:'pantalon',p:0x2b3445,g:false,b:false,bag:false,n:false,e:false,w:false};
     document.querySelectorAll('.look').forEach(row=>{
       const key=row.dataset.k,buttons=[...row.querySelectorAll('button')];
-      const match=buttons.find(b=>b.dataset.c!=null?parseInt(b.dataset.c,16)===look[key]:(['g','b','bag'].includes(key)?(b.dataset.v==='true')===look[key]:b.dataset.v===look[key]));
+      const match=buttons.find(b=>b.dataset.c!=null?parseInt(b.dataset.c,16)===look[key]:(['g','b','bag','n','e','w'].includes(key)?(b.dataset.v==='true')===look[key]:b.dataset.v===look[key]));
       if(match)match.click();
     });
     show('creator');

@@ -28,3 +28,16 @@
 # v14
 - Chaque métier a désormais sa propre mécanique (tournées, poursuites, incendies, triage, pêche, diagnostics, mémoire). Détails dans CHANGELOG.md.
 - Test automatisé : une mission de chacun des 17 métiers lancée et terminée sans erreur.
+
+
+# v18 · Personnage et accessoires
+- Modèle du personnage enrichi : finitions des vêtements, visage et chaussures, sac à dos détaillé.
+- Création du personnage : réglages visuels du sac à dos, collier, boucles d’oreilles et montre, en plus des options déjà présentes.
+- Les accessoires sont rendus dans l’aperçu et dans le jeu; les choix restent sauvegardés.
+- Vérification de syntaxe réussie avec scripts/check.mjs.
+
+
+# v19 · Voitures
+- 10 modèles de marques ajoutés (Benz, Lambo, Ford, Toyota, Ferrari, Porsche, BMW, Honda, Jeep, Hyundai) : proportions tuées par modèle, achetables et dans la circulation.
+- Feux de jour et diffuseur arrière ajoutés; contrôle de syntaxe réussi.
+- Rendu non vérifié visuellement dans l’environnement de build : à tester dans le navigateur.

@@ -5,7 +5,7 @@ state.thirst=80;
 const CAP=12,COLS=[0x3d7be0,0xd94f4f,0x4fb58a,0xe0b34a,0x8a5fc9,0x2f3a4a,0xf2f2ee],HCOLS=[0x1a1410,0x3a2616,0x6b4a2a,0xb08a4a,0x8a3a1e,0x9a9a9a],PN3=[0x2b3445,0x1c1c1c,0x5a4a3a,0x3d6fb0,0x7a2f2f];
 const nx=(a,v)=>a[(a.indexOf(v)+1)%a.length];
 function remesh(){const v=player.mesh.visible;scene.remove(player.mesh);player.mesh=makePlayerMesh();player.mesh.visible=v;scene.add(player.mesh);}
-makePlayerMesh=function(){return makePerson(look.s,look.p||0x2b3445,look.k,look.h||0x1a1410,{style:look.y||'court',top:look.t||'tee',bottom:look.bt||'pantalon',bag:!!look.bag,glasses:!!look.g,beard:!!look.b,shoe:look.f!=null?look.f:0xf2f2ee,jacket:0x2b3445,capColor:0xd94f4f});};
+makePlayerMesh=function(){return makePerson(look.s,look.p||0x2b3445,look.k,look.h||0x1a1410,{style:look.y||'court',top:look.t||'tee',bottom:look.bt||'pantalon',bag:!!look.bag,glasses:!!look.g,beard:!!look.b,shoe:look.f!=null?look.f:0xf2f2ee,earrings:!!look.e,necklace:!!look.n,watch:!!look.w,jacket:look.j||0x2b3445,capColor:look.cap||0xd94f4f});};
 const mkO=re=>(l,c,f)=>({label:l+' · '+fmt(c),off:state.cash<c,fn:()=>{if(state.cash>=c){state.cash-=c;f();remesh();toast('Look mis à jour.','good');}re();}});
 function coiffeur(){const o=mkO(coiffeur);
   openPanel('Salon de coiffure','Coiffure : '+HAIR_LABELS[look.y||'court']+'. Barbe : '+(look.b?'oui':'non')+'. Essaie, change, recommence.',[
