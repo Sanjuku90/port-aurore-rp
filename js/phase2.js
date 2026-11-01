@@ -280,5 +280,5 @@ function buildPhase2(){
 function updatePhase2(dt){
   TL.t+=dt;TL.mz.color.setHex(TLC[lightState('z')]);TL.mx.color.setHex(TLC[lightState('x')]);
   updateWeather(dt);
-  if(started&&!player.inside){const D=distAt(player.x,player.z);if(D!==curD){curD=D;toast(D.n,'');}}
+  if(started&&!player.inside&&Math.abs(player.x)<262&&player.z>-262){const D=distAt(player.x,player.z);if(D!==curD){curD=D;toast(D.n,'');}}
 }

@@ -1,3 +1,10 @@
+# Port-Aurore RP · v27 · Horizons : carte agrandie, aéroports, vols et île de Solenne
+- Carte agrandie : de 512 m à ~1 760 m de large. Zone aéroportuaire à l’ouest (autoroute A1), quartier pavillonnaire « Les Hauts-Jardins » au nord, Stade Aurore (match du jour) et zone d’activités à l’est, périphérique avec circulation, forêts, éoliennes, collines repoussées.
+- Aéroport International de Port-Aurore (PAX) : terminal ouvert à visiter (portes coulissantes, comptoirs d’enregistrement, écrans des départs animés, contrôle de sûreté avec barrière, salle d’attente où s’asseoir, duty free, café, porte A1 avec passerelle), piste 36/18 balisée et éclairée la nuit, tour de contrôle, hangar, parkings, navettes. Des avions décollent et atterrissent en continu.
+- Vol AA 274 / AA 275 : billet au comptoir (éco ou affaires, carte d’embarquement), sûreté, embarquement, puis vol complet suivi en direct : repoussage, roulage, décollage, montée, croisière au-dessus des nuages, descente, atterrissage et roulage jusqu’à la porte. Caméras Cinéma / Extérieure / Hublot / Cabine (V), carte de suivi type écran de bord (M), annonces du commandant, son des réacteurs, vitesse ×1/×2/×4, « Passer ».
+- Nouvelle carte : Île de Solenne (SLN), aéroport, village créole, marché, Hôtel Lagon Bleu (nuit, piscine, spa), bar de plage, ponton (excursion, plongée), chapelle, phare, plage et lagon.
+- Menu principal professionnel : écran titre, menu vertical sur fond cinématique (port, avenue, piste avec décollage, terminal, Solenne), aperçu de sauvegarde, paramètres à onglets (graphismes, caméra, audio, vol), écran de chargement avec astuces, créateur de personnage plein écran à onglets, pause repensée, appli téléphone « Vols ».
+
 # Port-Aurore RP · v26 · trajets réels et livreur en personne
 - Taxi, Prestige, okada (moto-taxi), keke et danfo : plus de téléportation. Le chauffeur part d’un carrefour, traverse la ville (feux, virages, circulation) et se gare au bord de la route à côté de toi.
 - Le chauffeur t’envoie un message à la commande et à son arrivée, puis attend jusqu’à 2 min 30 (rappel au bout d’une minute). Approche-toi et appuie sur E pour monter.

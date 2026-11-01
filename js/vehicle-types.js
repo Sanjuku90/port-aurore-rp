@@ -73,7 +73,7 @@ function bindLook(){
   const prev=$('#look-prev');let pr=null,pc=null,pm=null,prS=null;
   function preview(){
     if(!prev)return;
-    if(!pr){pr=new THREE.WebGLRenderer({canvas:prev,antialias:true,alpha:true});pr.setPixelRatio(Math.min(2,devicePixelRatio||1));pc=new THREE.PerspectiveCamera(30,1,0.1,20);pc.position.set(0,1.3,4.6);pc.lookAt(0,1.0,0);
+    if(!pr){pr=new THREE.WebGLRenderer({canvas:prev,antialias:true,alpha:true});pr.setPixelRatio(Math.min(2,devicePixelRatio||1));pc=new THREE.PerspectiveCamera(27,prev.width/prev.height,0.1,20);pc.position.set(0,1.25,5.2);pc.lookAt(0,0.98,0);
       prS=new THREE.Scene();const sc=prS;sc.add(new THREE.HemisphereLight(0xffffff,0x445566,0.9));const dl=new THREE.DirectionalLight(0xfff2d6,0.8);dl.position.set(2,3,4);sc.add(dl);      const loopP=()=>{if($('#start').hidden){pr.dispose&&pr.dispose();return;}if(pm){pm.rotation.y+=0.012;animPerson(pm,performance.now()*0.004,0,false);}pr.render(prS,pc);requestAnimationFrame(loopP);};requestAnimationFrame(loopP);}
     if(pm)prS.remove(pm);pm=makePlayerMesh();pm.rotation.y=pm.rotation.y||0.5;prS.add(pm);
   }

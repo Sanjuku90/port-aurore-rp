@@ -6,7 +6,7 @@ function resolvePlayer(){
     if(Math.abs(c.x-p.x)>4||Math.abs(c.z-p.z)>4)continue;
     carCircles(c).forEach(o=>{const dx=p.x-o.x,dz=p.z-o.z,d=Math.hypot(dx,dz);if(d<1.5&&d>0.001){p.x+=dx/d*(1.5-d);p.z+=dz/d*(1.5-d);}});
   }
-  const B=player.inside?player.inside.b:[-252,252,-252,207];player.x=clamp(p.x,B[0],B[1]);player.z=clamp(p.z,B[2],B[3]);
+  const B=player.inside?player.inside.b:worldB27(player.x);player.x=clamp(p.x,B[0],B[1]);player.z=clamp(p.z,B[2],B[3]);
 }
 function updatePlayer(dt){
   if(player.car){const c=player.car;driveCar(c,dt);player.x=c.x;player.z=c.z;player.h=c.h;player.amp=0;return;}

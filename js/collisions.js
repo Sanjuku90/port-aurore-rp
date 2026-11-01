@@ -33,7 +33,7 @@ function collideCarWorld(c){
       if(d<2.1&&d>0.001){const pen=2.1-d;c.x+=dx/d*pen*0.5;c.z+=dz/d*pen*0.5;hit=Math.max(hit,pen);}
     }
   });
-  c.x=clamp(c.x,-252,252);c.z=clamp(c.z,-252,207);
+  {const B=worldB27(c.x);c.x=clamp(c.x,B[0],B[1]);c.z=clamp(c.z,B[2],B[3]);}
   return hit;
 }
 

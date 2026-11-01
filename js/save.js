@@ -13,7 +13,7 @@ function loadProgress(){
     state.energy=n(s.energy,90,0,100);state.fun=n(s.fun,70,0,100);state.health=n(s.health,100,1,100);state.hunger=n(s.hunger,80,0,100);
     if(s.look&&typeof s.look.s==='number'&&typeof s.look.k==='number')look=s.look;
     gameMin=n(s.gameMin,10*60,0,1e7);
-    if(typeof s.x==='number'&&typeof s.z==='number')savedPos={x:clamp(s.x,-252,252),z:clamp(s.z,-252,207),h:n(s.h,Math.PI,-99,99),yaw:n(s.yaw,Math.PI,-99,99)};
+    if(typeof s.x==='number'&&typeof s.z==='number')savedPos={x:clamp(s.x,SOL27.x-470,760),z:clamp(s.z,-760,292),h:n(s.h,Math.PI,-99,99),yaw:n(s.yaw,Math.PI,-99,99)};
     const p=(typeof s.name==='string'?s.name:'').split(' ');if(p[0])$('#fn').value=p[0];if(p[1])$('#ln').value=p.slice(1).join(' ');
   }catch(e){}
 }

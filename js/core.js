@@ -26,6 +26,10 @@ const INCID=['Cambriolage au port','Bagarre devant le club','Accident rue du Pha
 const TXT={taxi:['Client à bord. ','Client déposé. Pourboire inclus. ','Client déposé en retard. '],livreur:['Commande récupérée. ','Livré à temps. ','Livré en retard. '],police:['Suspect menotté. ','Intervention réussie. ','Intervention tardive. ']};
 const rankOf=()=>Math.min(4,Math.floor(state.rep/10));
 const MAP_EDGE=256,MAP_MIN=-256,MAP_MAX=256;
+/* v27 : carte agrandie (zone aéroportuaire, Hauts-Jardins, stade) + île de Solenne */
+const SOL27={x:-8000,z:0};
+function inSol27(x){return (x==null?player.x:x)<-3000;}
+function worldB27(x){return inSol27(x)?[SOL27.x-470,SOL27.x+470,-345,292]:[-1000,760,-760,207];}
 const roadC=[];for(let i=-3;i<=3;i++)roadC.push(i*64-32,i*64+32);roadC.splice(0,roadC.length,...Array.from(new Set(roadC)).filter(v=>v<=160).sort((a,b)=>a-b));
 const nodeX=[];for(let i=-3;i<=3;i++){nodeX.push(i*64-23,i*64+23);}
 const nodeZ=[];for(let j=-3;j<=2;j++){nodeZ.push(j*64-23,j*64+23);}
