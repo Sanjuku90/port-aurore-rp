@@ -1,4 +1,4 @@
-# Port-Aurore RP · v33 · Quartier automobile Aurore
+# Port-Aurore RP · v40.1 · trois villes, hôtels de luxe et TGV
 
 Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
 
@@ -93,3 +93,24 @@ Ne configure pas de Start Command, de base de données, de secret ou de serveur 
 - **Clients et employés parlent** : accueil, conversations client ↔ conseiller, clients interpellables (E).
 - **Fluidité mobile** : résolution adaptative selon les images par seconde, distance d’affichage réduite, peinture allégée, voitures lointaines masquées.
 - Commandes : **C** commandes de bord · **L** phares · **X** détresse · bouton **🚘 Bord** sur mobile.
+
+
+## v40 · Nouvelle-Aurore, TGV et bus parcourus
+- Ajout d’une troisième ville avec palais présidentiel, hôpital, université, aéroport, gare TGV, centre commercial, marché, banque, commissariat, caserne, palais de justice, stade, port, zone industrielle, logements, centre culturel et station d’épuration.
+- Les commerces, services publics et bâtiments principaux ont des interactions; les achats utilisent le même portefeuille et les mêmes besoins que le reste du jeu.
+- Trois nations disposent chacune d’un président interactif : Port-Aurore, Solenne et Nouvelle-Aurore.
+- TGV entre Port-Aurore et Nouvelle-Aurore, avec rame visible et déplacement progressif sur la voie. Solenne conserve sa liaison aérienne existante.
+- Bus urbain dans Nouvelle-Aurore : embarquement à un arrêt, déplacement visible sur le trajet et arrivée progressive à l’arrêt choisi, sans téléportation.
+- Optimisation initiale : mise en pause de la simulation des piétons et voitures lointains, avec reprise à proximité.
+
+Le contrôle de build valide la syntaxe JavaScript et les références de fichiers. Les trajets et interactions doivent encore être testés en jeu sur navigateur, clavier/manette et mobile avant publication.
+
+
+## v40.1 · Hôtels de luxe dans les trois nations
+- Grand Hôtel Port-Aurore et Grand Palace Nouvelle-Aurore, avec réceptionniste, halls accessibles et façade hôtelière. L’Hôtel Lagon Bleu de Solenne devient le Palace du Lagon Bleu.
+- À la réception, choix d’une chambre supérieure, Deluxe ou suite présidentielle; séjour de 24 heures de jeu avec expiration sauvegardée.
+- Suites intérieures visitables avec lit king size, salon, télévision, salle de bain, minibar et service en chambre. Retour au hall sans sortie forcée de l’hôtel.
+- Restaurant gastronomique, conciergerie, transfert aéroport, bagagerie, piscine, spa, hammam et massages interactifs.
+- La version v40 comprend aussi la troisième ville, ses infrastructures, commerces, présidences nationales, TGV et bus parcourus. Les véhicules lointains sont mis en pause pour alléger la simulation.
+
+Vérification exécutée : `node scripts/check.mjs` passe. Les parcours, réservations et interactions doivent être validés en navigateur avant publication.

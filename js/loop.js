@@ -6,6 +6,8 @@ function update(dt){
   $('#app').classList.toggle('cut',blackout>0);
   if(started){updatePlayer(dt);updateMission(dt);needs(dt);}
   cars.forEach(c=>{
+    const far=Math.abs(c.x-camera.position.x)>180||Math.abs(c.z-camera.position.z)>180;
+    if(far&&c!==player.car){c.mesh.visible=false;return;}
     if(c.kind==='npc')updateNpc(c,dt);
     c.mesh.position.set(c.x,0,c.z);c.mesh.rotation.y=c.h;
     const ac=(c.v-(c.pv||0))/Math.max(dt,0.001);c.pv=c.v;c.pt=(c.pt||0)+(clamp(-ac*0.004,-0.05,0.05)-(c.pt||0))*Math.min(1,8*dt);c.mesh.rotation.x=c.pt;

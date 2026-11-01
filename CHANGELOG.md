@@ -1,3 +1,22 @@
+# Changelog
+
+## v40.1 · Hôtellerie de luxe
+- Hôtels de luxe sur Port-Aurore et Nouvelle-Aurore; l’Hôtel Lagon Bleu est promu Palace du Lagon Bleu à Solenne.
+- Réceptionnistes, réservation de 24 h de jeu, chambres supérieures, Deluxe et suites présidentielles avec intérieurs accessibles.
+- Minibar, room service, restauration, conciergerie, transferts, bagagerie, spa, piscine, hammam et massages.
+
+## v40 · Nouvelle-Aurore
+- Troisième ville et infrastructures publiques interactives, commerces, présidence nationale.
+- TGV visible entre Port-Aurore et Nouvelle-Aurore; bus urbain parcouru physiquement dans la nouvelle ville.
+- Mise en pause de la simulation des piétons et voitures éloignés.
+
+
+## v40 · Nouvelle-Aurore
+- Troisième ville avec infrastructures publiques, services interactifs et commerces reliés au portefeuille du joueur.
+- Présidence interactive dans chacune des trois nations.
+- TGV visible entre Port-Aurore et Nouvelle-Aurore; bus urbain parcouru physiquement dans la nouvelle ville.
+- Simulation des piétons et voitures lointains mise en pause pour réduire le travail par image.
+
 ## v33
 - Quartier automobile Aurore : concession Prestige complète, étage, atelier SAV, piste chronométrée, Aurore Moto, Occasion, Exclusive, 11 nouveaux modèles, voitures interactives, achat/crédit/reprise/location, garage sauvegardé, appli Véhicules, fluidité mobile.
 
@@ -233,6 +252,60 @@ Voir NOTES_v12.md : 16 métiers, grades, XP, uniformes, véhicules pro, stationn
 
 - Correctif : la Phase 3 (v5) ne se chargeait pas à cause de deux noms déjà pris (SKINS, PANTS). Réparé.
 - Voitures : carrosserie arrondie extrudée (capot, pare-brise, toit, lunette), vitres teintées, montants, passages de roues, jupes latérales, phares et feux avec barre, roues à 5 branches. Berline, taxi, SUV (barres de toit), sportive (aileron), danfo.
+- Intérieurs : sols carrelés ou en parquet, murs avec soubassement, fenêtres, tableaux, mobilier détaillé par lieu (bureaux et écrans à Pôle Emploi, rayons et frigos à la supérette, guichet vitré, DAB et coffre à la banque, lit, canapé, TV et cuisine à l’appartement, DJ, bar, boule à facettes au club, lits et rideaux à l’hôpital, tables et vitrine au café, portants, mannequins et cabines à la boutique, rayons à la pharmacie).
+
+# Port-Aurore RP · v5 (phase 3 : personnage et vie quotidienne)
+
+- Salon de coiffure (repère rose) : coiffure, couleur de cheveux, barbe, teint, lunettes.
+- Boutique Mode : couleur et type de haut, bas (pantalon, short, jupe) et sa couleur, chaussures, sac à dos.
+- Sac à dos (touche I) : 12 objets, nourriture, boissons, soins.
+- Supérette et pharmacie : achats rangés dans le sac.
+- Soif ajoutée aux besoins ; la déshydratation fait perdre de la santé.
+- Maladie : la pluie prolongée dehors rend malade ; médicaments ou hôpital pour guérir.
+- Repos : s’asseoir fait regagner de l’énergie ; alertes de soif et d’épuisement.
+- Gestes (touche G) : saluer, danser, s’asseoir, applaudir.
+- Habitants : menu de relation (discuter, saluer, offrir un verre, danser, nouvelles) avec 4 niveaux.
+
+# v4
+
+## Personnages
+- Silhouettes arrondies : torse effilé, épaules, bassin, ceinture, mains, chaussures avec semelle.
+- Visages : yeux, sourcils, nez, bouche, oreilles ; lunettes et barbes aléatoires.
+- 8 coiffures (court, long, chignon, afro, queue, ras, casquette, chauve).
+- 5 tenues (t-shirt, manches longues, veste, sweat à capuche) + pantalon, short ou jupe, sacs à dos.
+- Genoux articulés : vraie foulée en marche et en course.
+- Habitants de tailles variées, palettes de couleurs élargies.
+- Création de perso : aperçu 3D qui tourne, choix cheveux / coiffure / tenue (sauvegardés).
+- Optimisation : les habitants lointains ne sont plus dessinés.
+
+## Bâtiments
+- Nouvelles façades : enduit, brique, pierre, verre, tôle ondulée (rideaux, stores, jardinières, rebords).
+- Rez-de-chaussée séparé : vitrines (portes roulantes pour les entrepôts), éclairées la nuit.
+- Tours à gradins en verre dans le centre, toits à deux pans dans Les Hauts, entrepôts au port.
+- Balcons, châteaux d’eau, antennes, cages d’escalier sur les toits.
+- Banque à colonnes, croix et héliport de l’hôpital, néons du Club, étals de fruits à la supérette.
+
+## Décor
+- Arbres détaillés : feuillus, flamboyants, sapins (Les Hauts), palmiers (Port).
+- Lampadaires à crosse, bordures de trottoir, fosses d’arbres.
+- Place : fontaine à étages avec jets d’eau animés, bancs, jardinières, drapeaux qui flottent.
+- Parc : allées, bassin avec nénuphars, massifs de fleurs, kiosque, bancs.
+- Mobilier urbain modélisé (bancs, abribus, poubelles, boîtes aux lettres, bollards, caisses, barils, haies).
+- Port : conteneurs empilés, 3 grues portiques, quai avec bollards et pneus, jetée et phare avec faisceau tournant la nuit.
+- Bateaux amarrés qui tanguent, voiliers au large, cargo, mouettes.
+- Mer et bassins avec vagues animées, herbe texturée, collines à l’horizon.
+
+## Véhicules
+- Calandre, plaques, rétroviseurs, joints de portières, poignées, passages de roues, bas de caisse.
+
+Gameplay, sauvegardes et contrôles inchangés.
+
+# v16 · Architecture et intégration
+## Bâtiments
+- 7 familles de façades : haussmannien (pierre, fenêtres à la française, garde-corps), volets colorés, brique à arcs, bandeaux modernes, mur-rideau réfléchissant, trame art déco, tôle industrielle. Plusieurs teintes par famille.
+- Fenêtres alignées en travées entières : plus de fenêtres coupées aux angles.
+- Silhouettes : pans coupés sur les angles de rue, angles arrondis « paquebot », socles + tours, tours art déco à gradins, maisons mitoyennes de hauteurs différentes.
+- Toits : mansardes en zinc avec lucarnes et cheminées, croupes et pignonsà 5 branches. Berline, taxi, SUV (barres de toit), sportive (aileron), danfo.
 - Intérieurs : sols carrelés ou en parquet, murs avec soubassement, fenêtres, tableaux, mobilier détaillé par lieu (bureaux et écrans à Pôle Emploi, rayons et frigos à la supérette, guichet vitré, DAB et coffre à la banque, lit, canapé, TV et cuisine à l’appartement, DJ, bar, boule à facettes au club, lits et rideaux à l’hôpital, tables et vitrine au café, portants, mannequins et cabines à la boutique, rayons à la pharmacie).
 
 # Port-Aurore RP · v5 (phase 3 : personnage et vie quotidienne)

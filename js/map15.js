@@ -1,7 +1,7 @@
 'use strict';
 /* ---------- v15 : GPS avec itinéraire routier + carte aérienne 3D ---------- */
 (function(){
-const POI={bank:['🏦','Services'],home:['🏠','Maison'],job:['💼','Emploi'],hospital:['🏥','Services'],shop:['🛒','Commerces'],club:['🪩','Loisirs'],cafe:['☕','Commerces'],boutique:['🛍️','Commerces'],pharma:['💊','Commerces'],dealership:['🚗','Commerces'],fuel:['⛽','Commerces'],garage:['🔧','Services'],drivingschool:['🚦','Services'],comm13:['🚓','Services'],court13:['⚖️','Services'],gend13:['🛡️','Services'],prison13:['🔒','Services'],coiffeur:['💇','Commerces'],'air27:*':['✈️','Services'],'zone27:*':['📍','Loisirs']};
+const POI={bank:['🏦','Services'],home:['🏠','Maison'],job:['💼','Emploi'],hospital:['🏥','Services'],shop:['🛒','Commerces'],club:['🪩','Loisirs'],cafe:['☕','Commerces'],boutique:['🛍️','Commerces'],pharma:['💊','Commerces'],dealership:['🚗','Commerces'],fuel:['⛽','Services'],garage:['🔧','Services'],drivingschool:['🚦','Services'],comm13:['🚓','Services'],court13:['⚖️','Services'],gend13:['🛡️','Services'],prison13:['🔒','Services'],coiffeur:['💇','Commerces'],'hotel40:*':['🏨','Services'],'sol28hotel':['🏨','Services'],'hotel40:pax':['🏨','Services'],'air27:*':['✈️','Services'],'zone27:*':['📍','Loisirs']};
 const ZONES=[['LES HAUTS',-10,-150],['CENTRE-VILLE',0,34],['QUARTIER DU PORT',0,170],['OCÉAN AURORE',0,238],['QUARTIER OUEST',-232,0],['QUARTIER EST',232,-20],['AÉROPORT INTERNATIONAL',-560,-40],['LES HAUTS-JARDINS',0,-470],['STADE AURORE',520,-150],['ZONE D’ACTIVITÉS',560,110]];
 const FILTERS=['Tout','Emploi','Commerces','Services','Loisirs','Maison'];
 const RC=roadC.slice().sort((a,b)=>a-b),LO=RC[0],HI=RC[RC.length-1];
