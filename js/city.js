@@ -3,7 +3,7 @@
 function buildWorld(){
   makeWallMats();
   const road=new THREE.Mesh(new THREE.PlaneGeometry(560,560),new THREE.MeshPhongMaterial({map:noiseTex('#2d3138',22,60),specular:0x0d0d0d,shininess:10}));
-  road.rotation.x=-Math.PI/2;road.receiveShadow=true;scene.add(road);
+  road.material.userData.road42=1;road.rotation.x=-Math.PI/2;road.receiveShadow=true;scene.add(road);
   const walkMat=new THREE.MeshPhongMaterial({map:tileTex('#8f9398'),specular:0x080808,shininess:6}),plazaMat=new THREE.MeshPhongMaterial({map:tileTex('#bdb6a6'),specular:0x080808,shininess:6});
   const grass=new THREE.Mesh(new THREE.PlaneGeometry(2200,2200),new THREE.MeshLambertMaterial({map:noiseTex('#3f6e46',26,220)}));grass.receiveShadow=true;grass.rotation.x=-Math.PI/2;grass.position.y=-0.05;scene.add(grass);
 

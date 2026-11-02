@@ -1,4 +1,4 @@
-# Port-Aurore RP · v40.1 · trois villes, hôtels de luxe et TGV
+# Port-Aurore RP · v45 · Lagune Noire
 
 Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
 
@@ -114,3 +114,13 @@ Le contrôle de build valide la syntaxe JavaScript et les références de fichie
 - La version v40 comprend aussi la troisième ville, ses infrastructures, commerces, présidences nationales, TGV et bus parcourus. Les véhicules lointains sont mis en pause pour alléger la simulation.
 
 Vérification exécutée : `node scripts/check.mjs` passe. Les parcours, réservations et interactions doivent être validés en navigateur avant publication.
+
+
+## v41 · Vie quotidienne et contrats
+- Refuge animalier dans Nouvelle-Aurore et Solenne : adoption d’un chien ou d’un chat, suivi qui accompagne le joueur à pied et monte en voiture, nourriture, toilette, promenade, dressage et garde pendant les déplacements.
+- Agenda interactif : concert, festival, match, course organisée, marché nocturne (après 18 h) et fête nationale. Les matchs et concerts utilisent les mini-jeux existants.
+- Contrats avec GPS et minuterie : livraison urgente, dépannage, transport VIP et trajet interurbain. Le contrat se valide par interaction à destination; le VIP exige une voiture.
+- Gestion du logement : factures journalières, réparations, baux, revenus locatifs et soirées à domicile avec les amis.
+- La base avait déjà baignade, activités de plage, beach-volley, pêche, météo pluie/orage/brouillard, alternance jour/nuit, douches, missions ambulance/pompier/police et transports. Ces systèmes sont conservés.
+
+Le contrôle de build vérifie la syntaxe, les références de fichiers, l’ordre de chargement et les points d’entrée des nouveaux systèmes. Les interactions en navigateur restent à tester avant publication.

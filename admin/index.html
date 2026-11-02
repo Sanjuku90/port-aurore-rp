@@ -1,0 +1,44 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin · Port-Aurore RP</title><meta name="robots" content="noindex">
+<style>
+:root{--bg:#0e1a24;--card:#162736;--line:#284257;--tx:#eaf3f8;--mu:#9db4c4;--ac:#f5c451;--ok:#58d68d;--bad:#ff7b6b}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(circle at 20% 0,#1d3b52,var(--bg) 60%);color:var(--tx);font:16px/1.45 system-ui,Segoe UI,Arial,sans-serif;display:flex;justify-content:center;padding:28px 14px}
+main{width:min(560px,100%)}h1{font-size:28px;margin:0 0 4px}p{color:var(--mu);margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap}.stat{flex:1;min-width:140px;background:#0f1e2a;border-radius:12px;padding:12px}.stat small{color:var(--mu);display:block}.stat b{font-size:22px}
+label{display:block;color:var(--mu);font-size:14px;margin:10px 0 6px}input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0f1e2a;color:var(--tx);font-size:16px}
+button{padding:12px 16px;border-radius:10px;border:0;font-weight:700;font-size:15px;cursor:pointer;background:var(--ac);color:#1d1400}button.ghost{background:#21384a;color:var(--tx)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chips button{background:#21384a;color:var(--tx);padding:8px 12px}
+#msg{min-height:22px;margin-top:10px;font-weight:600}.ok{color:var(--ok)}.bad{color:var(--bad)}ul{padding-left:18px;color:var(--mu);margin:0}a{color:var(--ac)}
+</style></head><body><main>
+<h1>🎁 Espace admin</h1><p>Cadeaux pour la sauvegarde de ce navigateur. <a href="../">Retour au jeu</a></p>
+<section class="card" id="lock"><label for="pin">Code admin</label><input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Choisis un code à la première ouverture"><div class="row" style="margin-top:12px"><button type="button" id="unlock">Déverrouiller</button></div><div id="lmsg"></div></section>
+<div id="panel" hidden>
+<section class="card"><div class="row"><div class="stat"><small>Joueur</small><b id="pname">-</b></div><div class="stat"><small>Cash</small><b id="pcash">$0</b></div><div class="stat"><small>Banque</small><b id="pbank">$0</b></div></div></section>
+<section class="card"><label for="amt">Montant du cadeau</label><input id="amt" type="number" min="1" max="1000000" step="1" value="1000">
+<div class="chips"><button type="button" data-v="500">$500</button><button type="button" data-v="1000">$1 000</button><button type="button" data-v="5000">$5 000</button><button type="button" data-v="25000">$25 000</button></div>
+<label for="dest">Verser sur</label><select id="dest"><option value="cash">Cash (en poche)</option><option value="bank">Compte bancaire</option></select>
+<label for="note">Message (optionnel)</label><input id="note" maxlength="60" placeholder="Bravo pour ta progression !">
+<div class="row" style="margin-top:14px"><button type="button" id="give">Envoyer le cadeau</button><button type="button" class="ghost" id="heal">Remplir les besoins</button></div><div id="msg"></div></section>
+<section class="card"><b>Historique</b><ul id="hist"></ul></section>
+<p>Recharge la page du jeu pour voir le cadeau. Ferme le jeu avant d’envoyer, sinon la prochaine sauvegarde automatique peut écraser le montant.</p>
+</div>
+<script>
+const SK='port-aurore-rp',PK='pa-admin-pin',HK='pa-admin-gifts';
+const $=s=>document.querySelector(s),fmt=n=>'$'+Math.round(n).toLocaleString('fr-FR');
+async function hash(t){const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('pa:'+t));return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');}
+const read=()=>{try{return JSON.parse(localStorage.getItem(SK)||'null');}catch(e){return null;}};
+function render(){const s=read();$('#pname').textContent=s&&s.name?s.name:'Aucune sauvegarde';$('#pcash').textContent=fmt(s?s.cash||0:0);$('#pbank').textContent=fmt(s?s.bank||0:0);
+ const h=JSON.parse(localStorage.getItem(HK)||'[]');$('#hist').innerHTML=h.length?h.slice(0,10).map(x=>'<li>'+new Date(x.t).toLocaleString('fr-FR')+' · '+fmt(x.a)+' ('+(x.d==='bank'?'banque':'cash')+')'+(x.n?' · '+x.n.replace(/[<>&]/g,''):'')+'</li>').join(''):'<li>Aucun cadeau envoyé.</li>';}
+$('#unlock').onclick=async()=>{const v=$('#pin').value.trim();if(v.length<4){$('#lmsg').innerHTML='<span class="bad">4 caractères minimum.</span>';return;}const h=await hash(v),cur=localStorage.getItem(PK);
+ if(!cur){localStorage.setItem(PK,h);}else if(cur!==h){$('#lmsg').innerHTML='<span class="bad">Code incorrect.</span>';return;}
+ $('#lock').hidden=true;$('#panel').hidden=false;render();};
+$('#pin').onkeydown=e=>{if(e.key==='Enter')$('#unlock').click();};
+document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{$('#amt').value=b.dataset.v;});
+$('#give').onclick=()=>{const s=read(),a=Math.floor(+$('#amt').value),d=$('#dest').value,m=$('#msg');
+ if(!s){m.className='bad';m.textContent='Aucune partie trouvée. Lance une partie une première fois.';return;}
+ if(!(a>0&&a<=1000000)){m.className='bad';m.textContent='Montant entre $1 et $1 000 000.';return;}
+ s[d]=Math.min(1e9,(s[d]||0)+a);const note=$('#note').value.trim();s.gift44={a,d,n:note,t:Date.now()};localStorage.setItem(SK,JSON.stringify(s));
+ const h=JSON.parse(localStorage.getItem(HK)||'[]');h.unshift({a,d,n:note,t:Date.now()});localStorage.setItem(HK,JSON.stringify(h.slice(0,30)));
+ m.className='ok';m.textContent='Cadeau de '+fmt(a)+' envoyé à '+(s.name||'ce joueur')+' !';render();};
+$('#heal').onclick=()=>{const s=read(),m=$('#msg');if(!s){m.className='bad';m.textContent='Aucune partie trouvée.';return;}['health','hunger','energy','fun'].forEach(k=>s[k]=100);localStorage.setItem(SK,JSON.stringify(s));m.className='ok';m.textContent='Besoins remplis.';};
+</script></main></body></html>

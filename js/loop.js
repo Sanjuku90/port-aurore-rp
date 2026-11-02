@@ -2,7 +2,7 @@
 /* ---------- boucle ---------- */
 function update(dt){
   gameMin+=dt*0.4;impactCd-=dt;fineCd-=dt;
-  if(started){cutCd-=dt;if(blackout>0){blackout-=dt;if(blackout<=0)toast('Le courant est revenu.','good');}else if(cutCd<=0){blackout=rand(35,60);cutCd=rand(150,260);toast('Coupure de courant ! Les commerces ferment.','warn');}}
+  if(started){cutCd-=dt;if(blackout>0){blackout-=dt;if(blackout<=0)toast('Le courant est revenu.','good');}else if(cutCd<=0){cutCd=typeof nextCut42==='function'?nextCut42():rand(1500,2700);if(!(typeof CUTS42!=='undefined'&&CUTS42.mode==='off')&&!player.inside){blackout=rand(18,28);toast('Courte coupure de courant (environ 20 s). Les commerces ferment un instant.','warn');}}}
   $('#app').classList.toggle('cut',blackout>0);
   if(started){updatePlayer(dt);updateMission(dt);needs(dt);}
   cars.forEach(c=>{

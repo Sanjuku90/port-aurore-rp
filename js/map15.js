@@ -1,7 +1,7 @@
 'use strict';
 /* ---------- v15 : GPS avec itinéraire routier + carte aérienne 3D ---------- */
 (function(){
-const POI={bank:['🏦','Services'],home:['🏠','Maison'],job:['💼','Emploi'],hospital:['🏥','Services'],shop:['🛒','Commerces'],club:['🪩','Loisirs'],cafe:['☕','Commerces'],boutique:['🛍️','Commerces'],pharma:['💊','Commerces'],dealership:['🚗','Commerces'],fuel:['⛽','Services'],garage:['🔧','Services'],drivingschool:['🚦','Services'],comm13:['🚓','Services'],court13:['⚖️','Services'],gend13:['🛡️','Services'],prison13:['🔒','Services'],coiffeur:['💇','Commerces'],'hotel40:*':['🏨','Services'],'sol28hotel':['🏨','Services'],'hotel40:pax':['🏨','Services'],'air27:*':['✈️','Services'],'zone27:*':['📍','Loisirs']};
+const POI={bank:['🏦','Services'],home:['🏠','Maison'],job:['💼','Emploi'],hospital:['🏥','Services'],shop:['🛒','Commerces'],club:['🪩','Loisirs'],cafe:['☕','Commerces'],boutique:['🛍️','Commerces'],pharma:['💊','Commerces'],dealership:['🚗','Commerces'],fuel:['⛽','Services'],garage:['🔧','Services'],drivingschool:['🚦','Services'],comm13:['🚓','Services'],court13:['⚖️','Services'],gend13:['🛡️','Services'],prison13:['🔒','Services'],coiffeur:['💇','Commerces'],'hotel40:*':['🏨','Services'],'life41:*':['🐾','Loisirs'],'sol28hotel':['🏨','Services'],'hotel40:pax':['🏨','Services'],'air27:*':['✈️','Services'],'zone27:*':['📍','Loisirs'],'lag44:*':['📍','Loisirs']};
 const ZONES=[['LES HAUTS',-10,-150],['CENTRE-VILLE',0,34],['QUARTIER DU PORT',0,170],['OCÉAN AURORE',0,238],['QUARTIER OUEST',-232,0],['QUARTIER EST',232,-20],['AÉROPORT INTERNATIONAL',-560,-40],['LES HAUTS-JARDINS',0,-470],['STADE AURORE',520,-150],['ZONE D’ACTIVITÉS',560,110]];
 const FILTERS=['Tout','Emploi','Commerces','Services','Loisirs','Maison'];
 const RC=roadC.slice().sort((a,b)=>a-b),LO=RC[0],HI=RC[RC.length-1];
@@ -83,7 +83,7 @@ function build(){const d=el('div');d.id='map3d';d.hidden=true;
   d.addEventListener('wheel',e=>{e.preventDefault();M3.h=clamp(M3.h*(1+e.deltaY*.0012),55,900);},{passive:false});
 }
 function buildPins(){const layer=M3.el.querySelector('#m3-layer');M3.pins.forEach(p=>p.e.remove());M3.pins=[];
-  spots.filter(s=>(POI[s.id]||POI[String(s.id).split(':')[0]+':*'])&&s.x>=-1010&&s.x<=770&&s.z>=-770&&s.z<=262).map(s=>{if(!POI[s.id])POI[s.id]=POI[String(s.id).split(':')[0]+':*'];return s;}).forEach(s=>{const P=POI[s.id],e=el('button','m3-pin','<span>'+P[0]+'</span><em>'+s.label+'</em>');e.onpointerdown=ev=>ev.stopPropagation();e.onclick=ev=>{ev.stopPropagation();setDest(s.x,s.z,s.label);};layer.insertBefore(e,M3.me);M3.pins.push({e,x:s.x,z:s.z,y:5,cat:P[1]});});}
+  spots.filter(s=>(POI[s.id]||POI[String(s.id).split(':')[0]+':*'])&&s.x>=-1010&&s.x<=770&&s.z>=-770&&s.z<=262).map(s=>{if(!POI[s.id])POI[s.id]=POI[String(s.id).split(':')[0]+':*'];return s;}).forEach(s=>{const P=POI[s.id],e=el('button','m3-pin','<span>'+P[0]+'</span><em>'+s.label+'</em>');e.onpointerdown=ev=>ev.stopPropagation();e.onclick=ev=>{ev.stopPropagation();setDest(s.x,s.z,s.label);};layer.insertBefore(e,M3.me);M3.pins.push({e,x:s.x,z:s.z,y:5,cat:s.category||P[1]});});}
 function m3Card(){if(!M3.el)return;const c=M3.el.querySelector('#m3-card'),r=R.main;
   if(r){c.innerHTML='<div class="m3-route"><i style="background:'+r.css+'">🧭</i><div><b>'+r.l+'</b><span>'+mDist(r.len)+' · ~'+eta(r.len)+(player.car?' en voiture':' à pied')+'</span></div></div>';
     const go=el('button','m3-go','Démarrer');go.onclick=()=>closePanel();c.appendChild(go);if(wp){const x=el('button','m3-clear','Effacer');x.onclick=()=>{wp=null;refresh();m3Card();};c.appendChild(x);}return;}
@@ -99,6 +99,7 @@ function pins(){const lbl=M3.h<210;M3.el.classList.toggle('m3-far',!lbl);
 function m3On(){if(!M3.el)build();buildPins();M3.on=true;panelOpen=true;for(const k in keys)keys[k]=false;M3.cx=player.x;M3.cz=player.z;M3.h=175;M3.far=camera.far;camera.far=2600;camera.updateProjectionMatrix();
   M3.el.hidden=false;const h=$('#hud');if(h)h.style.visibility='hidden';refresh();m3Card();}
 function m3Off(){if(!M3.on)return;M3.on=false;if(M3.el)M3.el.hidden=true;camera.far=M3.far;camera.updateProjectionMatrix();const h=$('#hud');if(h)h.style.visibility='';refresh();}
+window.M3=M3;window.m3On=m3On;window.m3Off=m3Off;window.M3refresh=refresh;
 const _cp=closePanel;closePanel=function(){m3Off();_cp();};
 openBigMap=function(){if(M3.on||!$('#bigmap').hidden){closePanel();return;}if(!started||paused||panelOpen||chatOpen)return;if(player.inside){toast('Sors du bâtiment pour ouvrir la carte.','warn');return;}m3On();};
 // retour 3D depuis le plan 2D

@@ -1,8 +1,8 @@
 {
   "name": "port-aurore-rp",
-  "version": "40.1.0",
+  "version": "45.0.0",
   "private": true,
-  "description": "Port-Aurore RP : jeu de rôle 3D navigateur avec trois villes, hôtellerie de luxe et transports.",
+  "description": "Port-Aurore RP : trois villes, 36 lieux visitables, saisons, vie quotidienne, animaux et transports.",
   "type": "module",
   "scripts": {
     "start": "npx --yes serve -l 8080 .",

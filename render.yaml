@@ -9,6 +9,10 @@ services:
       - key: NODE_VERSION
         value: 20
     pullRequestPreviewsEnabled: true
+    routes:
+      - type: rewrite
+        source: /admin
+        destination: /admin/index.html
     headers:
       - path: /*
         name: X-Content-Type-Options
@@ -19,3 +23,6 @@ services:
       - path: /index.html
         name: Cache-Control
         value: no-cache
+      - path: /admin/*
+        name: X-Robots-Tag
+        value: noindex

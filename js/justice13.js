@@ -44,7 +44,7 @@ function crimeStep(dt){
   if(m.stage==='pickup'){m.wk+=dt;if(m.wk<m.cr[3])return;m.stage='deliver';m.time=0;addHeat(m.cr[2]);toast('Fais vite : direction '+m.addr+'.','warn');return;}
   const late=m.time>m.limit,p=Math.round(m.pay*(late?.6:1.25)),o=S.org,rv=org(o)[3];
   state.cash+=p;state.earned+=p;S.dirty+=p;S.inf+=4;S.rep[o]=(S.rep[o]||0)+5;if(rv)S.rep[rv]=Math.max(0,(S.rep[rv]||0)-2);
-  if(m.cr[0].indexOf('Sabotage')===0){blackout=rand(35,60);toast('Coupure de courant dans le quartier !','warn');}
+  if(m.cr[0].indexOf('Sabotage')===0){blackout=rand(20,30);toast('Coupure de courant dans le quartier !','warn');}
   toast('Mission terminée : '+fmt(p)+' d’argent sale · '+RK[orgRk(o)],'good');addHeat(1);mission=null;beam.visible=false;sv();
 }
 const _um=updateMission;updateMission=function(dt){

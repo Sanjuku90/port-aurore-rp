@@ -31,7 +31,7 @@ function exterior(d){const g=new THREE.Group();g.position.set(d.x,0,d.z);scene.a
   const canopy=b(g,new THREE.BoxGeometry(19,.55,7),roof,0,6,18);canopy.castShadow=true;
   for(const dx of [-8,8]){const pole=b(g,new THREE.CylinderGeometry(.12,.16,5,8),gold,dx,2.5,20);}
 }
-function hotelRoom(id,title,d,kind,roomIndex){
+function hotelRoom(id,title,d,kind,roomIndex,key){
   const rx=5600+roomIndex*60,rz=2800+roomIndex*35,Ht=3.5,R=roomCtx(id,rx,rz,Ht);R.name=title;R.sp=[];
   const floor=mat(0x8c7558,.72),wall=mat(0xf0e8dc,.92),dark=mat(0x364452,.7),trim=mat(d.accent,.4,.35),windowM=mat(0x82b9d0,.2,.1);
   R.floor(-8,-6,8,6,floor,1.6);R.ceil(-8,-6,8,6,mat(0xf8f5ef));
@@ -58,7 +58,7 @@ function hotelRoom(id,title,d,kind,roomIndex){
    {label:'Prendre un bain · 30 min',fn:()=>{gameMin+=30;state.fun=Math.min(100,state.fun+15);state.health=Math.min(100,state.health+5);toast('Bain terminé. Humeur +15.','good');}},
    {label:'Demander des serviettes fraîches · $3',off:state.cash<3,fn:()=>{state.cash-=3;state.fun=Math.min(100,state.fun+3);toast('Serviettes fraîches livrées.','good');}}
   ]),{r:1.5});
-  R.G.traverse(o=>{if(o.isMesh)o.receiveShadow=true;});ROOMS[id]=R;return R;
+  if(typeof yard7==='function')yard7(R);R.G.traverse(o=>{if(o.isMesh)o.receiveShadow=true;});ROOMS[id]=R;return R;
 }
 function buildLobby(d,key,index){let R;
  if(key==='sol'&&ROOMS.sol28hotel)R=ROOMS.sol28hotel;
@@ -86,7 +86,7 @@ function buildLobby(d,key,index){let R;
    {label:'Accès piscine & fitness · $20',off:state.cash<20,fn:()=>{state.cash-=20;state.fun=Math.min(100,state.fun+16);state.health=Math.min(100,state.health+5);state.energy=Math.max(0,state.energy-5);toast('Séance terminée. Humeur +16.','good');}},
    {label:'Massage aux huiles · $55',off:state.cash<55,fn:()=>{state.cash-=55;state.health=100;state.fun=Math.min(100,state.fun+18);toast('Massage terminé. Santé au maximum.','good');}}
   ]),{r:1.8});
-  R.G.traverse(o=>{if(o.isMesh)o.receiveShadow=true;});ROOMS[id]=R;
+  if(typeof yard7==='function')yard7(R);R.G.traverse(o=>{if(o.isMesh)o.receiveShadow=true;});ROOMS[id]=R;
  }
  const old=R.ints.some(q=>q.label&&q.label.startsWith('Réceptionniste ·'));
  if(!old)R.int(0,-2.5,'Réceptionniste · chambres et services',()=>reception(d,key));
@@ -115,7 +115,7 @@ function reception(d,key){const rec=H.stay[key],valid=rec&&rec.until>gameMin,roo
  ])});
  openPanel('Réception · '+d.name,valid?'Bonjour '+state.name+'. Ta '+room.name+' est réservée jusqu’à expiration. Une chambre comprend salle de bain, lit king size, salon, télévision, minibar et service en chambre.':'Bienvenue. La réception est ouverte 24 h/24. Choisis ton type de chambre pour un séjour de 24 heures de jeu. Toutes les chambres comprennent salle de bain, lit king size, salon, télévision et minibar.',buttons);
 }
-function buildHotelSuite(d,key,index){for(const k of kinds){const id=d.suiteBase+':'+k.id;if(ROOMS[id])continue;hotelRoom(id,d.name+' · '+k.name,d,k.id,index*10+kinds.indexOf(k)+1);}}
+function buildHotelSuite(d,key,index){for(const k of kinds){const id=d.suiteBase+':'+k.id;if(ROOMS[id])continue;hotelRoom(id,d.name+' · '+k.name,d,k.id,index*10+kinds.indexOf(k)+1,key);}}
 function buildHotels(){if(H.built)return;H.built=true;
  // Port-Aurore
  exterior(H.defs.pax);buildLobby(H.defs.pax,'pax',0);buildHotelSuite(H.defs.pax,'pax',0);

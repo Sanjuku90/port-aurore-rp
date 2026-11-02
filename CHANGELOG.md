@@ -1,4 +1,41 @@
+## v42
+- Coupures de courant : rares (25 à 45 min) et courtes (18 à 28 s), réglables dans Pause (désactivées / rares / normales), jamais en intérieur.
+- Carte 3D réparée.
+- Nouvelle-Aurore : la ville se construit entièrement (bug bloquant corrigé), ~96 immeubles, trottoirs, passages piétons, lampadaires, arbres, voitures garées, passants, circulation.
+- TGV : viaduc surélevé, vraies gares avec quais, nouveau train 3 voitures, caméra de trajet ; bus jaune.
+- Hôtels : réception corrigée, chambres posées sur un vrai terrain (plus de vide au-dessus de la mer).
+- Course organisée de l'agenda : démarre au Circuit des Docks ; GPS de la gare TGV corrigé.
+
 # Changelog
+
+## v45 · Lagune Noire (refonte visuelle)
+- Rendu cinématique HDR : bloom en cascade (lampadaires, vitrines, néons et phares brillent la nuit), tonemapping ACES, étalonnage jour / heure dorée / nuit / intérieur, vignette, grain argentique, aberration chromatique, reflets d'environnement sur carrosseries et vitres.
+- Effets de jeu : flou radial à haute vitesse, voile rouge et battement de cœur quand la santé est basse, flash et secousse caméra à l'impact.
+- Nouvelle interface joueur : panneaux « lame » chanfreinés ambre sodium, nom en grand, jauges segmentées colorées, argent en grand avec gains/pertes animés, radar circulaire avec boussole et nom du quartier, compteur de vitesse analogique avec rapport engagé, invites de touche [E], notifications à icônes, bannières d'arrivée (Port-Aurore, Aéroport, Nouvelle-Aurore, Solenne, intérieurs).
+- Correctif : le bouton Pause chevauchait Sac/Gestes, il rejoint maintenant le rail central.
+- Écran titre, menu, créateur de personnage, pause, fenêtres, téléphone et commandes tactiles réhabillés (Anton + Chakra Petch).
+- Mode photo : F2 masque l'interface. Paramètres › Graphismes : Rendu cinématique (Désactivé / Cinématique / Ultra), grain, effets de vitesse. « Performance » coupe tout le post-traitement.
+
+## v44 · Métropole de la Lagune
+- 36 nouveaux lieux emblématiques répartis entre Port-Aurore, Nouvelle-Aurore et Solenne, chacun avec façade, intérieur visitable, accueil et activité contextualisée.
+- Marchandage de voitures d’occasion, balade équestre, snooker, examens avec diplômes sauvegardés, chorale, studio radio, entraînement, loisirs, santé, administration et hôtels.
+- Application « Guide Lagune » : liste filtrée par carte et catégorie, distances et repères GPS; Taxi reste disponible dans Port-Aurore, TGV/bus et avion dans les autres cartes.
+- 21 halls résidentiels visitables ajoutés pour densifier les quartiers; passants programmés fréquentent les lieux pendant la journée.
+- Console `/admin` pour attribuer un cadeau en argent à la sauvegarde locale active. Le jeu reste solo, aucune base de comptes en ligne n’est présente.
+
+
+## v43 · Saisons, routines et habitants mémorables
+- Cycle tropical de quatre saisons jouant sur 28 jours de jeu : saison sèche, Harmattan, saison des pluies et saison des fêtes, avec ambiance visuelle légère et état affiché.
+- À la maison : douche, brossage des dents et lessive avec cycle de lavage, usure quotidienne des vêtements et progression sauvegardée.
+- Les habitants gardent des souvenirs de vos conversations; ils proposent une course quotidienne avec GPS, délai et récompense.
+- Les systèmes existants de plage, secours, événements, animaux, contrats et immobilier restent en place.
+
+
+## v41 · Vie quotidienne, événements et animaux
+- Refuges animaliers, adoption et suivi des soins/activités des animaux de compagnie.
+- Agenda d’événements jouables : concerts, festival, match, course, marché nocturne et fête nationale.
+- Contrats chronométrés à livrer/intervenir, incluant transport VIP et liaison interurbaine TGV.
+- Factures et réparations du logement, baux et loyers journaliers, soirées à domicile.
 
 ## v40.1 · Hôtellerie de luxe
 - Hôtels de luxe sur Port-Aurore et Nouvelle-Aurore; l’Hôtel Lagon Bleu est promu Palace du Lagon Bleu à Solenne.
