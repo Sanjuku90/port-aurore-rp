@@ -1,8 +1,9 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Port-Aurore RP · La Lagune</title>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><title>Port-Aurore RP · Métropole des Trois Cités</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230b1b3a%27/%3E%3Cpath d=%27M12 44 32 14l20 30z%27 fill=%27%23f5c451%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=45"></head><body>
+<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=48"><link rel="stylesheet" href="css/phone49.css?v=49">
+</head><body>
 <div id="app">
   <canvas id="gl"></canvas>
   <div id="hud" hidden>
@@ -31,8 +32,14 @@
     <div id="toasts"></div>
     <div id="chatlog"></div>
     <button id="prompt" hidden></button>
-    <div id="joy"><div id="knob"></div></div>
-    <div id="btns"><button id="b-act">Action</button><button id="b-run">Courir</button><button id="b-chat">Chat</button><button id="b-phone">📱 Téléphone</button><button id="b-map">🗺 Carte</button></div>
+    <div id="joy-zone" aria-label="Zone de déplacement tactile"><div id="joy"><div id="knob"></div></div></div>
+    <div id="btns" aria-label="Commandes tactiles">
+      <button id="b-act" type="button" aria-label="Interagir"><span class="b-act-icon">E</span><span class="b-act-label">ACTION</span></button>
+      <button id="b-run" type="button" aria-label="Courir" aria-pressed="false">🏃</button>
+      <button id="b-chat" type="button" aria-label="Ouvrir le chat">💬</button>
+      <button id="b-phone" type="button" aria-label="Ouvrir le téléphone">📱</button>
+      <button id="b-map" type="button" aria-label="Ouvrir la carte">🗺️</button>
+    </div>
     <form id="chatbar" hidden><input id="chatin" maxlength="120" autocomplete="off" placeholder="Dire quelque chose (/me action · /do décor)"><button class="primary">Envoyer</button></form>
   </div>
   <div id="panel" hidden><div class="sheet"><h2 id="pn-title"></h2><p id="pn-text"></p><div id="pn-btns"></div></div></div>
@@ -120,14 +127,14 @@
 <script src="js/ui.js?v=31"></script>
 <script src="js/camera-env.js?v=31"></script>
 <script src="js/loop.js?v=42b"></script>
-<script src="js/input.js?v=31"></script>
+<script src="js/input.js?v=48"></script>
 <script src="js/audio.js?v=31"></script>
 <script src="js/engines19.js?v=31"></script>
 <script src="js/gamepad19.js?v=31"></script>
 <script src="js/save.js?v=31"></script>
 <script src="js/phone.js?v=31"></script>
 <script src="js/vehicle-types.js?v=31"></script>
-<script src="js/phase2.js?v=31"></script>
+<script src="js/phase2.js?v=48"></script>
 <script src="js/phase3.js?v=31"></script>
 <script src="js/kit7.js?v=31"></script>
 <script src="js/cars7.js?v=31"></script>
@@ -137,7 +144,7 @@
 <script src="js/house7.js?v=31"></script>
 <script src="js/life7.js?v=31"></script>
 <script src="js/hooks7.js?v=31"></script>
-<script src="js/pause.js?v=31"></script>
+<script src="js/pause.js?v=48"></script>
 <script src="js/phase4.js?v=31"></script>
 <script src="js/phase5-8.js?v=31"></script>
 <script src="js/archi16.js?v=31"></script>
@@ -169,7 +176,7 @@
 <script src="js/motors33-play.js?v=33"></script>
 <script src="js/motors33-svc.js?v=33"></script>
 <script src="js/motors33-drive.js?v=33"></script>
-<script src="js/perf33.js?v=33"></script>
+<script src="js/perf33.js?v=48"></script>
 <script src="js/nation40.js?v=42b"></script>
 <script src="js/hotels40.js?v=42b"></script>
 <script src="js/life41.js?v=42b"></script>
@@ -177,7 +184,13 @@
 <script src="js/cuts42.js?v=43"></script>
 <script src="js/life43.js?v=44"></script>
 <script src="js/lagune44.js?v=44"></script>
-<script src="js/fx45.js?v=45"></script>
-<script src="js/hud45.js?v=45"></script>
-<script src="js/main.js?v=45"></script>
+<script src="js/fx45.js?v=48"></script>
+<script src="js/hud45.js?v=48"></script>
+<script src="js/metro46-core.js?v=47"></script>
+<script src="js/metro46-rooms.js?v=46"></script>
+<script src="js/metro46-port.js?v=47"></script>
+<script src="js/metro47-expansion.js?v=47"></script>
+<script src="js/phone49-core.js?v=49"></script>
+<script src="js/phone49-apps.js?v=49"></script>
+<script src="js/main.js?v=48"></script>
 </body></html>

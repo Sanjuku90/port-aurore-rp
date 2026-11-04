@@ -5,7 +5,7 @@ function init(){
   const coarse=matchMedia('(pointer: coarse)').matches;
   renderer=new THREE.WebGLRenderer({canvas:cv,antialias:!coarse,powerPreference:'high-performance'});
   if(window.FX45)FX45.attach(renderer);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,coarse?1.25:1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,coarse?1.1:1.75));
   renderer.shadowMap.enabled=!coarse;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
   scene=new THREE.Scene();scene.background=new THREE.Color(0x8cc4f0);scene.fog=new THREE.Fog(0x8cc4f0,90,300);
   camera=new THREE.PerspectiveCamera(60,1,0.3,420);

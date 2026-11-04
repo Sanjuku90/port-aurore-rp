@@ -11,7 +11,7 @@
 const FX45=(function(){
   const LS='port-aurore-fx45';
   const coarse=matchMedia('(pointer: coarse)').matches;
-  const S={mode:coarse?1:2,grain:1,motion:1,ca:1};
+  const S={mode:coarse?0:2,grain:1,motion:1,ca:1};
   try{const o=JSON.parse(localStorage.getItem(LS)||'null');if(o&&typeof o==='object')Object.assign(S,o);}
   catch(e){}
   const save=()=>{try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}};

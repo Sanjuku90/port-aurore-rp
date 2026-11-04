@@ -1,3 +1,34 @@
+# v49 · Aurore OS (téléphone complet)
+- 10 applis reliées au gameplay : Aurore Social, Bank, GPS, Immo, Jobs, Auto, Market, Services, Travel, Life.
+- Notifications HUD avec boutons d'action (à pied et en voiture), appels entrants répondre/refuser, sonneries, mode silencieux.
+- Verrouillage personnalisable (fond, horloge, message, code PIN), recherche d'applis et de lieux, icônes déplaçables (appui long), badges (messages, factures, livraisons).
+- Réservations « payer → se déplacer → effet sur place » (table, médecin, contrôle technique, mairie, billets, réunions).
+- Carte bancaire gelable, épargne avec intérêts, prêts, crypto AUC, impôts, Internet, assurances, cambriolages, locataires, domotique facturée.
+- Mode conduite, mode vacances, économie de batterie, synchronisation par code PA49.
+
+## v48 · Commandes tactiles et fluidité mobile
+- Commandes de déplacement en joystick flottant: le joueur pose le pouce dans la zone gauche, le stick apparaît sous le doigt, avec deadzone et réponse progressive; capture du pointeur et reset à la pause, perte de focus ou annulation tactile.
+- Cluster d’actions dédié au pouce droit: interaction, course, chat, téléphone, carte et commandes du véhicule; raccourcis Carte/Téléphone retirés du HUD supérieur en tactile pour supprimer les doublons visibles dans la capture.
+- Caméra toujours orientable par glissement sur la surface de jeu; commandes et joystick respectent les zones sûres et s’adaptent au mode paysage.
+- Optimisation mobile: rendu cinématique post-traité désactivé par défaut sur appareils tactiles (réactivable dans Graphismes), résolution de rendu abaissée et adaptative, pluie ramenée de 1 100 à 420 particules.
+- Contrôle: syntaxe, présence des contrôles tactiles, ordre de chargement et version de cache vérifiés. Pas de navigateur mobile disponible ici: le rendu réel et le confort doivent encore être testés sur iPhone.
+
+## v47 · Déploiement de la Métropole
+- Déploiement réel des secteurs Platinum Heights, Aurore Grand Mall, Aurore Waterfront, Federal Boulevard, Diplomatic Quarter, Innovation City, University Heights, Nouvelle-Aurore Premium, Exhibition District, Corridor métropolitain, Emerald Coast, Solenne Marina, Pearl Island, Solenne Nature Reserve et Solenne International.
+- Plus de 60 nouveaux ensembles visitables: résidences achetables ou louables, grand mall, hôtels, marina, terminal de croisière, aquarium, ambassades, ministères, centres de recherche, pôle médical, congrès, logistique, contrôle routier et services autoroutiers.
+- Façades dédiées par famille (résidences, mall, resorts, terminaux, industrie, stations, parkings, villas); intérieurs à la demande réutilisant les systèmes v46.
+- Transports jouables: métro M1 à Port-Aurore, métro M2 à Nouvelle-Aurore, navette touristique à Solenne, autocar A1 et ferry Port-Aurore–Solenne. L’A1 contourne la piste PAX par le sud; aucune route ne traverse l’océan.
+- Ajout du centre de secours métropolitain, du dépôt de bus, de la centrale électrique, du traitement des eaux et du centre de recyclage, avec missions interactives.
+- Extension des voies piétonnes et des terrains, voiries locales, gares et repères GPS. L’aéroport PAX existant est conservé et complété par fret, parking et hôtel.
+- Vérification: syntaxe JavaScript, références de fichiers, ordre de chargement et marqueurs de couverture v47 contrôlés par `npm run check`. Le rendu et les parcours restent à valider dans un navigateur, notamment sur iPhone.
+
+## v46 · Fondations métropolitaines
+- Noyau de quartiers activables/désactivables, chargement progressif, déchargement, LOD à quatre niveaux, fenêtres instanciées, matériaux partagés et PNJ figés à distance.
+- Intérieurs construits à l’entrée et détruits à la sortie; familles de salles prêtes pour bureaux, banques, hôtels, logements, commerces, santé, diplomatie, recherche, expositions et logistique.
+- Économie, immobilier, entreprise, bourse, missions et application téléphone Métropole.
+- Premier secteur construit: Aurore Business District, avec ses tours, centre financier, bourse, hôtel et centre de congrès.
+- Correctif de sortie des intérieurs v44.
+
 ## v42
 - Coupures de courant : rares (25 à 45 min) et courtes (18 à 28 s), réglables dans Pause (désactivées / rares / normales), jamais en intérieur.
 - Carte 3D réparée.

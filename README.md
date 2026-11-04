@@ -1,6 +1,18 @@
-# Port-Aurore RP · v45 · Lagune Noire
+# Port-Aurore RP · v49 · Métropole des Trois Cités
 
 Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
+
+## v48 · commandes mobiles
+
+Commandes tactiles réorganisées en deux zones: joystick flottant sous le pouce gauche, glissement du pouce droit pour la caméra, et actions regroupées sous le pouce droit. Les boutons Carte/Téléphone ne sont plus dupliqués en haut et en bas. En mobile, le rendu cinématique est désactivé par défaut, le pixel ratio et les particules de pluie sont plafonnés pour réduire la charge GPU/CPU; les options graphiques restent réglables.
+
+## v47 · Expansion urbaine
+
+La v47 déploie les secteurs manquants autour de Port-Aurore, Nouvelle-Aurore et Solenne: Platinum Heights, Aurore Grand Mall, Aurore Waterfront, Federal Boulevard, Diplomatic Quarter, Innovation City, University Heights, Nouvelle-Aurore Premium, Exhibition District, Corridor métropolitain, Emerald Coast, Solenne Marina, Pearl Island, Solenne Nature Reserve et Solenne International.
+
+Les gares et intérieurs sont visitables; les quartiers chargent progressivement avec le noyau v46. Le métro dessert les nouveaux pôles, l’autocar suit l’A1 en contournant la piste de PAX, une navette dessert Solenne et un ferry relie les deux rives. Le centre de secours, la centrale électrique, le traitement des eaux, le recyclage et le dépôt de bus ont leurs missions. L’aéroport, le port de commerce, les hôtels et les bâtiments publics déjà présents sont conservés, pas recréés.
+
+`npm run check` valide la syntaxe, les fichiers référencés et l’ordre des modules. Ce contrôle ne remplace pas un essai visuel en navigateur ou sur iPhone: collisions, parcours et performances restent à tester avant publication.
 
 ## Lancer et vérifier en local
 
@@ -124,3 +136,7 @@ Vérification exécutée : `node scripts/check.mjs` passe. Les parcours, réserv
 - La base avait déjà baignade, activités de plage, beach-volley, pêche, météo pluie/orage/brouillard, alternance jour/nuit, douches, missions ambulance/pompier/police et transports. Ces systèmes sont conservés.
 
 Le contrôle de build vérifie la syntaxe, les références de fichiers, l’ordre de chargement et les points d’entrée des nouveaux systèmes. Les interactions en navigateur restent à tester avant publication.
+
+
+## v49 · Aurore OS
+Téléphone complet : voir CHANGELOG. Fichiers : js/phone49-core.js, js/phone49-apps.js, css/phone49.css.

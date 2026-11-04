@@ -3,7 +3,7 @@
 (function(){
 const COARSE=matchMedia('(pointer: coarse)').matches||('ontouchstart' in window);
 if(!COARSE)return;
-const dpr=window.devicePixelRatio||1,MAX=Math.min(dpr,1.35),MIN=.6;let pr=Math.min(dpr,1.1),last=performance.now(),acc=0,n=0,lastAdj=0;
+const dpr=window.devicePixelRatio||1,MAX=Math.min(dpr,1.2),MIN=.65;let pr=Math.min(dpr,1.05),last=performance.now(),acc=0,n=0,lastAdj=0;
 function apply(){if(typeof renderer==='undefined'||!renderer)return;if(Math.abs(renderer.getPixelRatio()-pr)>.01){renderer.setPixelRatio(pr);dispatchEvent(new Event('resize'));}}
 function frame(t){const dt=t-last;last=t;if(dt>0&&dt<250){acc+=dt;n++;}
   if(t-lastAdj>2000&&n>20){const fps=1000/(acc/n);if(fps<40&&pr>MIN){pr=Math.max(MIN,pr-.12);apply();}else if(fps>56&&pr<MAX){pr=Math.min(MAX,pr+.06);apply();}acc=0;n=0;lastAdj=t;}

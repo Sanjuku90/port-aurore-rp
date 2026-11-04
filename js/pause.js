@@ -4,7 +4,7 @@ let paused=false;
 function setPause(v){
   if(!started||v===paused)return;
   paused=v;$('#pause').hidden=!v;
-  if(v){for(const k in keys)keys[k]=false;joy.x=joy.y=0;closeChat();saveProgress();renderPause();try{if(actx&&actx.state==='running')actx.suspend();}catch(e){}}
+  if(v){for(const k in keys)keys[k]=false;if(window.resetTouchControls)window.resetTouchControls();else joy.x=joy.y=0;closeChat();saveProgress();renderPause();try{if(actx&&actx.state==='running')actx.suspend();}catch(e){}}
   else{last=performance.now();try{if(actx&&actx.state==='suspended'&&!muted)actx.resume();}catch(e){}}
 }
 function renderPause(){

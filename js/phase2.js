@@ -189,7 +189,7 @@ function addTraffic(n){
 /* ----- météo ----- */
 const WX=[['clair','Clair','☀️',0,1,0],['nuageux','Nuageux','⛅',.28,.8,0],['pluie','Pluie','🌧️',.5,.5,1],['orage','Orage','⛈️',.7,.35,1.6]];
 const WXNEXT=[[1,1,2],[0,0,2,3],[1,1,3],[2,2,1]];
-const wx={i:0,k:{dark:0,fog:1,rain:0},t:rand(100,180),flash:0,nf:8,N:1100,rain:null,base:null,el:null,c:new THREE.Color()};
+const wx={i:0,k:{dark:0,fog:1,rain:0},t:rand(100,180),flash:0,nf:8,N:matchMedia('(pointer: coarse)').matches?420:1100,rain:null,base:null,el:null,c:new THREE.Color()};
 function buildWeather(){
   const N=wx.N,b=[];
   for(let i=0;i<N;i++)b.push(rand(-20,20),rand(0,24),rand(-20,20));

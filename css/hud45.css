@@ -264,3 +264,83 @@ html.ui45 .touch #chatlog{bottom:176px}
 @media (max-width:900px){html.ui45 #h45-zone b{font-size:44px}}
 @media (max-height:520px){html.ui45 #left{width:200px}html.ui45 #stats .bar{margin-top:2px}html.ui45 #v17hud{display:none}html.ui45 #h45-radar{width:150px;height:150px}html.ui45 #h45-radar #mini{inset:12px;width:126px!important;height:126px!important}html.ui45 #chatlog{bottom:180px}}
 @media (prefers-reduced-motion:reduce){.pm-title,.pm-mark,html.ui45 .r45-ring{animation:none!important;transition:none!important}}
+
+/* v48 · commandes tactiles à deux pouces, sans doublons ni chevauchement */
+#joy-zone{display:none}
+html.ui45 .touch #joy-zone{
+  display:block;position:absolute;left:env(safe-area-inset-left,0px);
+  bottom:env(safe-area-inset-bottom,0px);width:56vw;width:min(56vw,460px);
+  height:55vh;height:min(55dvh,360px);
+  pointer-events:auto;touch-action:none;z-index:12
+}
+html.ui45 .touch #joy{
+  display:block;position:absolute;left:18px;top:auto;bottom:18px;width:120px;height:120px;
+  pointer-events:none;touch-action:none;border:2px solid rgba(255,174,43,.35);
+  background:radial-gradient(circle,rgba(255,174,43,.12),rgba(5,6,10,.62));
+  box-shadow:0 8px 24px rgba(0,0,0,.32);opacity:.56;transition:opacity .12s
+}
+html.ui45 .touch #joy.active{opacity:1}
+html.ui45 .touch #knob{left:34px;top:34px;width:48px;height:48px}
+html.ui45 .touch #right{
+  top:calc(8px + env(safe-area-inset-top,0px));right:calc(8px + env(safe-area-inset-right,0px));
+  width:148px;min-width:0;gap:4px;pointer-events:none
+}
+html.ui45 .touch #right #map-btn,html.ui45 .touch #right #ph-btn,
+html.ui45 .touch #right #speed{display:none!important}
+html.ui45 .touch #right #wx{max-width:148px;font-size:11px!important;padding:3px 8px!important}
+html.ui45 .touch #left{width:min(42vw,180px)}
+html.ui45 .touch #p3b{gap:4px}
+html.ui45 .touch #p3-bag,html.ui45 .touch #p3-em{
+  width:40px;min-width:40px;height:40px;padding:0!important;font-size:0!important
+}
+html.ui45 .touch #p3-bag::after,html.ui45 .touch #p3-em::after{font:20px/1 system-ui}
+html.ui45 .touch #p3-bag::after{content:"🎒"}
+html.ui45 .touch #p3-em::after{content:"🙌"}
+html.ui45 .touch #btns{
+  display:grid!important;position:absolute;right:calc(10px + env(safe-area-inset-right,0px));
+  bottom:calc(10px + env(safe-area-inset-bottom,0px));width:164px;
+  grid-template-columns:44px 44px 64px;grid-template-rows:44px 64px;gap:6px;
+  z-index:20;pointer-events:auto
+}
+html.ui45 .touch #btns button{
+  box-sizing:border-box;width:100%;height:100%;min-height:0;margin:0;padding:0;
+  display:flex;align-items:center;justify-content:center;touch-action:none;
+  -webkit-tap-highlight-color:transparent;font:700 18px/1 var(--display)!important;
+  letter-spacing:0!important;clip-path:var(--blade-s)!important;
+  box-shadow:inset 2px 0 0 var(--sodium),0 6px 18px rgba(0,0,0,.38)!important;
+  user-select:none;-webkit-user-select:none
+}
+html.ui45 .touch #b-chat{grid-column:1;grid-row:1}
+html.ui45 .touch #b-phone{grid-column:2;grid-row:1}
+html.ui45 .touch #b-map{grid-column:3;grid-row:1}
+html.ui45 .touch #b-car33{grid-column:1;grid-row:2}
+html.ui45 .touch #b-run{grid-column:2;grid-row:2;border-radius:50%!important;clip-path:none!important}
+html.ui45 .touch #b-act{
+  grid-column:3;grid-row:2;width:64px;height:64px;border-radius:50%!important;
+  clip-path:none!important;display:flex;flex-direction:column;gap:2px;
+  background:linear-gradient(145deg,#ffd27a,var(--sodium))!important;
+  color:var(--ink)!important;box-shadow:0 0 0 4px rgba(255,174,43,.18),0 8px 22px rgba(0,0,0,.5)!important
+}
+html.ui45 .touch #b-act .b-act-icon{font:400 23px/1 var(--titan)}
+html.ui45 .touch #b-act .b-act-label{font:700 8px/1 var(--display);letter-spacing:.08em}
+html.ui45 .touch #b-run.on{background:var(--sodium)!important;color:var(--ink)!important;box-shadow:0 0 0 3px rgba(255,174,43,.28)!important}
+html.ui45 .touch #prompt{z-index:18;bottom:calc(150px + env(safe-area-inset-bottom,0px));max-width:min(76vw,560px)}
+html.ui45 .touch #chatlog{bottom:calc(170px + env(safe-area-inset-bottom,0px))}
+@media (min-height:700px){
+  html.ui45 .touch #h45-radar{
+    display:block;left:auto;right:calc(12px + env(safe-area-inset-right,0px));
+    top:calc(160px + env(safe-area-inset-top,0px));bottom:auto;width:132px;height:132px
+  }
+  html.ui45 .touch #h45-radar #mini{inset:10px;width:112px!important;height:112px!important}
+}
+@media (max-width:600px) and (orientation:portrait){
+  html.ui45 .touch #h45-radar{display:none!important}
+  html.ui45 .touch #p3b{top:calc(216px + env(safe-area-inset-top,0px))}
+}
+@media (max-height:520px){
+  html.ui45 .touch #h45-radar{display:none!important}
+  html.ui45 .touch #btns{bottom:calc(6px + env(safe-area-inset-bottom,0px));grid-template-rows:40px 56px}
+  html.ui45 .touch #btns button{font-size:16px!important}
+  html.ui45 .touch #b-act{width:56px;height:56px}
+  html.ui45 .touch #joy-zone{height:60vh;height:min(60dvh,250px)}
+}

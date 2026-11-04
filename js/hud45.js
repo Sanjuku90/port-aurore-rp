@@ -109,7 +109,7 @@ const HUD45=(function(){
     H.clean=!H.clean;document.documentElement.classList.toggle('photo45',H.clean);});
   /* ---------- écran titre et menu ---------- */
   function retitle(){const ed=q('.pm-ed');if(ed)ed.textContent='ÉDITION LAGUNE NOIRE';const ed2=q('.pm-ed2');if(ed2)ed2.textContent='Édition Lagune Noire';
-    const lg=q('.pm-legal');if(lg)lg.textContent='Jeu de rôle solo · sauvegarde locale · v45';const vr=q('.pm-ver');if(vr)vr.textContent='v45 · Lagune Noire · Sauvegarde automatique';
+    const lg=q('.pm-legal');if(lg)lg.textContent='Jeu de rôle solo · sauvegarde locale · v48';const vr=q('.pm-ver');if(vr)vr.textContent='v48 · Métropole · Sauvegarde automatique';
     const t=q('.pm-title');if(t&&!t.dataset.t45){t.dataset.t45=1;t.setAttribute('data-text',t.textContent);}}
   /* démarrage : attend que le HUD soit visible */
   const iv=setInterval(()=>{retitle();if(typeof started!=='undefined'&&started){build();}if(H.built)clearInterval(iv);},250);
