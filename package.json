@@ -1,11 +1,11 @@
 {
   "name": "port-aurore-rp",
-  "version": "49.0.0",
+  "version": "52.0.0",
   "private": true,
-  "description": "Port-Aurore RP v49 : métropole optimisée mobile, commandes tactiles à deux pouces, métro, A1, ferry et vie quotidienne.",
+  "description": "Port-Aurore RP v52 : vrais comptes vérifiés, sauvegarde cloud, histoire principale, filière cacao et vie de famille.",
   "type": "module",
   "scripts": {
-    "start": "npx --yes serve -l 8080 .",
+    "start": "node server.js",
     "check": "node scripts/check.mjs"
   },
   "engines": {

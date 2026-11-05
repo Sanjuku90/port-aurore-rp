@@ -8,37 +8,26 @@ main{width:min(560px,100%)}h1{font-size:28px;margin:0 0 4px}p{color:var(--mu);ma
 label{display:block;color:var(--mu);font-size:14px;margin:10px 0 6px}input,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:#0f1e2a;color:var(--tx);font-size:16px}
 button{padding:12px 16px;border-radius:10px;border:0;font-weight:700;font-size:15px;cursor:pointer;background:var(--ac);color:#1d1400}button.ghost{background:#21384a;color:var(--tx)}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.chips button{background:#21384a;color:var(--tx);padding:8px 12px}
-#msg{min-height:22px;margin-top:10px;font-weight:600}.ok{color:var(--ok)}.bad{color:var(--bad)}ul{padding-left:18px;color:var(--mu);margin:0}a{color:var(--ac)}
+#msg{min-height:22px;margin-top:10px;font-weight:600}.ok{color:var(--ok)}.bad{color:var(--bad)}ul{padding-left:18px;color:var(--mu);margin:0}a{color:var(--ac)}.account-card{display:grid;gap:5px;margin-top:12px;padding:12px;border-radius:10px;background:#0f1e2a;color:var(--mu)}.account-card b{color:var(--tx);font-size:18px}.account-card span{font-size:13px}button:disabled{opacity:.55;cursor:wait}
 </style></head><body><main>
-<h1>🎁 Espace admin</h1><p>Cadeaux pour la sauvegarde de ce navigateur. <a href="../">Retour au jeu</a></p>
-<section class="card" id="lock"><label for="pin">Code admin</label><input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="Choisis un code à la première ouverture"><div class="row" style="margin-top:12px"><button type="button" id="unlock">Déverrouiller</button></div><div id="lmsg"></div></section>
+<h1>🎁 Cadeaux admin</h1><p>Identifie le joueur avec l’adresse de son compte. <a href="../">Retour au jeu</a></p>
+<section class="card" id="lock"><label for="admin-key">Clé admin du serveur</label><input id="admin-key" type="password" autocomplete="current-password" placeholder="Valeur de ADMIN_KEY (24 caractères minimum)"><div class="row" style="margin-top:12px"><button type="button" id="check-key">Vérifier la clé</button></div><div id="key-msg" role="status"></div></section>
 <div id="panel" hidden>
-<section class="card"><div class="row"><div class="stat"><small>Joueur</small><b id="pname">-</b></div><div class="stat"><small>Cash</small><b id="pcash">$0</b></div><div class="stat"><small>Banque</small><b id="pbank">$0</b></div></div></section>
-<section class="card"><label for="amt">Montant du cadeau</label><input id="amt" type="number" min="1" max="1000000" step="1" value="1000">
-<div class="chips"><button type="button" data-v="500">$500</button><button type="button" data-v="1000">$1 000</button><button type="button" data-v="5000">$5 000</button><button type="button" data-v="25000">$25 000</button></div>
-<label for="dest">Verser sur</label><select id="dest"><option value="cash">Cash (en poche)</option><option value="bank">Compte bancaire</option></select>
-<label for="note">Message (optionnel)</label><input id="note" maxlength="60" placeholder="Bravo pour ta progression !">
-<div class="row" style="margin-top:14px"><button type="button" id="give">Envoyer le cadeau</button><button type="button" class="ghost" id="heal">Remplir les besoins</button></div><div id="msg"></div></section>
-<section class="card"><b>Historique</b><ul id="hist"></ul></section>
-<p>Recharge la page du jeu pour voir le cadeau. Ferme le jeu avant d’envoyer, sinon la prochaine sauvegarde automatique peut écraser le montant.</p>
+<section class="card"><label for="email">E-mail exact du compte joueur</label><input id="email" type="email" autocomplete="off" placeholder="joueur@exemple.com"><div class="row" style="margin-top:12px"><button type="button" id="lookup">Vérifier le compte</button></div><div id="lookup-msg" role="status"></div><div id="account-card" hidden class="account-card"><b id="account-email"></b><span id="account-created"></span><span id="pending"></span></div></section>
+<section class="card" id="gift-card" hidden><label for="amt">Montant du cadeau</label><input id="amt" type="number" min="1" max="1000000" step="1" value="1000"><div class="chips"><button type="button" data-v="500">$500</button><button type="button" data-v="1000">$1 000</button><button type="button" data-v="5000">$5 000</button><button type="button" data-v="25000">$25 000</button></div>
+<label for="dest">Verser sur</label><select id="dest"><option value="cash">Cash (en poche)</option><option value="bank">Compte bancaire</option></select><label for="note">Message au joueur (facultatif)</label><input id="note" maxlength="60" placeholder="Bravo pour ta progression !"><div class="row" style="margin-top:14px"><button type="button" id="give">Envoyer le cadeau</button></div><div id="msg" role="status"></div></section>
+<section class="card"><b>Mot de passe oublié</b><p style="margin:6px 0 10px">Génère un mot de passe temporaire pour le compte vérifié ci-dessus (les appareils sont déconnectés).</p><button type="button" class="ghost" id="temp-pw">Générer un mot de passe temporaire</button><div id="temp-msg" role="status"></div></section>
+<section class="card"><b>Derniers cadeaux</b><ul id="hist"><li>Vérifie un compte pour afficher l’historique.</li></ul></section>
+<p>Le cadeau est crédité sur la sauvegarde locale du joueur quand il se connecte au jeu. Les comptes et cadeaux sont conservés sur le serveur.</p>
 </div>
 <script>
-const SK='port-aurore-rp',PK='pa-admin-pin',HK='pa-admin-gifts';
-const $=s=>document.querySelector(s),fmt=n=>'$'+Math.round(n).toLocaleString('fr-FR');
-async function hash(t){const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('pa:'+t));return [...new Uint8Array(d)].map(b=>b.toString(16).padStart(2,'0')).join('');}
-const read=()=>{try{return JSON.parse(localStorage.getItem(SK)||'null');}catch(e){return null;}};
-function render(){const s=read();$('#pname').textContent=s&&s.name?s.name:'Aucune sauvegarde';$('#pcash').textContent=fmt(s?s.cash||0:0);$('#pbank').textContent=fmt(s?s.bank||0:0);
- const h=JSON.parse(localStorage.getItem(HK)||'[]');$('#hist').innerHTML=h.length?h.slice(0,10).map(x=>'<li>'+new Date(x.t).toLocaleString('fr-FR')+' · '+fmt(x.a)+' ('+(x.d==='bank'?'banque':'cash')+')'+(x.n?' · '+x.n.replace(/[<>&]/g,''):'')+'</li>').join(''):'<li>Aucun cadeau envoyé.</li>';}
-$('#unlock').onclick=async()=>{const v=$('#pin').value.trim();if(v.length<4){$('#lmsg').innerHTML='<span class="bad">4 caractères minimum.</span>';return;}const h=await hash(v),cur=localStorage.getItem(PK);
- if(!cur){localStorage.setItem(PK,h);}else if(cur!==h){$('#lmsg').innerHTML='<span class="bad">Code incorrect.</span>';return;}
- $('#lock').hidden=true;$('#panel').hidden=false;render();};
-$('#pin').onkeydown=e=>{if(e.key==='Enter')$('#unlock').click();};
+const $=s=>document.querySelector(s),fmt=n=>'$'+Math.round(n).toLocaleString('fr-FR');let verifiedEmail='';
+const msg=(el,text,ok=false)=>{el.textContent=text;el.className=ok?'ok':'bad';};
+async function api(url,data){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':$('#admin-key').value},body:JSON.stringify(data)});const v=await r.json().catch(()=>({error:'Réponse serveur invalide.'}));if(!r.ok)throw new Error(v.error||'Erreur serveur.');return v;}
+$('#check-key').onclick=async()=>{try{await api('/api/admin/verify',{});$('#panel').hidden=false;$('#lock').hidden=true;}catch(e){msg($('#key-msg'),e.message);} };
+$('#lookup').onclick=async()=>{const email=$('#email').value.trim().toLowerCase(),out=$('#lookup-msg');verifiedEmail='';$('#gift-card').hidden=true;$('#account-card').hidden=true;$('#hist').replaceChildren();try{const v=await api('/api/admin/lookup',{email});verifiedEmail=v.account.email;$('#account-email').textContent=v.account.email;$('#account-created').textContent='Compte créé le '+new Date(v.account.createdAt).toLocaleDateString('fr-FR')+' · '+(v.account.verified?'adresse confirmée ✓':'adresse NON confirmée : cadeau impossible pour l’instant')+(v.account.cloud?' · sauvegarde en ligne du '+new Date(v.account.cloud.updatedAt).toLocaleString('fr-FR'):' · aucune sauvegarde en ligne');$('#pending').textContent=v.pendingGifts+' cadeau(x) en attente';$('#account-card').hidden=false;$('#gift-card').hidden=!v.account.verified;msg(out,v.account.verified?'Compte trouvé. Vérifie bien l’adresse avant l’envoi.':'Compte trouvé, mais le joueur doit d’abord confirmer son adresse e-mail.',v.account.verified);if(v.recentGifts.length){v.recentGifts.forEach(g=>{const li=document.createElement('li');li.textContent=new Date(g.createdAt).toLocaleString('fr-FR')+' · '+fmt(g.amount)+' ('+(g.destination==='bank'?'banque':'cash')+') · '+(g.status==='delivered'?'reçu':'en attente')+(g.note?' · '+g.note:'');$('#hist').appendChild(li);});}else $('#hist').innerHTML='<li>Aucun cadeau envoyé.</li>';}catch(e){msg(out,e.message);}};
 document.querySelectorAll('.chips button').forEach(b=>b.onclick=()=>{$('#amt').value=b.dataset.v;});
-$('#give').onclick=()=>{const s=read(),a=Math.floor(+$('#amt').value),d=$('#dest').value,m=$('#msg');
- if(!s){m.className='bad';m.textContent='Aucune partie trouvée. Lance une partie une première fois.';return;}
- if(!(a>0&&a<=1000000)){m.className='bad';m.textContent='Montant entre $1 et $1 000 000.';return;}
- s[d]=Math.min(1e9,(s[d]||0)+a);const note=$('#note').value.trim();s.gift44={a,d,n:note,t:Date.now()};localStorage.setItem(SK,JSON.stringify(s));
- const h=JSON.parse(localStorage.getItem(HK)||'[]');h.unshift({a,d,n:note,t:Date.now()});localStorage.setItem(HK,JSON.stringify(h.slice(0,30)));
- m.className='ok';m.textContent='Cadeau de '+fmt(a)+' envoyé à '+(s.name||'ce joueur')+' !';render();};
-$('#heal').onclick=()=>{const s=read(),m=$('#msg');if(!s){m.className='bad';m.textContent='Aucune partie trouvée.';return;}['health','hunger','energy','fun'].forEach(k=>s[k]=100);localStorage.setItem(SK,JSON.stringify(s));m.className='ok';m.textContent='Besoins remplis.';};
+$('#give').onclick=async()=>{const out=$('#msg'),amount=Number($('#amt').value),email=$('#email').value.trim().toLowerCase();if(!verifiedEmail||email!==verifiedEmail){msg(out,'Vérifie à nouveau l’adresse du compte.');return;}try{const v=await api('/api/admin/gift',{email:verifiedEmail,amount,destination:$('#dest').value,note:$('#note').value.trim()});msg(out,'Cadeau de '+fmt(v.gift.amount)+' envoyé à '+v.email+'. Il sera crédité à sa prochaine connexion.',true);$('#lookup').click();}catch(e){msg(out,e.message);}};
+
+$('#temp-pw').onclick=async()=>{const out=$('#temp-msg');if(!verifiedEmail){msg(out,'Vérifie d’abord le compte.');return;}try{const v=await api('/api/admin/temp-password',{email:verifiedEmail});msg(out,'Mot de passe temporaire pour '+v.email+' : '+v.password+' (à transmettre au joueur, qui le changera dans « Sécurité du compte »).',true);}catch(e){msg(out,e.message);}};
 </script></main></body></html>

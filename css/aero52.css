@@ -1,0 +1,14 @@
+#aero52{position:fixed;inset:0;pointer-events:none;z-index:60;font-family:'Chakra Petch',system-ui,sans-serif;color:#fff}
+#aero52 .a52-top{position:absolute;top:14px;left:50%;transform:translateX(-50%);background:rgba(8,16,28,.72);border:1px solid rgba(245,196,81,.5);border-radius:12px;padding:8px 16px;text-align:center;max-width:min(92vw,680px)}
+#aero52 .a52-top b{display:block;color:#f5c451;font-size:16px}#aero52 .a52-top span{font-size:14px}
+#aero52 .a52-gauges{position:absolute;left:16px;bottom:120px;display:grid;gap:6px}
+#aero52 .a52-gauges>div{background:rgba(8,16,28,.72);border-radius:10px;padding:6px 12px;min-width:120px}
+#aero52 small{display:block;font-size:11px;opacity:.75;letter-spacing:.08em}#aero52 .a52-gauges b{font-size:24px}#aero52 .a52-gauges i{font-style:normal;font-size:13px;margin-left:4px;opacity:.8}
+#aero52 .a52-thr u{display:block;height:10px;background:rgba(255,255,255,.15);border-radius:5px;margin-top:4px;overflow:hidden}#aero52 .a52-thr em{display:block;height:100%;width:0;background:#f5c451}
+#aero52 .a52-warn{position:absolute;top:38%;left:50%;transform:translateX(-50%);background:#c62828;padding:10px 18px;border-radius:10px;font-weight:700;animation:a52b .5s infinite alternate}
+@keyframes a52b{to{opacity:.4}}
+#aero52 .a52-pad{position:absolute;right:16px;bottom:120px;display:grid;grid-template-columns:repeat(2,84px);gap:8px;pointer-events:auto}
+#aero52 .a52-pad button{min-height:48px;border-radius:12px;border:1px solid rgba(255,255,255,.3);background:rgba(8,16,28,.8);color:#fff;font:700 14px 'Chakra Petch',sans-serif;touch-action:none}
+#aero52 .a52-pad button.q{grid-column:span 2;background:rgba(198,40,40,.85)}
+#aero52 .a52-help{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);font-size:13px;opacity:.8;background:rgba(8,16,28,.6);padding:4px 10px;border-radius:8px;white-space:nowrap}
+.touch #aero52 .a52-help{display:none}

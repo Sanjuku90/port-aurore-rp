@@ -1,7 +1,7 @@
 'use strict';
 function saveProgress(){
   if(!started)return;
-  try{localStorage.setItem('port-aurore-rp',JSON.stringify({v:2,name:state.name,cash:state.cash,bank:state.bank,done:state.done,earned:state.earned,job:state.job,rep:state.rep,friends:state.friends,energy:state.energy,fun:state.fun,health:state.health,hunger:state.hunger,look:look,gameMin:gameMin,x:(player.inside?player.outside:player).x,z:(player.inside?player.outside:player).z,h:player.h,yaw:camYaw}));}catch(e){}
+  try{localStorage.setItem('port-aurore-rp',JSON.stringify({v:2,name:state.name,cash:state.cash,bank:state.bank,done:state.done,earned:state.earned,job:state.job,rep:state.rep,friends:state.friends,energy:state.energy,fun:state.fun,health:state.health,hunger:state.hunger,look:look,gameMin:gameMin,x:(player.inside?player.outside:player).x,z:(player.inside?player.outside:player).z,h:player.h,yaw:camYaw,accountGiftIds:window.ACCOUNT50?window.ACCOUNT50.giftIds():[]}));}catch(e){}
 }
 let savedPos=null;
 function loadProgress(){

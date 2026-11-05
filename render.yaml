@@ -1,28 +1,27 @@
-# Blueprint Render : site statique (aucun serveur ni build requis)
+# Blueprint Render : service Node.js (comptes, e-mails, sauvegarde cloud, cadeaux) + disque persistant.
+# Le disque persistant nécessite une offre payante Render (Starter ou plus).
 services:
   - type: web
     name: port-aurore-rp
-    runtime: static
+    runtime: node
+    plan: starter
     buildCommand: npm run check
-    staticPublishPath: .
+    startCommand: npm start
+    healthCheckPath: /api/health
+    disk:
+      name: port-aurore-data
+      mountPath: /var/data
+      sizeGB: 1
     envVars:
       - key: NODE_VERSION
         value: 20
-    pullRequestPreviewsEnabled: true
-    routes:
-      - type: rewrite
-        source: /admin
-        destination: /admin/index.html
-    headers:
-      - path: /*
-        name: X-Content-Type-Options
-        value: nosniff
-      - path: /js/lib/*
-        name: Cache-Control
-        value: public, max-age=604800, immutable
-      - path: /index.html
-        name: Cache-Control
-        value: no-cache
-      - path: /admin/*
-        name: X-Robots-Tag
-        value: noindex
+      - key: NODE_ENV
+        value: production
+      - key: DATA_DIR
+        value: /var/data
+      - key: PUBLIC_URL
+        sync: false
+      - key: ADMIN_KEY
+        sync: false
+      # Facultatif (mot de passe oublié par e-mail) : MAIL_FROM + RESEND_API_KEY ou BREVO_API_KEY
+    pullRequestPreviewsEnabled: false

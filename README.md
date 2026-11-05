@@ -1,6 +1,30 @@
-# Port-Aurore RP · v49 · Métropole des Trois Cités
+# Port-Aurore RP · v52 · Métropole des Trois Cités
 
-Jeu de rôle 3D jouable dans le navigateur, construit en site statique avec Three.js embarqué. Pas de compilation front-end ni d’installation de dépendances nécessaires pour le déploiement.
+Jeu de rôle 3D jouable dans le navigateur, servi par un petit serveur Node.js sans dépendance externe. Le serveur gère les vrais comptes joueur, l’envoi des e-mails, la sauvegarde en ligne et les cadeaux admin.
+
+## v51 · Vrais comptes, histoire, filière et famille
+
+**Compte joueur** (menu titre → bouton « 👤 Se connecter » en haut à droite)
+- Inscription instantanée par e-mail + mot de passe (10 caractères min.), sans e-mail de confirmation (v52).
+- Connexion sur plusieurs appareils, « mot de passe oublié » par lien e-mail (30 min), changement de mot de passe, déconnexion de tous les appareils, suppression du compte.
+- Sauvegarde en ligne : la partie se synchronise toutes les minutes et à la fermeture ; sur un autre appareil, la connexion recharge la partie. Si deux appareils divergent, le joueur choisit laquelle garder.
+- Cadeaux admin : `/admin` retrouve le joueur par son e-mail exact ; seuls les comptes confirmés peuvent recevoir un cadeau.
+- Sécurité : mots de passe hachés (scrypt salé), cookie de session HttpOnly/SameSite, liens à usage unique, blocage après 6 erreurs, limites de tentatives, contrôle d’origine, code serveur et données non exposés.
+
+**Histoire principale « Les Lumières d’Aurore »** : 3 chapitres, 9 missions guidées par GPS entre les trois cités, personnages récurrents (Inès Kaboré, Kofi, Marc Delorme, présidents) et choix qui mènent à 3 fins, modifient la vitalité des villes et donnent un titre.
+
+**Filière cacao & café** : plantation à Solenne → chocolaterie à Nouvelle-Aurore → boutique à Port-Aurore. Récolte, transport à pied/en voiture ou par fret, import/export au cours mondial, prix qui varient avec la demande, commandes d’hôtels et d’entreprises, charges quotidiennes.
+
+**Vie de famille** : rendez-vous, couple, vie commune, fiançailles, mariage à la mairie, enfants (naissance ou adoption) qui grandissent, école, anniversaires, album et héritier désigné.
+
+**Appli « Aurore Destin »** sur le téléphone : suivi de l’histoire, de la filière, de la famille et 12 succès avec titres.
+
+## Configuration des e-mails (facultative depuis la v52, seulement pour « mot de passe oublié »)
+
+Variables du service : `PUBLIC_URL` (adresse publique, ex. `https://port-aurore.onrender.com`), `MAIL_FROM` (ex. `Port-Aurore RP <compte@ton-domaine.fr>`, domaine vérifié chez le fournisseur) et `RESEND_API_KEY` (ou `BREVO_API_KEY`). Sans ces réglages en production, les inscriptions restent fermées avec un message clair. En local (`npm start` sans `NODE_ENV=production`), les liens de confirmation et de réinitialisation s’affichent dans la console du serveur.
+
+## v50 · Le monde vivant
+Des alertes locales apparaissent dans les trois cités : ravitaillement urgent, opération de quartier, panne d’infrastructure et scène ouverte. Réponds depuis Aurore Life, suis le GPS jusqu’au repère rouge, puis termine l’intervention sur place. Les missions expirent; chaque réussite ou occasion manquée modifie durablement l’indice de vitalité de la ville et les récompenses des interventions futures. Historique et progression conservés localement. Le projet reste solo avec sauvegardes locales, le multijoueur demanderait une architecture serveur séparée.
 
 ## v48 · commandes mobiles
 
@@ -16,11 +40,14 @@ Les gares et intérieurs sont visitables; les quartiers chargent progressivement
 
 ## Lancer et vérifier en local
 
+Node.js 18 ou plus récent suffit, aucun paquet externe n’est nécessaire. Définis une clé admin longue et unique avant le démarrage :
+
 ```bash
-python3 -m http.server 8080
+export ADMIN_KEY="remplace-par-une-cle-aleatoire-d-au-moins-32-caracteres"   # 24 caractères minimum
+npm start
 ```
 
-Ouvre ensuite http://localhost:8080. Avec Node.js 18 ou plus récent, vérifie les scripts et les fichiers utilisés par la page :
+Ouvre ensuite http://localhost:8080. Les données de comptes sont stockées hors du dossier public dans `~/.port-aurore-data`. Vérifie le code avec :
 
 ```bash
 npm run check
@@ -28,32 +55,22 @@ npm run check
 
 ## Déployer sur Render (recommandé : Blueprint)
 
-Le fichier `render.yaml` est prêt à créer un **Static Site**. Render publie le dossier racine après avoir exécuté `npm run check`.
+Le fichier `render.yaml` crée un **Web Service Node.js** avec un disque persistant pour les comptes et les cadeaux. Il ne peut plus être déployé comme simple site statique.
 
-1. Mets le contenu de ce dossier dans un dépôt GitHub et pousse la branche `main`.
+1. Mets le contenu du dossier dans un dépôt GitHub et pousse `main`.
 2. Dans Render, choisis **New → Blueprint** et connecte le dépôt.
-3. Vérifie la configuration lue depuis `render.yaml`, puis clique **Apply**.
-4. Attends la fin du premier déploiement, puis ouvre l’URL `.onrender.com` indiquée sur la page du service.
-5. Teste le menu de démarrage, le chargement de la ville, la sauvegarde locale, les intérieurs et les commandes. Le jeu stocke la progression dans le navigateur de chaque joueur (`localStorage`).
+3. Render demande les valeurs secrètes : `ADMIN_KEY` (clé aléatoire privée, 32 caractères conseillés), `PUBLIC_URL`, `MAIL_FROM` et `RESEND_API_KEY`. Garde-les secrètes.
+4. Applique le Blueprint et attends le déploiement. Le disque persistant est monté sur `/var/data`; les données de compte y survivent aux redéploiements.
+5. Ouvre l’adresse `.onrender.com`, crée un compte de test puis visite `/admin` pour vérifier l’envoi d’un cadeau.
 
-Chaque push sur la branche suivie par Render lance un nouveau déploiement automatiquement. Les previews de pull request sont activées dans le Blueprint.
-
-## Déploiement manuel (Static Site)
-
-Si tu ne veux pas utiliser le Blueprint, crée un Static Site Render relié au même dépôt :
-
-- **Branch** : `main`
-- **Build Command** : `npm run check`
-- **Publish Directory** : `.`
-
-Ne configure pas de Start Command, de base de données, de secret ou de serveur Node : ce projet est servi comme un site statique.
+Le service doit utiliser HTTPS et un disque persistant (offre Render payante). Un déploiement statique ou un disque éphémère ne conserve pas les comptes entre redémarrages. Sauvegarde le disque régulièrement : il contient tous les comptes et parties en ligne.
 
 ## Dépannage rapide
 
 - Si le build échoue, ouvre les logs Render : `scripts/check.mjs` indique les scripts en erreur ou les fichiers statiques manquants.
 - Si la page est blanche, vérifie que `index.html`, `css/` et `js/` sont bien à la racine publiée, et consulte la console du navigateur.
 - Les polices sont chargées depuis Google Fonts; si elles ne sont pas accessibles, le jeu conserve les polices de secours.
-- Les sauvegardes sont locales au navigateur et ne sont pas partagées entre appareils.
+- Sans compte, la partie reste uniquement dans le navigateur. Avec un compte confirmé, elle est aussi sauvegardée en ligne.
 
 ## Autres fichiers
 

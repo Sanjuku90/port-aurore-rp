@@ -1,4 +1,35 @@
-# v49 · Aurore OS (téléphone complet)
+# v52 · Horizons (inscription instantanée, ciel, mer, terre, arène)
+- Inscription instantanée : plus aucun e-mail de confirmation. Le compte est actif tout de suite (sauvegarde en ligne + cadeaux). Les anciens comptes « à confirmer » sont activés automatiquement.
+- Mot de passe oublié : par e-mail si un fournisseur est configuré (facultatif), sinon l’admin génère un mot de passe temporaire depuis /admin.
+- Aviation pilotable : Aéro-club (PAX et Solenne), formation + brevet + licence pro, vol 3D piloté (gaz, tangage, roulis, décrochage, atterrissage noté, crash), anneaux, 7 missions, 3 avions à acheter.
+- Navigation maritime : permis bateau, 4 bateaux (yacht du Yacht Club compté), traversées réelles Port-Aurore ⇄ Solenne, 6 îles à explorer, navettes passagers, croisières VIP, régates en saisons.
+- Agriculture & élevage : Domaine des Alizés, 5 cultures, champs extensibles, 5 améliorations, poules/chèvres/vaches, ouvriers, coopérative à prix saisonniers, commandes de restaurants.
+- Arène : karting, bowling (nouveau mini-jeu), paintball, esport, équitation (cheval à acheter), cuisine pro + service en brigade ; ligues à 3 niveaux, rivaux, primes, trophées.
+- Carrières à 5 rangs par secteur, notoriété, titres, trophées et appli téléphone « Aurore Horizons ».
+
+# v51 · Vrais comptes, histoire principale, filière et famille
+- Comptes joueur complets : confirmation obligatoire par e-mail (Resend ou Brevo), mot de passe oublié, changement de mot de passe, déconnexion de tous les appareils, suppression du compte, blocage après erreurs répétées.
+- Sauvegarde en ligne multi-appareils : synchronisation automatique, chargement à la connexion sur un nouvel appareil, choix explicite en cas de conflit.
+- Le panneau compte est maintenant visible dans le menu titre (il était masqué par le menu v27 en v50.1).
+- Cadeaux admin réservés aux comptes confirmés ; la console affiche le statut de l’adresse et de la sauvegarde.
+- Histoire principale « Les Lumières d’Aurore » : 3 chapitres, 9 missions, 3 fins, conséquences sur la vitalité des villes et titres.
+- Filière cacao & café : plantation, chocolaterie, boutique, transport et fret, import/export, prix dynamiques, commandes d’entreprises.
+- Vie de famille : couple, mariage, vie commune, enfants qui grandissent, école, anniversaires, héritier.
+- Appli téléphone « Aurore Destin » et 12 succès.
+
+# v50.1 · Comptes joueur et cadeaux admin
+- Inscription et connexion par e-mail et mot de passe depuis le menu; mots de passe hachés côté serveur, sessions sécurisées par cookie HttpOnly.
+- Cadeaux admin ciblés sur l’adresse exacte du compte, vérification du destinataire, montant limité et historique serveur. Le cadeau est réclamé dans le jeu puis crédité dans la sauvegarde locale.
+- Nouveau serveur Node.js sans dépendances, limites de tentatives, stockage des comptes et des cadeaux sur disque persistant, console admin protégée par `ADMIN_KEY`.
+- La progression reste locale; aucune synchronisation entre appareils. Vérification e-mail et récupération de mot de passe non configurées.
+
+# v50 · Le monde vivant
+- Alertes locales dynamiques dans Port-Aurore, Nouvelle-Aurore et Solenne : ravitaillement, mobilisation de quartier, panne d’infrastructure et scène culturelle.
+- Bulletin intégré à Aurore Life, GPS vers un repère d’intervention, acceptation et résolution sur place. Les alertes expirent si personne n’intervient.
+- Conséquences persistantes : la vitalité de chaque cité monte ou baisse, et influence les récompenses futures. Historique des interventions sauvegardé localement.
+- Contrôle de syntaxe et de chargement ajouté pour le module v50. Architecture solo conservée; le multijoueur reste un chantier serveur distinct.
+
+## v49 · Aurore OS (téléphone complet)
 - 10 applis reliées au gameplay : Aurore Social, Bank, GPS, Immo, Jobs, Auto, Market, Services, Travel, Life.
 - Notifications HUD avec boutons d'action (à pied et en voiture), appels entrants répondre/refuser, sonneries, mode silencieux.
 - Verrouillage personnalisable (fond, horloge, message, code PIN), recherche d'applis et de lieux, icônes déplaçables (appui long), badges (messages, factures, livraisons).

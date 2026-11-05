@@ -2,7 +2,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230b1b3a%27/%3E%3Cpath d=%27M12 44 32 14l20 30z%27 fill=%27%23f5c451%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=48"><link rel="stylesheet" href="css/phone49.css?v=49">
+<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=48"><link rel="stylesheet" href="css/phone49.css?v=49"><link rel="stylesheet" href="css/account51.css?v=51"><link rel="stylesheet" href="css/aero52.css?v=52">
 </head><body>
 <div id="app">
   <canvas id="gl"></canvas>
@@ -47,7 +47,7 @@
   <div id="pause" hidden><div class="sheet"><h2>Pause</h2><p id="pz-info"></p><div id="pz-btns"></div></div></div>
   <div id="start">
     <section id="main-menu" class="start-card">
-      <div class="menu-kicker">SIMULATION DE VIE · SOLO</div>
+      <div class="menu-kicker">SIMULATION DE VIE · v51</div>
       <h1>Port-Aurore<span>JEU DE RÔLE</span></h1>
       <p>Une ville à vivre, un personnage à façonner, des rencontres à chaque coin de rue.</p>
       <div class="menu-actions">
@@ -55,6 +55,12 @@
         <button id="new-game" class="primary">Créer mon personnage</button>
         <button id="open-guide">Guide du débutant</button>
       </div>
+      <section class="account-box" aria-label="Compte joueur">
+        <div class="account-head"><div class="menu-kicker">COMPTE JOUEUR</div><span id="account-badge" class="account-badge" hidden></span></div>
+        <p id="account-status" class="account-status">Connexion au serveur de comptes…</p>
+        <button id="account-open" type="button" class="account-toggle">Se connecter / créer un compte</button>
+        <div id="account-panel" class="account-form" hidden></div>
+      </section>
       <div class="menu-foot">Élections, courses de rue, défis du jour, transports · Sauvegarde auto</div>
     </section>
     <section id="beginner-guide" class="start-card guide-card" hidden>
@@ -111,6 +117,7 @@
     </form>
   </div>
 </div>
+<script src="js/cloudboot51.js?v=51"></script>
 <script src="js/lib/three.min.js"></script>
 <script src="js/compat7.js?v=31"></script>
 <script src="js/core.js?v=31"></script>
@@ -192,5 +199,17 @@
 <script src="js/metro47-expansion.js?v=47"></script>
 <script src="js/phone49-core.js?v=49"></script>
 <script src="js/phone49-apps.js?v=49"></script>
-<script src="js/main.js?v=48"></script>
+<script src="js/world50.js?v=51"></script>
+<script src="js/core51.js?v=51"></script>
+<script src="js/story51.js?v=51"></script>
+<script src="js/eco51.js?v=51"></script>
+<script src="js/family51.js?v=51"></script>
+<script src="js/hub51.js?v=51"></script>
+<script src="js/core52.js?v=52"></script>
+<script src="js/aero52.js?v=52"></script>
+<script src="js/mer52.js?v=52"></script>
+<script src="js/terre52.js?v=52"></script>
+<script src="js/arene52.js?v=52"></script>
+<script src="js/account51.js?v=52"></script>
+<script src="js/main.js?v=50"></script>
 </body></html>
