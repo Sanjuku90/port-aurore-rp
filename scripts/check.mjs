@@ -45,7 +45,7 @@ const mobile=[
   ['js/main.js',['coarse?1.1:1.75']],
   ['js/menu27.js',["TOUCH_GFX=matchMedia('(pointer: coarse)').matches",'if(TOUCH_GFX)GFX.q=0;','sun.castShadow=!TOUCH_GFX&&q>0','GFX_QUALITIES=TOUCH_GFX?[QN[0]]:QN']],
   ['js/perf33.js',['MAX=Math.min(dpr,1.0),MIN=.65;let pr=Math.min(dpr,.9)']],
-  ['js/fx45.js',["if(coarse)S.mode=0;",'S.mode=coarse?0:Math.max','MN=coarse?['Désactivé']']],
+  ['js/fx45.js',["if(coarse)S.mode=0;",'S.mode=coarse?0:Math.max',"MN=coarse?['Désactivé']"]],
   ['index.html',['menu27.js?v=52.1','perf33.js?v=52.1','fx45.js?v=52.1']],
   ['js/phase2.js',['matches?420:1100']]
 ];
