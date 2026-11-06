@@ -10,15 +10,19 @@
 const el=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e;};
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const SET=window.S27?S27.set:{flySpeed:1,view:'cine',ann:true};
-const GFX={q:1,ui:true};try{const o=JSON.parse(localStorage.getItem('port-aurore-gfx27')||'null');if(o)Object.assign(GFX,o);}catch(e){}
+const TOUCH_GFX=matchMedia('(pointer: coarse)').matches||('ontouchstart' in window);
+const GFX={q:TOUCH_GFX?0:1,ui:true};try{const o=JSON.parse(localStorage.getItem('port-aurore-gfx27')||'null');if(o)Object.assign(GFX,o);}catch(e){}
+if(TOUCH_GFX)GFX.q=0;
 const saveSet=()=>{try{localStorage.setItem('port-aurore-set27',JSON.stringify(SET));localStorage.setItem('port-aurore-gfx27',JSON.stringify(GFX));}catch(e){}};
 /* ---------------- sons d'interface ---------------- */
 let uctx=null;function ui(f,d,v){if(!GFX.ui||(typeof muted!=='undefined'&&muted))return;try{uctx=uctx||(window.actx&&actx.state==='running'?actx:new (window.AudioContext||window.webkitAudioContext)());const o=uctx.createOscillator(),g=uctx.createGain(),t=uctx.currentTime;o.type='triangle';o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(f*1.5,t+d);g.gain.setValueAtTime(v||.035,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(uctx.destination);o.start(t);o.stop(t+d+.02);}catch(e){}}
 const tick=()=>ui(1400,.05,.02),okS=()=>ui(520,.18,.05),backS=()=>ui(300,.14,.04);
 /* ---------------- qualité graphique ---------------- */
 const QN=['Performance','Équilibrée','Ultra'];
-function applyGfx(){if(typeof renderer==='undefined'||!renderer)return;const dpr=window.devicePixelRatio||1;renderer.setPixelRatio(GFX.q===0?1:GFX.q===1?Math.min(dpr,1.5):Math.min(dpr,2));
-  if(sun){sun.castShadow=GFX.q>0;const sz=GFX.q===2?2048:1024;if(sun.shadow.mapSize.x!==sz){sun.shadow.mapSize.set(sz,sz);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}}
+const GFX_QUALITIES=TOUCH_GFX?[QN[0]]:QN;
+function applyGfx(){if(typeof renderer==='undefined'||!renderer)return;const dpr=window.devicePixelRatio||1,q=TOUCH_GFX?0:GFX.q,maxDpr=TOUCH_GFX?1:(q===0?1:q===1?1.5:2);renderer.setPixelRatio(Math.min(dpr,maxDpr));
+  if(sun){sun.castShadow=!TOUCH_GFX&&q>0;const sz=TOUCH_GFX?512:q===2?2048:1024;if(sun.shadow.mapSize.x!==sz){sun.shadow.mapSize.set(sz,sz);if(sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}if(!sun.castShadow&&sun.shadow.map){sun.shadow.map.dispose();sun.shadow.map=null;}}
+  if(window.FX45)FX45.setMode(q);
   dispatchEvent(new Event('resize'));}
 /* ---------------- sauvegarde : lecture pour le profil ---------------- */
 function readSave(){try{const s=JSON.parse(localStorage.getItem('port-aurore-rp')||'null');if(!s||!s.v)return null;const v27=JSON.parse(localStorage.getItem('port-aurore-v27')||'null')||{};
@@ -92,7 +96,7 @@ function settingsUI(){const W=el('div','st27');const tabs=el('nav','st-tabs'),bo
   const opt=(label,desc,get,vals,set)=>{const r=el('div','st-row');r.innerHTML='<div><b>'+label+'</b><small>'+desc+'</small></div><div class="st-sel"><button type="button" class="st-a">‹</button><span></span><button type="button" class="st-a">›</button></div>';const sp=r.querySelector('span'),[pv,nx]=r.querySelectorAll('button');
     const paint=()=>{sp.textContent=vals[get()]!=null?vals[get()]:get();};const step=d=>{const n=(get()+d+vals.length)%vals.length;set(n);paint();tick();saveSet();};pv.onclick=()=>step(-1);nx.onclick=()=>step(1);r.tabIndex=-1;paint();return r;};
   const sensI=()=>typeof CAMX!=='undefined'?Math.max(0,CAMX.SENS.findIndex(x=>x[1]===CAMX.sens)):1;
-  const G={'Graphismes':()=>[opt('Qualité','Résolution et ombres',()=>GFX.q,QN,n=>{GFX.q=n;applyGfx();if(window.FX45)FX45.setMode(n);})].concat(window.FX45?FX45.rows(opt):[]),
+  const G={'Graphismes':()=>[opt('Qualité','Résolution et ombres',()=>GFX.q,GFX_QUALITIES,n=>{GFX.q=TOUCH_GFX?0:n;applyGfx();})].concat(window.FX45?FX45.rows(opt):[]),
     'Caméra':()=>[opt('Sensibilité','Souris, tactile et manette',sensI,typeof CAMX!=='undefined'?CAMX.SENS.map(x=>x[0]):['—'],n=>{CAMX.sens=CAMX.SENS[n][1];try{localStorage.setItem('port-aurore-sens',String(CAMX.sens));}catch(e){}}),
       opt('Distance','Aussi avec la touche V',()=>typeof CAMX!=='undefined'?CAMX.preset:1,typeof CAMX!=='undefined'?CAMX.PRE.map(x=>x[0]):['—'],n=>{CAMX.preset=n;CAMX.zoom=CAMX.PRE[n][1];camSaveZoom();})],
     'Audio':()=>[opt('Son du jeu','Moteurs, ambiance, réacteurs',()=>typeof muted!=='undefined'&&muted?1:0,['Activé','Coupé'],n=>{muted=!!n;}),opt('Annonces','Commandant de bord et aéroport',()=>SET.ann?0:1,['Activées','Coupées'],n=>{SET.ann=!n;}),opt('Sons d’interface','Menus',()=>GFX.ui?0:1,['Activés','Coupés'],n=>{GFX.ui=!n;})],
