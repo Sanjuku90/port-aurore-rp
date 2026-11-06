@@ -10,10 +10,11 @@
    ========================================================================== */
 const FX45=(function(){
   const LS='port-aurore-fx45';
-  const coarse=matchMedia('(pointer: coarse)').matches;
+  const coarse=matchMedia('(pointer: coarse)').matches||('ontouchstart' in window);
   const S={mode:coarse?0:2,grain:1,motion:1,ca:1};
   try{const o=JSON.parse(localStorage.getItem(LS)||'null');if(o&&typeof o==='object')Object.assign(S,o);}
   catch(e){}
+  if(coarse)S.mode=0;
   const save=()=>{try{localStorage.setItem(LS,JSON.stringify(S));}catch(e){}};
   let R=null,R0=null,failed=false,ready=false;
   let rtScene=null,mips=[],W=0,H=0,samples=-1,levels=0;
@@ -157,9 +158,9 @@ const FX45=(function(){
     };
   }
   function hit(k){st.flash=Math.max(st.flash,0.35+0.65*(k||0.5));if(window.HUD45&&HUD45.shake)HUD45.shake(0.12+0.3*(k||0.5));}
-  function setMode(m){S.mode=Math.max(0,Math.min(2,m|0));save();if(S.mode===0){disposeTargets();W=H=0;if(env&&typeof scene!=='undefined'&&scene.environment===env)scene.environment=null;}document.documentElement.dataset.fx45=S.mode;}
+  function setMode(m){S.mode=coarse?0:Math.max(0,Math.min(2,m|0));save();if(S.mode===0){disposeTargets();W=H=0;if(env&&typeof scene!=='undefined'&&scene.environment===env)scene.environment=null;}document.documentElement.dataset.fx45=S.mode;}
   document.documentElement.dataset.fx45=S.mode;
-  const MN=['Désactivé','Cinématique','Ultra cinématique'],OO=['Activé','Coupé'];
+  const MN=coarse?['Désactivé']:['Désactivé','Cinématique','Ultra cinématique'],OO=['Activé','Coupé'];
   function rows(opt){return [
     opt('Rendu cinématique','Bloom HDR, étalonnage, reflets',()=>S.mode,MN,n=>setMode(n)),
     opt('Grain de film','Texture argentique',()=>S.grain?0:1,OO,n=>{S.grain=n?0:1;save();}),
