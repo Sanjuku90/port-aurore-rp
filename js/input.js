@@ -46,11 +46,11 @@ function setupInput(){
   };
   joyZone.addEventListener('pointerdown',beginJoy);
   joyZone.addEventListener('pointermove',e=>{if(e.pointerId===joy.id)moveJoy(e);});
-  const endJoy=e=>{if(e.pointerId===joy.id){joy.id=null;joy.x=joy.y=0;knob.style.transform='translate(0,0)';joyEl.style.left='18px';joyEl.style.top='auto';joyEl.style.bottom='18px';joyEl.classList.remove('active');}};
+  const endJoy=e=>{if(e.pointerId===joy.id){joy.id=null;joy.x=joy.y=0;knob.style.transform='translate(0,0)';joyEl.style.left='28px';joyEl.style.top='auto';joyEl.style.bottom='64px';joyEl.classList.remove('active');}};
   joyZone.addEventListener('pointerup',endJoy);joyZone.addEventListener('pointercancel',endJoy);joyZone.addEventListener('lostpointercapture',endJoy);
   window.resetTouchControls=()=>{
     if(joy.id!==null){try{joyZone.releasePointerCapture(joy.id);}catch(_){}joy.id=null;}
-    joy.x=joy.y=0;knob.style.transform='translate(0,0)';joyEl.style.left='18px';joyEl.style.top='auto';joyEl.style.bottom='18px';joyEl.classList.remove('active');setRun(false);
+    joy.x=joy.y=0;knob.style.transform='translate(0,0)';joyEl.style.left='28px';joyEl.style.top='auto';joyEl.style.bottom='64px';joyEl.classList.remove('active');setRun(false);
   };
   const cv=$('#gl');let drag=null;
   cv.addEventListener('pointerdown',e=>{if(drag)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY};cv.setPointerCapture(e.pointerId);});

@@ -2,7 +2,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2712%27 fill=%27%230b1b3a%27/%3E%3Cpath d=%27M12 44 32 14l20 30z%27 fill=%27%23f5c451%27/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=48"><link rel="stylesheet" href="css/phone49.css?v=49"><link rel="stylesheet" href="css/account51.css?v=51"><link rel="stylesheet" href="css/aero52.css?v=52">
+<link rel="stylesheet" href="css/style.css?v=31"><link rel="stylesheet" href="css/phone25.css?v=31"><link rel="stylesheet" href="css/trajets26.css?v=31"><link rel="stylesheet" href="css/aero27.css?v=31"><link rel="stylesheet" href="css/v28.css?v=31"><link rel="stylesheet" href="css/jeux29.css?v=31"><link rel="stylesheet" href="css/motors33.css?v=33"><link rel="stylesheet" href="css/hud45.css?v=48"><link rel="stylesheet" href="css/phone49.css?v=49"><link rel="stylesheet" href="css/account51.css?v=51"><link rel="stylesheet" href="css/aero52.css?v=52"><link rel="stylesheet" href="css/ui54.css?v=54">
 </head><body>
 <div id="app">
   <canvas id="gl"></canvas>
@@ -73,7 +73,7 @@
         <article><b>3 · Vis la ville</b><span>Approche-toi d’un repère et appuie sur E (ou Action) pour entrer, parler, acheter ou utiliser un objet.</span></article>
         <article><b>4 · Garde l’équilibre</b><span>Mange, repose-toi et prends soin de ta santé. La supérette, le café, l’hôpital et ton appartement t’aident.</span></article>
       </div>
-      <div class="guide-controls"><span><b>Z Q S D</b> Se déplacer</span><span><b>E</b> Interagir</span><span><b>Maj</b> Courir</span><span><b>T</b> Téléphone</span><span><b>I</b> Sac</span><span><b>Entrée</b> Chat</span></div><div class="guide-controls"><span><b>Manette</b> Stick gauche : bouger/conduire · stick droit : caméra</span><span><b>A</b> Interagir · <b>B</b> Retour · <b>Start</b> Pause · boutons remappables dans Pause</span></div>
+      <div class="guide-controls"><span><b>Z Q S D</b> Se déplacer</span><span><b>E</b> Interagir</span><span><b>Maj</b> Courir · Nitro en voiture</span><span><b>Espace</b> Drift</span><span><b>T</b> Téléphone</span><span><b>I</b> Sac</span><span><b>Entrée</b> Chat</span></div><div class="guide-controls"><span><b>Manette</b> Stick gauche : bouger/conduire · stick droit : caméra</span><span><b>A</b> Interagir · <b>B</b> Retour · <b>Start</b> Pause · boutons remappables dans Pause</span></div>
       <button id="guide-create" class="primary">Créer mon personnage</button>
     </section>
     <form class="intro" id="intro" hidden>
@@ -107,8 +107,9 @@
         <b>Entrée</b><span>Chat de la ville</span>
         <b>T</b><span>Téléphone</span>
         <b>I</b><span>Sac à dos</span>
-        <b>G</b><span>Gestes</span>
         <b>H</b><span>Klaxon (en voiture)</span>
+        <b>Espace</b><span>Frein à main : drift (en voiture)</span>
+        <b>Maj</b><span>Nitro (en voiture)</span>
         <b>Glisser</b><span>Tourner la caméra</span>
       </div>
       <div class="legend"><span><i style="background:#ffb84d"></i>Emploi</span><span><i style="background:#58d68d"></i>Supérette</span><span><i style="background:#5aa9ff"></i>Banque</span><span><i style="background:#ff6b6b"></i>Hôpital</span><span><i style="background:#c79bff"></i>Appart</span><span><i style="background:#ff5fd2"></i>Club</span></div>
@@ -178,7 +179,7 @@
 <script src="js/ville31.js?v=32"></script>
 <script src="js/features32.js?v=33"></script>
 <script src="js/motors33-world.js?v=33"></script>
-<script src="js/motors33.js?v=33"></script>
+<script src="js/motors33.js?v=53.1"></script>
 <script src="js/motors33-ui.js?v=33"></script>
 <script src="js/motors33-play.js?v=33"></script>
 <script src="js/motors33-svc.js?v=33"></script>
@@ -211,5 +212,8 @@
 <script src="js/terre52.js?v=52"></script>
 <script src="js/arene52.js?v=52"></script>
 <script src="js/account51.js?v=52"></script>
+<script src="js/glb53.js?v=53.1"></script>
+<script src="js/v53.js?v=53.1"></script>
+<script src="js/drive54.js?v=54"></script>
 <script src="js/main.js?v=50"></script>
 </body></html>

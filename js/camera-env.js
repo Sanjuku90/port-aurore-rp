@@ -140,7 +140,7 @@ function updatePrompt(){
     else{
       let bd=3.4;spots.forEach(s=>{const d=Math.hypot(s.x-player.x,s.z-player.z);if(d<bd){bd=d;nearSpot=s;}});
       if(nearSpot)txt=(blackout>0&&(nearSpot.id==='shop'||nearSpot.id==='club'))?'Fermé · coupure de courant':'E · '+nearSpot.label;
-      else{let cd=4.2;cars.forEach(c=>{if(c.kind!=='parked')return;const d=Math.hypot(c.x-player.x,c.z-player.z);if(d<cd){cd=d;nearCar=c;}});if(nearCar)txt='E · Monter dans la voiture';else{let pd=2.6;peds.forEach(p=>{const d=Math.hypot(p.x-player.x,p.z-player.z);if(d<pd&&p.stun<=0){pd=d;nearPed=p;}});if(nearPed)txt='E · Parler à '+nearPed.name+(state.friends.indexOf(nearPed.name)<0?'':' (ami)');}}
+      else{let cd=4.2;cars.forEach(c=>{if(c.kind!=='parked'||c.lock53)return;const d=Math.hypot(c.x-player.x,c.z-player.z);if(d<cd){cd=d;nearCar=c;}});if(nearCar)txt='E · Monter dans la voiture';else{let pd=2.6;peds.forEach(p=>{const d=Math.hypot(p.x-player.x,p.z-player.z);if(d<pd&&p.stun<=0){pd=d;nearPed=p;}});if(nearPed)txt='E · Parler à '+nearPed.name+(state.friends.indexOf(nearPed.name)<0?'':' (ami)');}}
     }
   }
   if(txt!==promptKey){promptKey=txt;const b=$('#prompt');b.hidden=!txt;b.textContent=txt;}

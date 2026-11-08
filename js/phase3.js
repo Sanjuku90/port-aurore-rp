@@ -18,12 +18,12 @@ function boutique(){const o=mkO(boutique);
     o('Bas : '+(look.bt||'pantalon'),20,()=>{look.bt=nx(['pantalon','short','jupe'],look.bt||'pantalon');}),o('Couleur du bas',15,()=>{look.p=nx(PN3,look.p||PN3[0]);}),
     o('Chaussures',20,()=>{look.f=nx(SHOE_COLS,look.f!=null?look.f:0xf2f2ee);}),o(look.bag?'Retirer le sac à dos':'Sac à dos',18,()=>{look.bag=!look.bag;})]);}
 /* inventaire, nourriture, boissons, soins */
-const IT={water:['Bouteille d’eau',s=>{s.thirst+=35;}],soda:['Soda',s=>{s.thirst+=25;s.fun+=6;}],sand:['Sandwich',s=>{s.hunger+=30;}],menu:['Menu complet',s=>{s.hunger+=60;s.thirst+=10;}],fish:['Poisson grillé',s=>{s.hunger+=45;}],pans:['Pansements',s=>{s.health+=15;}],kit:['Kit de soins',s=>{s.health+=45;}],meds:['Médicaments',s=>{s.health+=10;P3.sick=0;toast('Tu te sens mieux.','good');}]};
+const IT={water:['Bouteille d’eau',s=>{s.thirst+=35;}],soda:['Soda',s=>{s.thirst+=25;s.fun+=6;}],sand:['Sandwich',s=>{s.hunger+=30;}],menu:['Menu complet',s=>{s.hunger+=60;s.thirst+=10;}],fish:['Poisson grillé',s=>{s.hunger+=45;}],pans:['Pansements',s=>{s.health+=15;}],kit:['Kit de soins',s=>{s.health+=45;}],bidon:['Bidon d’essence (+40 %)',()=>{}],meds:['Médicaments',s=>{s.health+=10;P3.sick=0;toast('Tu te sens mieux.','good');}]};
 const inv=()=>Object.values(P3.inv).reduce((a,b)=>a+b,0);
 function useItem(k){if(!P3.inv[k])return;P3.inv[k]--;if(!P3.inv[k])delete P3.inv[k];IT[k][1](state);['thirst','hunger','health','fun'].forEach(a=>{state[a]=Math.min(100,state[a]);});toast(IT[k][0]+' utilisé.','good');}
 function sac(){const ks=Object.keys(P3.inv);openPanel('Sac à dos',ks.length?inv()+' sur '+CAP+' objets. Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+' · Santé '+Math.round(state.health)+'.':'Ton sac est vide. Achète à manger à la supérette, des soins à la pharmacie.',ks.map(k=>({label:IT[k][0]+' ×'+P3.inv[k],fn:()=>{useItem(k);sac();}})));}
 function market(title,txt,list,re){openPanel(title,txt+' Sac : '+inv()+' sur '+CAP+'.',list.map(a=>({label:IT[a[0]][0]+' · '+fmt(a[1]),off:state.cash<a[1]||inv()>=CAP,fn:()=>{if(state.cash>=a[1]&&inv()<CAP){state.cash-=a[1];P3.inv[a[0]]=(P3.inv[a[0]]||0)+1;toast(IT[a[0]][0]+' dans le sac.','good');}re();}})).concat([{label:'Ouvrir le sac',fn:sac}]));}
-function superette(){market('Supérette','Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+'.',[['water',2],['soda',3],['sand',8],['menu',15],['fish',12]],superette);}
+function superette(){market('Supérette','Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+'.',[['water',2],['soda',3],['sand',8],['menu',15],['fish',12],['bidon',20]],superette);}
 function pharma(){market('Pharmacie','Santé '+Math.round(state.health)+(P3.sick?' · tu es malade.':'.'),[['pans',6],['kit',18],['meds',12]],pharma);}
 const _os=openSpot;openSpot=function(id){if(id==='shop'){if(blackout>0)toast('Coupure de courant : fermé.','warn');else superette();}else if(id==='coiffeur')coiffeur();else _os(id);};
 const _sx=shopX;shopX=function(id){if(id==='boutique')boutique();else if(id==='pharma')pharma();else _sx(id);};
@@ -65,10 +65,10 @@ const _nd=needs;needs=function(dt){
 const _uh=updateHud;updateHud=function(){_uh();const t=$('#ht'),s=$('#sk');if(t)t.style.width=Math.round(state.thirst)+'%';if(s)s.hidden=!P3.sick;};
 /* interface et sauvegarde */
 $('#hf').closest('.bar').insertAdjacentHTML('afterend','<div class="bar"><span>Soif</span><i><u id="ht" style="background:#4fb0e8"></u></i></div><div id="sk" hidden style="color:#ff6b6b;font-size:12px;padding:2px 0">Malade · prends des médicaments</div>');
-const bar=document.createElement('div');bar.id='p3b';bar.innerHTML='<button class="card" id="p3-bag">🎒 Sac</button><button class="card" id="p3-em">🙌 Gestes</button>';$('#hud').appendChild(bar);
-$('#p3-bag').onclick=sac;$('#p3-em').onclick=gestes;
+const bar=document.createElement('div');bar.id='p3b';bar.innerHTML='<button class="card" id="p3-bag">🎒 Sac</button>';$('#hud').appendChild(bar);
+$('#p3-bag').onclick=sac;
 const st=document.createElement('style');st.textContent='#p3b{position:absolute;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:6}#p3b button{pointer-events:auto;padding:6px 10px;font:600 13px Barlow,sans-serif;color:inherit;border:0}';document.head.appendChild(st);
-addEventListener('keydown',e=>{if(!started||paused||chatOpen||(e.target&&e.target.tagName==='INPUT'))return;const k=e.key.toLowerCase();if(k==='i'){if(panelOpen)closePanel();else sac();}else if(k==='g'&&!panelOpen)gestes();});
+addEventListener('keydown',e=>{if(!started||paused||chatOpen||(e.target&&e.target.tagName==='INPUT'))return;const k=e.key.toLowerCase();if(k==='i'){if(panelOpen)closePanel();else sac();}});
 const K3='port-aurore-p3';
 try{const s=JSON.parse(localStorage.getItem(K3)||'null');if(s){state.thirst=clamp(+s.t||80,0,100);P3.inv=s.i&&typeof s.i==='object'?s.i:{};P3.rel=s.r&&typeof s.r==='object'?s.r:{};P3.sick=s.k?1:0;}}catch(e){}
 Object.keys(P3.inv).forEach(k=>{if(!IT[k]||!(P3.inv[k]>0))delete P3.inv[k];});

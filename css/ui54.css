@@ -1,0 +1,127 @@
+/* ==========================================================================
+   v54 · interface « maquette » : verre sombre, boutons ronds, rien d'inutile
+   ========================================================================== */
+:root{--g54:rgba(14,18,30,.62);--gb54:rgba(255,255,255,.2)}
+
+/* ---------- pastille de santé (alertes seulement) ---------- */
+#v54-pill{display:flex;align-items:center;gap:8px;min-height:22px}
+#v54-pill .v54-h{font-size:13px;line-height:1;color:#ff5a6e}
+#v54-pill .v54-bar{display:block;width:64px;height:5px;border-radius:3px;background:rgba(255,255,255,.16);overflow:hidden;flex:none}
+#v54-pill .v54-bar u{display:block;height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#ff2e5a,#ff7b8d);text-decoration:none;transition:width .35s}
+#v54-pill .v54-bar u.low{animation:v54p .8s steps(2,end) infinite}
+#v54-al{display:flex;gap:4px}#v54-al b{font-size:15px;line-height:1;animation:v54p 1.1s ease-in-out infinite}
+@keyframes v54p{50%{opacity:.3}}
+/* repliée : seule la pastille reste ; dépliée au toucher (6 s) : fiche complète */
+html.ui45 #app:not(.x54) #left{width:auto}
+html.ui45 #app:not(.x54) #stats{padding:6px 11px;opacity:.7;pointer-events:auto}
+html.ui45 #app.alert54:not(.x54) #stats{opacity:1}
+html.ui45 #app:not(.x54) #stats .who,html.ui45 #app:not(.x54) #stats #rank,html.ui45 #app:not(.x54) #stats .bar,
+html.ui45 #app:not(.x54) #stats #sk,html.ui45 #app:not(.x54) #v17hud{display:none!important}
+html.ui45 #app.x54 #stats{pointer-events:auto}
+html.ui45 #mission{max-width:min(230px,46vw)}
+#v54-top,#v54-bt,#v54-wx,#drv54{display:none}
+
+/* ---------- boutons « verre » communs ---------- */
+.g54{pointer-events:auto;touch-action:none;color:#fff;background:var(--g54);border:2px solid var(--gb54);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 8px 22px rgba(0,0,0,.35);padding:0;margin:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  font:600 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0;text-transform:none;
+  -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;transition:transform .06s,background .06s}
+.g54 svg{width:56%;height:56%;display:block}
+.g54:active,.g54.on{transform:scale(.94);background:rgba(255,174,43,.9);color:#10131a;border-color:#ffd27a}
+
+/* ---------- mobile : tout ce qui n'est pas dans la maquette disparaît ---------- */
+#app.touch #right,#app.touch #btns,#app.touch #p3-bag,#app.touch #h45-speedo,#app.touch #speed{display:none!important}
+
+/* ---------- mobile, à pied ---------- */
+/* minicarte ronde en haut à gauche */
+html.ui45 #app.touch #h45-radar{display:block!important;position:absolute;left:calc(12px + env(safe-area-inset-left,0px));
+  top:calc(12px + env(safe-area-inset-top,0px));right:auto;bottom:auto;width:clamp(84px,25vh,108px);height:clamp(84px,25vh,108px);
+  pointer-events:auto;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))}
+html.ui45 #app.touch #h45-radar .r45-ring,html.ui45 #app.touch #h45-radar .r45-zone{display:none!important}
+html.ui45 #app.touch #h45-radar #mini{inset:0!important;width:100%!important;height:100%!important;border-radius:50%;border:3px solid #fff!important;opacity:1}
+/* fiche et alertes : sous la minicarte */
+html.ui45 #app.touch #left{top:calc(24px + clamp(84px,25vh,108px) + env(safe-area-inset-top,0px))}
+html.ui45 #app.touch:not(.x54):not(.alert54) #stats{display:none!important}
+/* pastille argent + heure, bouton pause à sa droite */
+#app.touch:not(.driving54) #v54-top{display:flex;align-items:center;gap:10px;position:absolute;z-index:6;pointer-events:auto;
+  top:calc(12px + env(safe-area-inset-top,0px));right:calc(72px + env(safe-area-inset-right,0px));height:48px;padding:0 18px 0 10px;border-radius:24px;
+  background:var(--g54);border:1px solid var(--gb54);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;
+  font:700 17px/1 system-ui,-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+#v54-top .cash{display:grid;place-items:center;width:30px;height:22px;border-radius:6px;background:#43c75a;color:#0d2a13;font-weight:800;transform:rotate(-8deg)}
+#v54-top .sep{display:block;width:1px;height:26px;background:rgba(255,255,255,.35)}
+#v54-top #v54-ic{font-size:18px}
+html.ui45 #app.touch #p3b{left:auto!important;right:calc(12px + env(safe-area-inset-right,0px))!important;transform:none!important;
+  top:calc(12px + env(safe-area-inset-top,0px))!important}
+html.ui45 #app.touch #pausebtn.in-rail{width:48px!important;height:48px!important;border-radius:16px!important;clip-path:none!important;
+  background:var(--g54)!important;color:#fff!important;border:1px solid var(--gb54)!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:18px}
+/* Inventaire + Téléphone en bas à droite */
+#app.touch:not(.driving54) #v54-bt{display:flex;gap:12px;position:absolute;z-index:6;right:calc(12px + env(safe-area-inset-right,0px));bottom:calc(12px + env(safe-area-inset-bottom,0px))}
+#v54-bt .big{width:clamp(70px,21vh,86px);height:clamp(70px,21vh,86px);border-radius:20px;gap:6px}
+#v54-bt .big svg{width:42%;height:42%}#v54-bt .big span{font-size:11px;font-weight:600}
+/* météo / saison en bas à gauche */
+#app.touch:not(.driving54) #v54-wx{display:flex;align-items:center;gap:8px;position:absolute;z-index:5;left:calc(12px + env(safe-area-inset-left,0px));
+  bottom:calc(12px + env(safe-area-inset-bottom,0px));height:40px;padding:0 14px;border-radius:20px;background:var(--g54);border:1px solid var(--gb54);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font:600 13px/1 system-ui,sans-serif;pointer-events:none;max-width:44vw;overflow:hidden;white-space:nowrap}
+#v54-wx em{font-style:normal;opacity:.6}
+/* joystick : grand anneau translucide */
+html.ui45 #app.touch #joy{width:clamp(104px,34vh,136px)!important;height:clamp(104px,34vh,136px)!important;border:2px solid rgba(255,255,255,.28)!important;
+  background:radial-gradient(circle,rgba(255,255,255,.08),rgba(14,18,30,.45))!important;opacity:.85}
+html.ui45 #app.touch #knob{width:44%!important;height:44%!important;left:28%!important;top:28%!important;background:rgba(255,255,255,.82)!important;border:0!important}
+
+/* ---------- mobile, en voiture ---------- */
+#app.touch.driving54 #stats,#app.touch.driving54 #joy-zone,#app.touch.driving54 #v54-top,
+#app.touch.driving54 #v54-bt,#app.touch.driving54 #v54-wx,#app.touch.driving54 #chatlog{display:none!important}
+html.ui45 #app.touch.driving54 #p3b{right:calc(86px + env(safe-area-inset-right,0px))!important}
+html.ui45 #app.touch.driving54 #h45-radar #mini{border-radius:16px!important}
+#app.touch.driving54 #drv54{display:block;position:absolute;inset:0;pointer-events:none;z-index:14;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+/* flèches rondes */
+#d54-steer{position:absolute;left:calc(10px + env(safe-area-inset-left,0px));bottom:calc(58px + env(safe-area-inset-bottom,0px));display:flex;gap:14px;padding:10px;
+  pointer-events:auto;touch-action:none}
+.d54-ar{width:clamp(52px,16vh,64px);height:clamp(52px,16vh,64px);border-radius:50%;display:grid;place-items:center;pointer-events:none;color:#fff;
+  background:var(--g54);border:2px solid var(--gb54);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .06s,background .06s}
+.d54-ar svg{width:42%;height:42%}.d54-ar.on{background:rgba(255,174,43,.9);color:#10131a;border-color:#ffd27a;transform:scale(.94)}
+/* inventaire + téléphone (petits) */
+#d54-mini{position:absolute;left:calc(12px + env(safe-area-inset-left,0px));bottom:calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:10px}
+#d54-mini .sq{width:42px;height:42px;border-radius:13px}#d54-mini .sq svg{width:56%;height:56%}
+/* Sortir */
+#d54-exit{position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));width:clamp(54px,16vh,62px);height:clamp(54px,16vh,62px);border-radius:50%;gap:3px}
+#d54-exit svg{width:46%;height:46%}#d54-exit span{font-size:10px;font-weight:600}
+/* compteur central en demi-dôme + rapport + carburant */
+#d54-dial{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(6px + env(safe-area-inset-bottom,0px));width:clamp(118px,36vh,150px);height:clamp(92px,28vh,117px);
+  pointer-events:auto;touch-action:none;border-radius:50% 50% 16px 16px / 62% 62% 16px 16px;background:linear-gradient(180deg,rgba(14,17,26,.9),rgba(8,10,16,.94));
+  border:2px solid rgba(255,255,255,.14);box-shadow:0 8px 22px rgba(0,0,0,.4)}
+#d54-dial svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+#d54-dial .tr,#d54-dial .fl{fill:none;stroke-linecap:round;stroke-width:3.4}
+#d54-dial .tr{stroke:rgba(255,255,255,.14)}#d54-dial .fl{stroke:#ffae2b;stroke-dasharray:0 100;transition:stroke-dasharray .1s linear}
+#d54-dial .tk line{stroke:rgba(255,255,255,.55);stroke-width:1.2}
+#d54-gr{position:absolute;left:0;right:0;top:15%;text-align:center;font:700 clamp(9px,2.6vh,11px)/1 system-ui,sans-serif;font-style:normal;color:rgba(255,255,255,.7);letter-spacing:.08em}
+#d54-dial .rd{position:absolute;left:0;right:0;top:27%;text-align:center;color:#fff}
+#d54-dial .rd b{display:block;font:800 clamp(28px,9vh,38px)/1 system-ui,-apple-system,sans-serif;font-variant-numeric:tabular-nums}
+#d54-dial .rd small{display:block;margin-top:2px;font:700 clamp(10px,3vh,13px)/1 system-ui,sans-serif;color:#ffae2b}
+#d54-dial .fu{position:absolute;left:0;right:0;bottom:9%;display:flex;justify-content:center;align-items:center;gap:7px}
+#d54-dial .fu svg{position:static;width:15px;height:15px;color:#fff}
+#d54-fu{display:flex;gap:3px}#d54-fu u{display:block;width:clamp(12px,3.4vh,16px);height:6px;border-radius:2px;background:rgba(255,255,255,.18);text-decoration:none}
+#d54-fu u.on{background:#ffae2b}#d54-fu.low u.on{background:#ff4650}
+#d54-nt{position:absolute;left:34%;bottom:3px;height:2px;border-radius:2px;background:#3fe0ff;max-width:32%;opacity:.8}#d54-nt.boost{background:#ff2e88;opacity:1}
+/* pédales */
+#d54-pedals{position:absolute;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));display:flex;align-items:flex-end;gap:clamp(10px,3vh,14px)}
+.pedal{border-radius:22px}.pedal svg{width:58%;height:auto}
+#d54-brake{width:clamp(52px,16vh,64px);height:clamp(52px,16vh,64px)}
+#d54-gas{width:clamp(52px,16vh,64px);height:clamp(76px,23vh,92px)}
+#d54-gas svg{width:56%}
+#d54-gas.alt{background:rgba(255,46,136,.9);color:#fff;border-color:#ff9acb;box-shadow:0 0 26px rgba(255,46,136,.6)}
+#d54-brake.alt{background:rgba(255,70,80,.92);color:#fff;border-color:#ff9aa3}
+#d54-gas.on:not(.alt),#d54-brake.on:not(.alt){background:rgba(255,174,43,.9)}
+
+/* portrait étroit : pédales et flèches plus compactes */
+@media (max-width:600px) and (orientation:portrait){
+  #d54-steer{gap:10px;bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .d54-ar{width:56px;height:56px}#d54-brake,#d54-gas{width:56px}
+}
+@media (prefers-reduced-motion:reduce){#v54-al b,#v54-pill .v54-bar u.low{animation:none}}
+html.ui45 #app.touch #pausebtn.in-rail{font-size:24px!important;line-height:1}
+
+/* repère Nord qui suit la rotation de la minicarte */
+#v54-n{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;display:grid;place-items:center;border-radius:50%;background:#10131a;color:#fff;
+  font:800 12px/1 system-ui,sans-serif;border:1px solid rgba(255,255,255,.5);pointer-events:none;z-index:2}

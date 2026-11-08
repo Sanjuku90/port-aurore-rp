@@ -156,7 +156,7 @@ phHome=function(){
   const s=$('#ph-scr'),v=$('#ph-appv');s.classList.remove('inapp');tone25('home');
   if(was&&!v.hidden){v.classList.remove('opening','slide');v.classList.add('closing');setTimeout(()=>{if(!phApp){v.hidden=true;v.classList.remove('closing');}},290);}else v.hidden=true;
   const pg=$('#ph-pages'),keep=pg.scrollLeft;pg.innerHTML='';
-  const list=APPS.filter(a=>!DOCK25.includes(a[0]));
+  const list=APPS.filter(a=>!DOCK25.includes(a[0])&&!(window.HIDE53&&HIDE53(a[0])));
   const p1=mk('div','page');p1.appendChild(wxWidget25());p1.appendChild(walWidget25());list.slice(0,16).forEach(a=>p1.appendChild(appIcon25(a)));pg.appendChild(p1);
   for(let i=16;i<list.length;i+=24){const p=mk('div','page');list.slice(i,i+24).forEach(a=>p.appendChild(appIcon25(a)));pg.appendChild(p);}
   const dots=$('#ph-dots');dots.innerHTML='';[...pg.children].forEach((_,i)=>dots.appendChild(mk('i',i?'':'on')));

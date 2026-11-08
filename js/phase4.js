@@ -85,7 +85,7 @@ addCar=function(x,z,h,color,kind,type){
 const _driveCarP4=driveCar;
 driveCar=function(c,dt){
   p4FuelTick=Math.max(0,p4FuelTick-dt);const oldx=c.x,oldz=c.z;
-  if(c.fuel<=0){c.v*=Math.max(0,1-3*dt);if(Math.abs(c.v)<.15)c.v=0;if(player.car===c&&p4FuelTick<=0){p4FuelTick=3;toast('Réservoir vide. Trouve une station-service.','warn');}}
+  if(c.fuel<=0){c.v*=Math.max(0,1-3*dt);if(Math.abs(c.v)<.15)c.v=0;if(player.car===c&&p4FuelTick<=0){p4FuelTick=3;toast('Réservoir vide : ouvre le sac 🎒 pour utiliser un bidon, ou trouve une station-service.','warn');}}
   else _driveCarP4(c,dt);
   if(player.car===c&&c.fuel>0){c.fuel=Math.max(0,c.fuel-Math.hypot(c.x-oldx,c.z-oldz)*.027);if(drivingExam){drivingExam.distance+=Math.hypot(c.x-oldx,c.z-oldz);}}
   if(player.car===c&&drivingExam&&drivingExam.distance>=110){state.license=state.license||{};state.license[drivingExam.type]=true;toast(VEHICLE_LICENSE[drivingExam.type]+' obtenu !','good');drivingExam=null;saveProgress();}
@@ -111,7 +111,8 @@ openSpot=function(id){
     const car=target(),txt=car?'Véhicule sélectionné · '+Math.round(car.fuel||0)+'% carburant.':'Gare-toi près des pompes pour faire le plein ou réparer.';
     openPanel('Station-service',txt,[
       {label:'Faire le plein · $45',off:state.cash<45||!car||(car.fuel||0)>=99,fn:()=>{const c=target();if(!c||state.cash<45)return;state.cash-=45;c.fuel=100;toast('Plein effectué.','good');saveProgress();openSpot('fuel');}},
-      {label:'Réparer et faire le plein · $90',off:state.cash<90||!car,fn:()=>{const c=target();if(!c||state.cash<90)return;state.cash-=90;c.fuel=100;c.damage=0;toast('Véhicule réparé et révisé.','good');saveProgress();openSpot('fuel');}}
+      {label:'Réparer et faire le plein · $90',off:state.cash<90||!car,fn:()=>{const c=target();if(!c||state.cash<90)return;state.cash-=90;c.fuel=100;c.damage=0;toast('Véhicule réparé et révisé.','good');saveProgress();openSpot('fuel');}},
+      {label:'Acheter un bidon d’essence · $20 (sac : '+inv()+'/'+CAP+')',off:state.cash<20||inv()>=CAP,fn:()=>{if(state.cash<20||inv()>=CAP)return;state.cash-=20;P3.inv.bidon=(P3.inv.bidon||0)+1;toast('Bidon d’essence dans le sac : utilise-le n’importe où.','good');saveProgress();openSpot('fuel');}}
     ]);return;
   }
   if(id==='dealership'){const opts=FLEET_CATALOG.map(v=>({label:v.label+' · '+fmt(v.price)+(state.license&&state.license[v.license]?' · permis validé':' · '+VEHICLE_LICENSE[v.license]),off:state.cash<v.price||!state.license||!state.license[v.license],fn:()=>buyFleetVehicle(v)}));

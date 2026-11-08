@@ -97,9 +97,9 @@ const HUD45=(function(){
     /* vitesse */
     const sp=q('#h45-speedo');
     if(sp&&typeof player!=='undefined'){const car=player.car,on=!!car&&!(typeof FL!=='undefined'&&FL&&FL.on);sp.classList.toggle('on',on);
-      if(on){const v=Math.abs(car.v||0)*3.6;H.spd+=(v-H.spd)*Math.min(1,dt*10);const k=Math.min(1,H.spd/H.arc.MAX);
+      if(on){const v=(car.spd!=null?car.spd:Math.abs(car.v||0))*3.6;H.spd+=(v-H.spd)*Math.min(1,dt*10);const k=Math.min(1,H.spd/H.arc.MAX);
         sp.querySelector('.s45-fill').style.strokeDashoffset=(H.fillLen*(1-k)).toFixed(1);sp.querySelector('.s45-read b').textContent=Math.round(H.spd);
-        const g=car.v<-0.3?'R':H.spd<2?'N':'D'+Math.min(6,1+Math.floor(H.spd/38));sp.querySelector('.s45-gear').textContent=g;sp.classList.toggle('red',H.spd>200);}}
+        const g=car.v<-0.3?'R':H.spd<2?'N':'D'+(car.gear||Math.min(6,1+Math.floor(H.spd/38)));sp.querySelector('.s45-gear').textContent=g;sp.classList.toggle('red',H.spd>200);}}
     /* quartiers et intérieurs */
     const [zn,zs]=zoneOf();if(zn&&zn!==H.zone){if(H.zone)banner(zs,zn);H.zone=zn;const rz=q('.r45-zone');if(rz)rz.textContent=zn;}
     const ins=player&&player.inside||null;if(ins!==H.inside){H.inside=ins;if(ins&&typeof ins.name==='string'&&ins.name)banner('Intérieur',ins.name,true);}

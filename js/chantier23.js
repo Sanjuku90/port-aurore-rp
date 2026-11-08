@@ -810,7 +810,7 @@ function anim23(dt){
   const hr=(gameMin%1440)/60,night=hr<6.5||hr>19;CORE_L23.emissiveIntensity=night?1.1:.18;
   const cx=camera.position.x,cz=camera.position.z;
   Object.values(RT23.sites).forEach(R=>{
-    const s=R.s;apply23(R);
+    const s=R.s;apply23(R);if(s.done&&(R.crane||R.exc||R.truck))buildEng23(R);
     const near=Math.hypot(R.l.x-cx,R.l.z-cz)<170;R.g.visible=true;
     const working=!s.done&&rate23(s,s.phase)>0;
     if(R.crane)animCrane23(R,R.crane,dt,working&&(s.phase===3||s.phase===5));

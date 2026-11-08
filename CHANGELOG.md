@@ -1,3 +1,13 @@
+# v54 · Conduite, commandes et interface
+
+- **Bidons d'essence** : vendus à la station ($20) et à la supérette ($20), +40 % de carburant, utilisables n'importe où depuis le sac (au volant ou à moins de 9 m du véhicule). Alerte « carburant bas » sous 15 %.
+- **Minicarte en conduite** : carré arrondi en haut à gauche, avec repère N qui suit la rotation de la carte.
+
+- **Mécanique de conduite** (`js/drive54.js`) : boîte 6 rapports avec régime moteur, adhérence latérale limitée, drift au frein à main, nitro (se recharge en dérapant), roulis, inclinaison des deux-roues, poids différent pour sportives, bus, camions, motos et scooters. L'ancienne conduite reste en secours (`driveCarLegacy`).
+- **Interface mobile d'après la maquette** : à pied, minicarte ronde (toucher = grande carte), pastille argent + heure, pause, joystick (à fond = courir), boutons Inventaire et Téléphone, pastille météo. En voiture, flèches rondes ◀ ▶ (on glisse de l'une à l'autre), pédales FREIN et ACCÉLÉRATEUR, compteur central avec carburant (toucher = klaxon), bouton Sortir. Double appui puis maintien sur l'accélérateur = nitro, sur le frein = frein à main (drift). Clavier : ZQSD/flèches, Espace drift, Maj nitro.
+- **Retraits** : bouton « Gestes » (touche G) et bouton/menu « Bord » (touche C, capot, portières…).
+- **Interface allégée** : nom, métier, rang et barres masqués ; pastille de santé + icônes d'alerte ; toucher la pastille ou l'argent affiche le détail 6 s. Grappe de boutons à pied corrigée (ACTION ne chevauche plus COURIR).
+
 # v52 · Horizons (inscription instantanée, ciel, mer, terre, arène)
 - Inscription instantanée : plus aucun e-mail de confirmation. Le compte est actif tout de suite (sauvegarde en ligne + cadeaux). Les anciens comptes « à confirmer » sont activés automatiquement.
 - Mot de passe oublié : par e-mail si un fournisseur est configuré (facultatif), sinon l’admin génère un mot de passe temporaire depuis /admin.
@@ -414,3 +424,15 @@ Gameplay, sauvegardes et contrôles inchangés.
 ## Lumière
 - Ciel moins saturé avec brume d'horizon, rebond de lumière chaud au sol, exposition ajustée.
 - Façades regroupées par matériau : moins d'appels de dessin malgré plus de détails.
+
+# v53 · Départ à la maison, motos, chantiers, carte
+- Départ à la maison avec un seul scooter ; voitures des autres verrouillées.
+- Pilote visible sur moto/scooter ; 5 nouvelles motos (Titan, Savane, Rétro, Fury, Volt).
+- Chantier terminé : entrée dans le bâtiment, engins retirés.
+- Carte 3D fonctionnelle à Nouvelle-Aurore et Solenne.
+- Téléphone : doublons masqués ; bandeau d'aide ; décor (arbres, bancs, lampadaires).
+- Golf GTI Mk1 (modèle GLB, chargeur maison js/glb53.js) en vente chez Aurore Exclusive (collection) (4 200 $).
+- Deux nouvelles voitures 3D détaillées chez Aurore Exclusive (collection) : Honda NSX 2019 (11 500 $, 573 ch, 307 km/h) et BMW M4 GT3 EVO 2025 (15 500 $, 590 ch, 290 km/h). Chargées à la demande à la première montée / au premier essai.
+- Chargeur GLB généralisé (registre de modèles, roues détectées par groupe ou par position, orientation intégrée à la géométrie, peinture recolorable, couleurs sRGB correctes avec three r185). La couleur choisie (achat, essai, atelier) s'applique à la carrosserie.
+- NSX allégé (moteur et coque émissive invisibles retirés : 194 k → 150 k triangles, 8,1 → 6,2 Mo).
+- Crédits : Honda NSX 2019 et BMW M4 GT3 EVO G82 par Ddiaz Design (Sketchfab), licence CC BY-NC-SA 4.0 : usage non commercial, attribution et partage dans les mêmes conditions. Golf GTI Mk1 : voir assets/golf-gti-mk1.glb.js.

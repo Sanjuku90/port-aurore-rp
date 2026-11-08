@@ -9,7 +9,7 @@ function getInput(){
   const m=Math.hypot(x,z);if(m>1){x/=m;z/=m;}
   return {x,z};
 }
-function driveCar(c,dt){
+function driveCarLegacy(c,dt){
   const inp=(panelOpen||chatOpen)?{x:0,z:0}:getInput();
   const thr=inp.z,steer=inp.x;
   if(thr>0.05){c.v+=(c.v<0?30:15)*(c.acc||1)*thr*dt;}
@@ -33,6 +33,8 @@ function driveCar(c,dt){
     }
   });
 }
+/* v54 : la vraie physique de conduite vit dans drive54.js ; l'ancienne reste en secours */
+function driveCar(c,dt){if(window.DRV54&&DRV54.step)return DRV54.step(c,dt);return driveCarLegacy(c,dt);}
 function takeMoney(a){const c=Math.min(state.cash,a);state.cash-=c;state.bank=Math.max(0,state.bank-(a-c));}
 function updateNpc(c,dt){
   const fx=Math.sin(c.h),fz=Math.cos(c.h);let blocked=false;
@@ -59,12 +61,12 @@ function updateNpc(c,dt){
 }
 function enterCar(c){
   player.car=c;c.kind='player';c.v=0;player.mesh.visible=false;
-  $('#speed').hidden=false;toast('Au volant. Flèches ou ZQSD, Espace pour le frein à main.');
+  $('#speed').hidden=false;if(window.DRV54&&DRV54.onEnter)DRV54.onEnter(c);toast(window.DRV54&&DRV54.touch?'Au volant · touche une flèche pour démarrer.':'Au volant · ZQSD/flèches, Espace drift, Maj nitro, H klaxon.');
 }
 function exitCar(){
   const c=player.car,rx=-Math.cos(c.h),rz=Math.sin(c.h),fx=Math.sin(c.h),fz=Math.cos(c.h);
   let x=c.x+rx*2.5,z=c.z+rz*2.5;
   for(const [a,b] of [[rx,rz],[-rx,-rz],[fx,fz],[-fx,-fz]]){const t={x:c.x+a*2.6,z:c.z+b*2.6};if(pushAABB(t,0.5)===0){x=t.x;z=t.z;break;}}
-  player.x=x;player.z=z;player.h=c.h;c.kind='parked';c.v=0;player.car=null;player.mesh.visible=true;$('#speed').hidden=true;
+  if(window.DRV54&&DRV54.onExit)DRV54.onExit(c);player.x=x;player.z=z;player.h=c.h;c.kind='parked';c.v=0;player.car=null;player.mesh.visible=true;$('#speed').hidden=true;
 }
 

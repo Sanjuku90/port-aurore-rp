@@ -157,3 +157,8 @@ Le contrôle de build vérifie la syntaxe, les références de fichiers, l’ord
 
 ## v49 · Aurore OS
 Téléphone complet : voir CHANGELOG. Fichiers : js/phone49-core.js, js/phone49-apps.js, css/phone49.css.
+
+## Crédits des modèles 3D
+- **2019 Honda NSX** et **2025 BMW M4 GT3 EVO (G82)** : modèles de [Ddiaz Design](https://sketchfab.com/ddiaz-design) sur Sketchfab, licence [CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/) (attribution, usage non commercial, partage dans les mêmes conditions). Le NSX a été allégé (moteur et coque émissive invisibles retirés).
+  Sources : <https://sketchfab.com/3d-models/2019-honda-nsx-78ec2b54b63744d48d037b6e41c5004a> · <https://sketchfab.com/3d-models/2025-bmw-m4-gt3-evo-g82-113f83dd87064697a5ec2511d280b9d5>
+- Les fichiers `assets/*.glb.js` contiennent les modèles encodés en base64 et sont chargés à la demande.
