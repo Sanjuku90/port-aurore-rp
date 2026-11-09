@@ -1,9 +1,10 @@
 'use strict';
 /* ---------- besoins, chat, interface ---------- */
 function needs(dt){
-  state.hunger=Math.max(0,state.hunger-0.12*dt);state.energy=Math.max(0,state.energy-0.07*dt);state.fun=Math.max(0,state.fun-0.05*dt);
-  if(state.hunger<=0||state.energy<=0)state.health-=0.8*dt;
-  else if(state.hunger>40&&state.health<100)state.health=Math.min(100,state.health+0.25*dt);
+  /* v55 : besoins 3× plus lents ; la faim ou la fatigue usent la santé très doucement et ne peuvent plus la faire tomber sous 12 */
+  state.hunger=Math.max(0,state.hunger-0.04*dt);state.energy=Math.max(0,state.energy-0.025*dt);state.fun=Math.max(0,state.fun-0.02*dt);
+  if(state.hunger<=0||state.energy<=0){if(state.health>12)state.health=Math.max(12,state.health-0.05*dt);}
+  else if(state.hunger>25&&(state.thirst==null||state.thirst>15)&&state.health<100)state.health=Math.min(100,state.health+0.25*dt);
   if(state.health<=0)respawn();
 }
 function respawn(){

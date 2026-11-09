@@ -24,7 +24,7 @@ function driveCarLegacy(c,dt){
   const speed=Math.abs(c.v),hit=collideCarWorld(c);
   if(hit>0){
     c.v*=0.82;
-    if(impactCd<=0&&speed>9){impactCd=0.6;const dmg=(speed-8)*1.1;state.health=Math.max(0,state.health-dmg);toast('Collision. −'+Math.round(dmg)+' de santé','bad');}
+    if(impactCd<=0&&speed>6){impactCd=0.6;if(window.V55)V55.crash(c,speed);}   /* v55 : le choc abîme le véhicule, plus la santé */
   }
   peds.forEach(p=>{
     if(speed>3&&Math.hypot(p.x-c.x,p.z-c.z)<1.7&&p.stun<=0){

@@ -63,7 +63,8 @@ D.step=function(c,dt){
   const I=blocked?{gas:0,brake:1,steer:0,analog:false,hb:0,nitro:0}:readInput(),K_=klass(c);
   if(c.vx===undefined||Math.abs(c.v-(c._pv||0))>.6)seed(c);
   if(c.nit==null)c.nit=1;
-  const top=c.top||27,acc=c.acc||1;
+  const dm=cl((c.damage||0)/100,0,1);   /* v55 : carrosserie abîmée = moins de vitesse, moins d'accélération, direction qui tire */
+  const top=(c.top||27)*(1-.5*Math.pow(dm,1.5)),acc=(c.acc||1)*(1-.6*Math.pow(dm,1.3));
   let fx=Math.sin(c.h),fz=Math.cos(c.h),rx=-Math.cos(c.h),rz=Math.sin(c.h);
   let fwd=c.vx*fx+c.vz*fz,lat=c.vx*rx+c.vz*rz;
   const sp=Math.abs(fwd),sf=cl(sp/top,0,1.4);
@@ -113,6 +114,8 @@ D.step=function(c,dt){
   let yawT=fwd/K_.L*Math.tan(s*lock)*(1+.3*hbk);
   const grip0=K_.grip*(1-.8*hbk)*(1-.35*I.brake*cl(sf*1.3,0,1)*(sp>12?1:0));
   const yMax=hbk?1.5:Math.max(.25,K_.grip*.92/Math.max(sp,3));
+  if(dm>.4){if(!c.pull)c.pull=Math.random()<.5?-1:1;yawT+=c.pull*.06*((dm-.4)/.6)*cl(sp/10,0,1);}
+  if(dm>.85&&sp>4&&Math.random()<dt*.9)c.shiftT=Math.max(c.shiftT||0,.28);   /* le moteur tousse */
   yawT=cl(yawT,-yMax,yMax);
   if(!hbk&&Math.abs(lat)>1.4)yawT+=cl(lat/Math.max(sp,5),-.8,.8)*1.15;   /* contre-braquage assisté */
   c.yaw=(c.yaw||0)+(yawT-(c.yaw||0))*Math.min(1,(K_.heavy?6:11)*dt);
@@ -137,8 +140,7 @@ D.step=function(c,dt){
   const hit=collideCarWorld(c);
   if(hit>0){
     c.vx*=.7;c.vz*=.7;c.yaw*=.6;if(c.nitOn)c.nit=Math.max(0,c.nit-.15);
-    if(impactCd<=0&&pre>9){impactCd=.6;const dmg=(pre-8)*1.1;state.health=Math.max(0,state.health-dmg);toast('Collision. −'+Math.round(dmg)+' de santé','bad');
-      if(window.HUD45&&HUD45.shake)HUD45.shake(Math.min(.8,pre/30));}
+    if(impactCd<=0&&pre>6){impactCd=.6;if(window.V55)V55.crash(c,pre);}   /* v55 : le choc abîme le véhicule, plus la santé */
   }
   c.v=c.vx*Math.sin(c.h)+c.vz*Math.cos(c.h);c._pv=c.v;c.spd=Math.hypot(c.vx,c.vz);
   const speed=Math.abs(c.v);

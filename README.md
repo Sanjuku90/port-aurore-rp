@@ -1,6 +1,12 @@
-# Port-Aurore RP · v52 · Métropole des Trois Cités
+# Port-Aurore RP · v55 · Métropole des Trois Cités
 
 Jeu de rôle 3D jouable dans le navigateur, servi par un petit serveur Node.js sans dépendance externe. Le serveur gère les vrais comptes joueur, l’envoi des e-mails, la sauvegarde en ligne et les cadeaux admin.
+
+## v55 · À savoir en jeu
+
+- **Choc = véhicule abîmé, pas joueur blessé.** Pastille 🔧 sous la minicarte (état en %). Réparation à la station-service ou à l'atelier.
+- **Bidons d'essence** : supérette, station-service, appli Aurore Market. À l'unité ($20) ou par 3 ($54, directement dans le coffre). Coffre : sac 🎒 → « Coffre du véhicule » ou toucher la pastille 🔧. Réservoir vide = bidon versé automatiquement.
+- **Survie plus douce** : faim, soif et fatigue ne peuvent plus tuer (santé minimale 12 %), et baissent beaucoup plus lentement.
 
 ## v51 · Vrais comptes, histoire, filière et famille
 

@@ -38,7 +38,7 @@ for(const term of ['Platinum Heights','Aurore Grand Mall','Aurore Waterfront','F
   if(!exp.includes(term)){bad++;console.error('Élément v47 manquant : '+term);}
 }
 const mobile=[
-  ['index.html',['id="joy-zone"','id="b-act"','id="b-chat"','id="b-phone"','id="b-map"','hud45.css?v=48','hud45.js?v=48','pause.js?v=48','main.js?v=50']],
+  ['index.html',['id="joy-zone"','id="b-act"','id="b-chat"','id="b-phone"','id="b-map"','hud45.css?v=55','hud45.js?v=55','pause.js?v=55','main.js?v=55']],
   ['js/input.js',['joyZone.addEventListener(\'pointerdown\'','setPointerCapture','pointercancel','resetTouchControls','aria-pressed']],
   ['css/hud45.css',['v48 · commandes tactiles','html.ui45 .touch #joy-zone','right #map-btn','right #ph-btn','grid-template-columns:44px 44px 64px','#joy.active']],
   ['js/fx45.js',['mode:coarse?0:2']],
@@ -46,7 +46,7 @@ const mobile=[
   ['js/menu27.js',["TOUCH_GFX=matchMedia('(pointer: coarse)').matches",'if(TOUCH_GFX)GFX.q=0;','sun.castShadow=!TOUCH_GFX&&q>0','GFX_QUALITIES=TOUCH_GFX?[QN[0]]:QN']],
   ['js/perf33.js',['MAX=Math.min(dpr,1.0),MIN=.65;let pr=Math.min(dpr,.9)']],
   ['js/fx45.js',["if(coarse)S.mode=0;",'S.mode=coarse?0:Math.max',"MN=coarse?['Désactivé']"]],
-  ['index.html',['menu27.js?v=52.1','perf33.js?v=52.1','fx45.js?v=52.1']],
+  ['index.html',['menu27.js?v=55','perf33.js?v=55','fx45.js?v=55']],
   ['js/phase2.js',['matches?420:1100']]
 ];
 for(const [file,terms] of mobile){const src=readFileSync(file,'utf8');for(const term of terms)if(!src.includes(term)){bad++;console.error('Optimisation mobile manquante dans '+file+' : '+term);}}
@@ -55,6 +55,10 @@ if (bad) { console.error(bad + ' problème(s).'); process.exit(1); }
 const w50=readFileSync('js/world50.js', 'utf8');
 for (const term of ['world50:active','function spawn','function finish','function expire','window.WORLD50']) { if (!w50.includes(term)) { bad++; console.error('Fonction v50 manquante dans js/world50.js : ' + term); } }
 const a51=readFileSync('js/account51.js','utf8'),api51=readFileSync('server.js','utf8'),admin51=readFileSync('admin/index.html','utf8');
+const v55js=html.indexOf('src="js/v55.js'),d54=html.indexOf('src="js/drive54.js'),main55=html.indexOf('src="js/main.js');
+if(v55js<0||d54<0||!(d54<v55js&&v55js<main55)){bad++;console.error('js/v55.js doit être chargé après drive54.js et avant main.js.');}
+if(!html.includes('css/v55.css')){bad++;console.error('css/v55.css absent de index.html.');}
+const v55src=readFileSync('js/v55.js','utf8');for(const t of ['V.crash','V.trunk','V.packOpts','V.sacExtra','function navMap','TRUNK_CAP'])if(!v55src.includes(t)){bad++;console.error('Élément v55 manquant dans js/v55.js : '+t);}
 const order51=['world50','core51','story51','eco51','family51','hub51','account51','main'].map(n=>html.indexOf('src="js/'+n+'.js'));
 if(order51.some(i=>i<0)||order51.some((v,i)=>i&&v<order51[i-1])){bad++;console.error('Ordre v51 invalide : world50 → core51 → story51 → eco51 → family51 → hub51 → account51 → main.');}
 const boot=html.indexOf('src="js/cloudboot51.js'),three=html.indexOf('src="js/lib/three.min.js');if(boot<0||boot>three){bad++;console.error('cloudboot51.js doit être chargé avant tous les modules du jeu.');}

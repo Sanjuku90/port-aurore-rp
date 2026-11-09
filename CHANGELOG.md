@@ -1,3 +1,12 @@
+# v55 · Dégâts du véhicule, coffre à bidons, minicarte, survie plus douce
+
+- **Santé et collisions** : un choc n'enlève plus de santé au joueur. C'est le **véhicule** qui s'abîme (état en %, déjà relié à Aurore Motors). Plus il est abîmé, moins il accélère et moins il va vite (jusqu'à −50 % de vitesse maximale), sa direction tire d'un côté, il fume (≥ 50 % de dégâts, fumée noire ≥ 80 %) et le moteur tousse près de la casse. Il reste toujours roulable (mode dégradé) pour rejoindre un garage. Les poids lourds encaissent mieux, les deux-roues moins bien.
+- **Réparation** : station-service « Réparer la carrosserie » (de $10 à $90 selon les dégâts), « Réparer et faire le plein » ($90) ou atelier Aurore Motors (« Carrosserie et débosselage »). Pastille 🔧 sous la minicarte : état du véhicule et bidons disponibles ; toucher = ouvre le coffre.
+- **On ne meurt plus bêtement** : la faim, la soif et la fatigue baissent 3× plus lentement (soif : 27 min de 80 % à 0 au lieu de 8 min), usent la santé très doucement (0,05 à 0,06 %/s au lieu de 0,8 %/s cumulés) et ne peuvent plus la faire descendre sous 12 %. Le rhume (pluie) est moins agressif. Avertissements de soif/faim plus tôt (30 %/20 %). La santé remonte dès que faim > 25 % et soif > 15 %.
+- **Bidons d'essence** : de nouveau en rayon à la **supérette** (la redéfinition de la boutique dans phase5-8.js les avait fait disparaître), à la **station-service**, et en livraison dans **Aurore Market** ($22). **Pack de 3 bidons** $54 (station et supérette) rangé directement dans le **coffre** si un véhicule est à moins de 9 m. **Coffre** (6 bidons max, conservé pour les véhicules personnels) accessible depuis le sac 🎒 ou la pastille 🔧 : déposer, reprendre, verser. **Réservoir vide : un bidon du coffre (puis du sac) est versé automatiquement.**
+- **Minicarte** (`js/v55.js`) : carré arrondi en haut à gauche en voiture (jamais masqué), qui **tourne avec la caméra** (la flèche blanche pointe vers le haut), icône maison, trait GPS pointillé, repère N cohérent avec la carte, zoom qui s'élargit avec la vitesse.
+- **Cache** : tous les fichiers du jeu passent en `?v=55` pour que les téléphones rechargent les nouvelles versions (phase3/phase4/hud45… étaient restés en `?v=31/48` malgré leurs modifications, d'où des anciennes versions possibles).
+
 # v54 · Conduite, commandes et interface
 
 - **Bidons d'essence** : vendus à la station ($20) et à la supérette ($20), +40 % de carburant, utilisables n'importe où depuis le sac (au volant ou à moins de 9 m du véhicule). Alerte « carburant bas » sous 15 %.

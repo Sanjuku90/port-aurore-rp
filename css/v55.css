@@ -1,0 +1,28 @@
+/* ==========================================================================
+   v55 · minicarte en voiture (carré arrondi, toujours visible) + état du véhicule
+   ========================================================================== */
+
+/* minicarte : jamais masquée au volant, au-dessus des autres éléments */
+html.ui45 #app.touch.driving54 #h45-radar{display:block!important;visibility:visible!important;opacity:1!important;z-index:16}
+html.ui45 #app.touch.driving54 #h45-radar #mini{display:block!important;border-radius:20px!important;border:3px solid rgba(255,255,255,.92)!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.45);opacity:1!important}
+html.ui45 #app.touch #h45-radar #mini{background:#0f1b27}
+
+/* pastille « état du véhicule + bidons » : sous la minicarte */
+#v55-car{display:none}
+#app.driving54 #v55-car{display:flex;align-items:center;gap:7px;position:absolute;z-index:15;pointer-events:auto;touch-action:manipulation;
+  height:32px;padding:0 11px 0 9px;border-radius:16px;color:#fff;cursor:pointer;
+  background:rgba(14,18,30,.66);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  font:700 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;font-variant-numeric:tabular-nums;-webkit-tap-highlight-color:transparent}
+#app.touch.driving54 #v55-car{left:calc(12px + env(safe-area-inset-left,0px));top:calc(24px + clamp(84px,25vh,108px) + env(safe-area-inset-top,0px))}
+#app:not(.touch).driving54 #v55-car{left:18px;bottom:calc(224px + env(safe-area-inset-bottom,0px))}
+#v55-car .w{font-size:14px;line-height:1}
+#v55-car .bar{display:block;width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.18);overflow:hidden;flex:none}
+#v55-car .bar u{display:block;height:100%;width:100%;border-radius:3px;background:#43c75a;text-decoration:none;transition:width .3s,background .3s}
+#v55-car.mid .bar u{background:#ffae2b}
+#v55-car.bad .bar u{background:#ff4650}
+#v55-car.bad .w,#v55-car.crit .w{animation:v55p 1s ease-in-out infinite}
+#v55-car .bd{color:#ffd27a}#v55-car .bd:empty{display:none}
+#v55-car:active{background:rgba(255,174,43,.9);color:#10131a}
+@keyframes v55p{50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){#v55-car.bad .w,#v55-car.crit .w{animation:none}}

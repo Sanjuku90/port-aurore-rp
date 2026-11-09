@@ -1,8 +1,8 @@
 {
   "name": "port-aurore-rp",
-  "version": "53.0.0",
+  "version": "55.0.0",
   "private": true,
-  "description": "Port-Aurore RP v52 : vrais comptes vérifiés, sauvegarde cloud, histoire principale, filière cacao et vie de famille.",
+  "description": "Port-Aurore RP v55 : dégâts de véhicule, coffre à bidons, minicarte, survie plus douce.",
   "type": "module",
   "scripts": {
     "start": "node server.js",

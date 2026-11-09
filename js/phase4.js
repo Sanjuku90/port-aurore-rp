@@ -108,12 +108,13 @@ const _openSpotP4=openSpot;
 openSpot=function(id){
   if(id==='fuel'){
     const target=()=>player.car||cars.filter(c=>Math.hypot(c.x-player.x,c.z-player.z)<12).sort((a,b)=>Math.hypot(a.x-player.x,a.z-player.z)-Math.hypot(b.x-player.x,b.z-player.z))[0]||null;
-    const car=target(),txt=car?'Véhicule sélectionné · '+Math.round(car.fuel||0)+'% carburant.':'Gare-toi près des pompes pour faire le plein ou réparer.';
+    const car=target(),dmg0=car?Math.round(car.damage||0):0,rep0=Math.round(10+dmg0*.8),txt=car?'Véhicule sélectionné · '+Math.round(car.fuel||0)+'% carburant · état '+(100-dmg0)+' %.':'Gare-toi près des pompes pour faire le plein ou réparer.';
     openPanel('Station-service',txt,[
       {label:'Faire le plein · $45',off:state.cash<45||!car||(car.fuel||0)>=99,fn:()=>{const c=target();if(!c||state.cash<45)return;state.cash-=45;c.fuel=100;toast('Plein effectué.','good');saveProgress();openSpot('fuel');}},
+      {label:'Réparer la carrosserie · $'+rep0+(dmg0?' (état '+(100-dmg0)+' %)':''),off:!car||dmg0<1||state.cash<rep0,fn:()=>{const c=target();if(!c)return;const p=Math.round(10+(c.damage||0)*.8);if(!(c.damage>0)||state.cash<p)return;state.cash-=p;c.damage=0;toast('Carrosserie remise à neuf.','good');saveProgress();openSpot('fuel');}},
       {label:'Réparer et faire le plein · $90',off:state.cash<90||!car,fn:()=>{const c=target();if(!c||state.cash<90)return;state.cash-=90;c.fuel=100;c.damage=0;toast('Véhicule réparé et révisé.','good');saveProgress();openSpot('fuel');}},
       {label:'Acheter un bidon d’essence · $20 (sac : '+inv()+'/'+CAP+')',off:state.cash<20||inv()>=CAP,fn:()=>{if(state.cash<20||inv()>=CAP)return;state.cash-=20;P3.inv.bidon=(P3.inv.bidon||0)+1;toast('Bidon d’essence dans le sac : utilise-le n’importe où.','good');saveProgress();openSpot('fuel');}}
-    ]);return;
+    ].concat(window.V55?V55.packOpts(()=>openSpot('fuel')):[]));return;
   }
   if(id==='dealership'){const opts=FLEET_CATALOG.map(v=>({label:v.label+' · '+fmt(v.price)+(state.license&&state.license[v.license]?' · permis validé':' · '+VEHICLE_LICENSE[v.license]),off:state.cash<v.price||!state.license||!state.license[v.license],fn:()=>buyFleetVehicle(v)}));
     fleetOwned.forEach((owned,index)=>{const v=FLEET_CATALOG.find(q=>q.id===owned);if(v)opts.push({label:'Revendre '+v.label+' · +'+fmt(Math.round(v.price*.6)),fn:()=>sellFleetVehicle(owned,index)});});

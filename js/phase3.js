@@ -21,9 +21,9 @@ function boutique(){const o=mkO(boutique);
 const IT={water:['Bouteille d’eau',s=>{s.thirst+=35;}],soda:['Soda',s=>{s.thirst+=25;s.fun+=6;}],sand:['Sandwich',s=>{s.hunger+=30;}],menu:['Menu complet',s=>{s.hunger+=60;s.thirst+=10;}],fish:['Poisson grillé',s=>{s.hunger+=45;}],pans:['Pansements',s=>{s.health+=15;}],kit:['Kit de soins',s=>{s.health+=45;}],bidon:['Bidon d’essence (+40 %)',()=>{}],meds:['Médicaments',s=>{s.health+=10;P3.sick=0;toast('Tu te sens mieux.','good');}]};
 const inv=()=>Object.values(P3.inv).reduce((a,b)=>a+b,0);
 function useItem(k){if(!P3.inv[k])return;P3.inv[k]--;if(!P3.inv[k])delete P3.inv[k];IT[k][1](state);['thirst','hunger','health','fun'].forEach(a=>{state[a]=Math.min(100,state[a]);});toast(IT[k][0]+' utilisé.','good');}
-function sac(){const ks=Object.keys(P3.inv);openPanel('Sac à dos',ks.length?inv()+' sur '+CAP+' objets. Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+' · Santé '+Math.round(state.health)+'.':'Ton sac est vide. Achète à manger à la supérette, des soins à la pharmacie.',ks.map(k=>({label:IT[k][0]+' ×'+P3.inv[k],fn:()=>{useItem(k);sac();}})));}
-function market(title,txt,list,re){openPanel(title,txt+' Sac : '+inv()+' sur '+CAP+'.',list.map(a=>({label:IT[a[0]][0]+' · '+fmt(a[1]),off:state.cash<a[1]||inv()>=CAP,fn:()=>{if(state.cash>=a[1]&&inv()<CAP){state.cash-=a[1];P3.inv[a[0]]=(P3.inv[a[0]]||0)+1;toast(IT[a[0]][0]+' dans le sac.','good');}re();}})).concat([{label:'Ouvrir le sac',fn:sac}]));}
-function superette(){market('Supérette','Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+'.',[['water',2],['soda',3],['sand',8],['menu',15],['fish',12],['bidon',20]],superette);}
+function sac(){const ks=Object.keys(P3.inv);openPanel('Sac à dos',ks.length?inv()+' sur '+CAP+' objets. Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+' · Santé '+Math.round(state.health)+'.':'Ton sac est vide. Achète à manger à la supérette, des soins à la pharmacie.',ks.map(k=>({label:IT[k][0]+' ×'+P3.inv[k],fn:()=>{useItem(k);sac();}})).concat(window.V55?V55.sacExtra():[]));}
+function market(title,txt,list,re,extra){openPanel(title,txt+' Sac : '+inv()+' sur '+CAP+'.',list.map(a=>({label:IT[a[0]][0]+' · '+fmt(a[1]),off:state.cash<a[1]||inv()>=CAP,fn:()=>{if(state.cash>=a[1]&&inv()<CAP){state.cash-=a[1];P3.inv[a[0]]=(P3.inv[a[0]]||0)+1;toast(IT[a[0]][0]+' dans le sac.','good');}re();}})).concat(extra||[]).concat([{label:'Ouvrir le sac',fn:sac}]));}
+function superette(){market('Supérette','Soif '+Math.round(state.thirst)+' · Faim '+Math.round(state.hunger)+'.',[['water',2],['soda',3],['sand',8],['menu',15],['fish',12],['bidon',20]],superette,window.V55?V55.packOpts(superette):[]);}
 function pharma(){market('Pharmacie','Santé '+Math.round(state.health)+(P3.sick?' · tu es malade.':'.'),[['pans',6],['kit',18],['meds',12]],pharma);}
 const _os=openSpot;openSpot=function(id){if(id==='shop'){if(blackout>0)toast('Coupure de courant : fermé.','warn');else superette();}else if(id==='coiffeur')coiffeur();else _os(id);};
 const _sx=shopX;shopX=function(id){if(id==='boutique')boutique();else if(id==='pharma')pharma();else _sx(id);};
@@ -53,13 +53,13 @@ const _bf=befriend;befriend=function(p){
 /* besoins : soif, sommeil, santé */
 const _nd=needs;needs=function(dt){
   _nd(dt);
-  if(P3.lastGM!=null&&gameMin-P3.lastGM>20)state.thirst-=(gameMin-P3.lastGM)*0.04;P3.lastGM=gameMin;
-  state.thirst=Math.max(0,state.thirst-0.16*dt);if(state.thirst<=0)state.health-=0.8*dt;
+  if(P3.lastGM!=null&&gameMin-P3.lastGM>20)state.thirst-=(gameMin-P3.lastGM)*0.02;P3.lastGM=gameMin;
+  state.thirst=Math.max(0,state.thirst-0.05*dt);if(state.thirst<=0&&state.health>12)state.health=Math.max(12,state.health-0.06*dt);   /* v55 : la soif ne tue plus */
   if(P3.sick&&state.health>=99.5)P3.sick=0;
-  if(wx.i>=2&&!player.inside&&!player.car){P3.wet+=dt;if(P3.wet>50&&!P3.sick){P3.sick=1;toast('Tu as pris froid. Médicaments à la pharmacie, ou hôpital.','warn');}}else P3.wet=Math.max(0,P3.wet-dt*0.5);
-  if(P3.sick){state.health=Math.max(20,state.health-0.5*dt);state.energy=Math.max(0,state.energy-0.05*dt);}
+  if(wx.i>=2&&!player.inside&&!player.car){P3.wet+=dt;if(P3.wet>90&&!P3.sick){P3.sick=1;toast('Tu as pris froid. Médicaments à la pharmacie, ou hôpital.','warn');}}else P3.wet=Math.max(0,P3.wet-dt*0.5);
+  if(P3.sick){if(state.health>20)state.health=Math.max(20,state.health-0.12*dt);state.energy=Math.max(0,state.energy-0.02*dt);}
   const e=P3.emo;if(e.t>0){e.t-=dt;if(e.k==='assis')state.energy=Math.min(100,state.energy+1.5*dt);}
-  P3.warn-=dt;if(P3.warn<=0){if(state.thirst<20){toast('Tu as soif.','warn');P3.warn=30;}else if(state.energy<15){toast('Tu es épuisé. Dors ou assieds-toi.','warn');P3.warn=40;}}
+  P3.warn-=dt;if(P3.warn<=0){if(state.thirst<30){toast(state.thirst<10?'Tu as très soif : bois vite (supérette, bouteille d’eau du sac).':'Tu as soif.','warn');P3.warn=45;}else if(state.hunger<20){toast('Tu as faim : un sandwich ou un repas.','warn');P3.warn=60;}else if(state.energy<20){toast('Tu es épuisé. Dors ou assieds-toi.','warn');P3.warn=60;}}
   if(!P3.spot){P3.spot=1;const c=[[8,-5.5],[-8,-5.5],[0,-9.5],[12,0],[-12,0],[6,10],[0,12]].find(q=>pushAABB({x:q[0],z:q[1]},1.6)===0);if(c)addSpot(c[0],c[1],'coiffeur',0xff9bd0,'Salon de coiffure');}
 };
 const _uh=updateHud;updateHud=function(){_uh();const t=$('#ht'),s=$('#sk');if(t)t.style.width=Math.round(state.thirst)+'%';if(s)s.hidden=!P3.sick;};
